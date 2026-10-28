@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ACB Intranet — Lo-fi wireframes</title>
+<style>
+  @font-face{font-family:'Kalam';font-style:normal;font-weight:400;font-display:block;
+    src:url('vendor/kalam-400-latin.woff2') format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+  @font-face{font-family:'Kalam';font-style:normal;font-weight:400;font-display:block;
+    src:url('vendor/kalam-400-latin-ext.woff2') format('woff2');
+    unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+  @font-face{font-family:'Kalam';font-style:normal;font-weight:700;font-display:block;
+    src:url('vendor/kalam-700-latin.woff2') format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+  @font-face{font-family:'Kalam';font-style:normal;font-weight:700;font-display:block;
+    src:url('vendor/kalam-700-latin-ext.woff2') format('woff2');
+    unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+
+  :root{
+    --ink:#33302b; --ink2:#6d675d; --faint:#9b9486;
+    --paper:#fbfaf5; --bg:#f2efe5; --line:#d9d3c2; --accent:#a4512f;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Kalam','Segoe Print','Comic Sans MS',cursive;
+    font-size:16px; line-height:1.55;
+  }
+  .wrap{max-width:1280px; margin:0 auto; padding:56px 32px 120px}
+
+  /* ---------- cover ---------- */
+  .cover{border-bottom:2px solid var(--ink); padding-bottom:28px; margin-bottom:44px}
+  .kicker{font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--faint)}
+  h1{font-size:44px; line-height:1.1; margin:10px 0 6px; font-weight:700; letter-spacing:-.01em}
+  .lede{font-size:17px; color:var(--ink2); max-width:760px; margin:8px 0 0}
+  .meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:22px}
+  .tag{font-size:12.5px; color:var(--ink2); border:1px solid var(--line); background:var(--paper);
+       border-radius:999px; padding:4px 12px}
+  .tag b{color:var(--ink)}
+
+  /* ---------- principles ---------- */
+  .principles{margin:0 0 60px}
+  .principles h2{font-size:15px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink2); margin:0 0 18px}
+  .pgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:2px; background:var(--line); border:1px solid var(--line)}
+  .p{background:var(--paper); padding:16px 18px}
+  .p .n{font-size:11px; color:var(--accent); font-weight:700; letter-spacing:.1em}
+  .p .t{font-size:15px; font-weight:700; margin:2px 0 2px}
+  .p .d{font-size:13px; color:var(--ink2); line-height:1.45}
+
+  /* ---------- sections ---------- */
+  .section{margin:0 0 24px; padding-top:8px}
+  .section-head{display:flex; align-items:baseline; gap:14px; border-top:2px solid var(--ink); padding-top:14px; margin-bottom:30px}
+  .section-head .idx{font-size:12px; letter-spacing:.2em; color:var(--accent); font-weight:700}
+  .section-head h2{font-size:24px; margin:0; font-weight:700}
+  .section-head .sub{font-size:13px; color:var(--faint); margin-left:auto}
+
+  /* ---------- frames ---------- */
+  figure{margin:0 0 64px}
+  .frame-head{display:flex; align-items:baseline; gap:12px; margin-bottom:10px}
+  .frame-head h3{font-size:19px; margin:0; font-weight:700}
+  .frame-head .num{font-size:11.5px; color:var(--accent); font-weight:700; letter-spacing:.12em}
+  .frame-head .num::after{content:" / 10"; color:var(--faint); letter-spacing:0}
+  .frame-head .purpose{font-size:13px; color:var(--faint); margin-left:auto; text-align:right; max-width:52%}
+  svg.frame{width:100%; height:auto; display:block; background:var(--paper);
+    border:1px solid var(--line); border-radius:3px; box-shadow:0 1px 0 rgba(51,48,43,.06)}
+
+  ol.notes{list-style:none; counter-reset:n; margin:16px 0 0; padding:0;
+    display:grid; grid-template-columns:1fr 1fr; gap:6px 36px}
+  ol.notes li{counter-increment:n; position:relative; padding-left:30px; font-size:13.5px; color:var(--ink2); line-height:1.45}
+  ol.notes li::before{content:counter(n); position:absolute; left:0; top:3px; width:20px; height:20px;
+    border-radius:50%; background:var(--accent); color:#fff; font-size:11px; font-weight:700;
+    display:flex; align-items:center; justify-content:center}
+  ol.notes li b{color:var(--ink)}
+
+  .outro{border-top:2px solid var(--ink); padding-top:22px; margin-top:8px; font-size:13.5px; color:var(--ink2)}
+  .outro b{color:var(--ink)}
+
+  @media (max-width:860px){
+    h1{font-size:32px}
+    ol.notes{grid-template-columns:1fr}
+    .frame-head .purpose{display:none}
+  }
+  @media print{
+    body{background:#fff}
+    .wrap{max-width:none; padding:0}
+    figure{page-break-inside:avoid}
+    svg.frame{box-shadow:none}
+    .principles{page-break-after:always}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="cover">
+    <div class="kicker">Biznes analitika · v0.1 · lo-fi</div>
+    <h1>ACB Intranet — dörd məhsulun eskizi</h1>
+    <p class="lede">
+      Kağız-qələm səviyyəsində vayr-freymlər: yalnız struktur, iyerarxiya və qərar nöqtələri.
+      Rəng, ikon dəsti, animasiya və real data qəsdən yoxdur — bu mərhələdə müzakirə mövzusu məhz axındır.
+    </p>
+    <div class="meta">
+      <span class="tag"><b>4</b> məhsul</span>
+      <span class="tag"><b>10</b> ekran</span>
+      <span class="tag">1440 × 900</span>
+      <span class="tag">rough.js + Kalam</span>
+      <span class="tag">28 oktyabr 2026</span>
+    </div>
+  </header>
+
+  <section class="principles">
+    <h2>Dizayn prinsipləri</h2>
+    <div class="pgrid">
+      <div class="p"><div class="n">01</div><div class="t">Bir ekran, bir qərar</div><div class="d">Hər ekranın tək bir əsas hərəkəti var. İkinci dərəcəli hərəkətlər vizual olaraq geri çəkilir.</div></div>
+      <div class="p"><div class="n">02</div><div class="t">Kontekst itmir</div><div class="d">Nested layihə, resurs və iş vahidi — istifadəçi həmişə "haradayam" sualına cavabı görür.</div></div>
+      <div class="p"><div class="n">03</div><div class="t">Tədricən açılış</div><div class="d">Siyahı → detal → kontekst paneli. Hər şey bir ekranda yığılmır.</div></div>
+      <div class="p"><div class="n">04</div><div class="t">Diqqət büdcəsi</div><div class="d">Bir primary + iki secondary hərəkət. Qalanı menyu, hover və ya detalda.</div></div>
+      <div class="p"><div class="n">05</div><div class="t">Sistem təklif edir, qərar vermir</div><div class="d">Yük balansı tövsiyə xarakterlidir; hər təklif izahlı və geri qaytarıla biləndir.</div></div>
+      <div class="p"><div class="n">06</div><div class="t">Rol = linza, icazə deyil</div><div class="d">Eyni data, rol üzrə fərqli pəncərə. İcazə modeli ayrı qatda qalır.</div></div>
+      <div class="p"><div class="n">07</div><div class="t">Boş vəziyyət də dizayndır</div><div class="d">Şablonlar və nümunə strukturlar v1-in içinə daxildir — boş sistem adoptasiya olunmur.</div></div>
+      <div class="p"><div class="n">08</div><div class="t">Sıxlıq sabitdir</div><div class="d">4/8 px şəbəkə, üç ölçü, iki çəki. Lo-fi-da belə ritm pozulmur — real interfeysdə də pozulmayacaq.</div></div>
+    </div>
+  </section>
+
+  <!-- ===================== 01 MY WORK OS ===================== -->
+  <section class="section">
+    <div class="section-head">
+      <span class="idx">01</span><h2>My Work OS</h2>
+      <span class="sub">gündəlik giriş nöqtəsi · agenda · yük balansı</span>
+    </div>
+
+    <figure>
+      <div class="frame-head"><span class="num">01</span><h3>Bugün</h3>
+        <span class="purpose">Sistemin açılış ekranı: gün, işlər, diqqət tələb edənlər, gələnlər</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="today"></svg>
+      <ol class="notes">
+        <li><b>Yük hökm vermir.</b> 68% rəqəmi tək başına heç nə demir — yanında rədd edilə bilən təklif var (bənd 15).</li>
+        <li><b>Gün saat oxu üzərindədir.</b> Görüşlər, focus blokları və boşluqlar bir baxışda görünür; siyahı bunu vermir.</li>
+        <li><b>Görünüş linzası.</b> "Mənim / Komanda / Departament" — eyni data, rol üzrə fərqli pəncərə. Bu, icazə deyil.</li>
+        <li><b>Inbox aqreqasiyası.</b> Mənbə üzrə say göstərilir, məzmun açılmır — diqqət büdcəsi qorunur.</li>
+      </ol>
+    </figure>
+
+    <figure>
+      <div class="frame-head"><span class="num">02</span><h3>Günü balanslaşdır</h3>
+        <span class="purpose">Tövsiyə paneli — "sistem özü tənzimləyir, amma strict deyil"</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="plan"></svg>
+      <ol class="notes">
+        <li><b>Default olaraq söndürülüb.</b> Heç bir təklif avtomatik tətbiq olunmur — istifadəçi seçir.</li>
+        <li><b>Hər təklifin səbəbi var.</b> İzahsız tövsiyə qara qutu kimi qəbul edilir və rədd olunur.</li>
+        <li><b>Geri qaytarıla bilər.</b> Geri alınmayan avtomatlaşdırma bu məhsulda yoxdur.</li>
+      </ol>
+    </figure>
+  </section>
+
+  <!-- ===================== 02 PROJECTS ===================== -->
+  <section class="section">
+    <div class="section-head">
+      <span class="idx">02</span><h2>Projects</h2>
+      <span class="sub">nested layihələr · work items · icma görünüşü</span>
+    </div>
+
+    <figure>
+      <div class="frame-head"><span class="num">03</span><h3>Layihə icmalı</h3>
+        <span class="purpose">Hər layihənin öz overview, komanda və fəaliyyət qatı</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="project"></svg>
+      <ol class="notes">
+        <li><b>Nested layihələr ağacda.</b> Alt layihə gizlədilmir — dərinlik vizual olaraq görünür (bənd 2).</li>
+        <li><b>Owner və Lead ayrıdır.</b> Owner məsuliyyət, Lead icra — eyni adam ola bilər, anlayış fərqlidir (bənd 5).</li>
+        <li><b>Alt layihələr kart kimi.</b> İrəliləyiş + komanda bir baxışda; içinə girmədən vəziyyət oxunur.</li>
+        <li><b>Fəaliyyət + versiya.</b> Snapshot işarələri generic audit qatından gəlir, hər modula ayrıca yazılmır (bənd 12).</li>
+      </ol>
+    </figure>
+
+    <figure>
+      <div class="frame-head"><span class="num">04</span><h3>Work items — board</h3>
+        <span class="purpose">Status üzrə sütunlar, kartda yalnız qərar üçün lazım olan siqnallar</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="board"></svg>
+      <ol class="notes">
+        <li><b>Sütun = status.</b> v1-də ayrı workflow konfiqurasiyası yoxdur — Jira pariteti qəsdən hədəf deyil.</li>
+        <li><b>Kartda 4 siqnal.</b> id, tip, kim, asılılıq. Təsvir, şərhlər və tarixçə detal panelindədir.</li>
+        <li><b>Klaviatura ilə yaratma.</b> Forma açmadan yazmaq — authoring sürtünməsi adoptasiyanın açarıdır.</li>
+      </ol>
+    </figure>
+
+    <figure>
+      <div class="frame-head"><span class="num">05</span><h3>Work item detalı</h3>
+        <span class="purpose">Alt işlər, iştirakçılar, asılılıqlar, resurslar və versiya jurnalı</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="workitem"></svg>
+      <ol class="notes">
+        <li><b>Bütün iştirakçılar görünür.</b> Alt işlərdə çalışan üzvlər sətirdə yığılır — roll-up avtomatikdir (bənd 16).</li>
+        <li><b>Asılılıq iki istiqamətdə.</b> "Bloklayır" və "bloklanır" ayrı göstərilir; tək "linked issues" kifayət deyil (bənd 10).</li>
+        <li><b>Meta sabit panel.</b> Detal sağda qalır, kontekst dəyişəndə yerini itirmir.</li>
+      </ol>
+    </figure>
+  </section>
+
+  <!-- ===================== 03 MAP ===================== -->
+  <section class="section">
+    <div class="section-head">
+      <span class="idx">03</span><h2>Xəritə</h2>
+      <span class="sub">bir qraf mühərriki · üç kontekst</span>
+    </div>
+
+    <figure>
+      <div class="frame-head"><span class="num">06</span><h3>Asılılıq xəritəsi</h3>
+        <span class="purpose">Layihə / work item / resurs — eyni qraf, fərqli fokus</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="map"></svg>
+      <ol class="notes">
+        <li><b>İki fərqli ox.</b> Bərk xətt iyerarxiya, kəsik xətt asılılıq — bunlar qarışdırılmır (bənd 9–11).</li>
+        <li><b>Asılılıq istiqamətlidir.</b> Ox "bloklayır" mənasını verir; istiqamətsiz link planlaşdırma üçün yararsızdır.</li>
+        <li><b>Dövr aşkarlanır.</b> Dövri asılılıq accent rəngi ilə işarələnir — səssiz qalmır.</li>
+        <li><b>Dərinlik limiti.</b> Default 2 səviyyə; "hər şeyi göstər" oxunaqlığı öldürür.</li>
+      </ol>
+    </figure>
+  </section>
+
+  <!-- ===================== 04 KNOWLEDGE ===================== -->
+  <section class="section">
+    <div class="section-head">
+      <span class="idx">04</span><h2>Knowledge</h2>
+      <span class="sub">resurslar · use case · data dictionary</span>
+    </div>
+
+    <figure>
+      <div class="frame-head"><span class="num">07</span><h3>Resurs — use case</h3>
+        <span class="purpose">Nested resurs ağacı, tipli əlaqələr, versiyalar</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="doc"></svg>
+      <ol class="notes">
+        <li><b>Resurslar nested.</b> Breadcrumb dərinliyi göstərir; ağac sağda deyil, solda sabitdir (bənd 8).</li>
+        <li><b>Əlaqələr tiplidir.</b> "İstinad edir / asılıdır / valideyn" — sərbəst link deyil (bənd 9).</li>
+        <li><b>Versiyalar yan panelde.</b> Müqayisə ayrı ekran; gündəlik oxunuşu çətinləşdirmir.</li>
+      </ol>
+    </figure>
+
+    <figure>
+      <div class="frame-head"><span class="num">08</span><h3>Data dictionary</h3>
+        <span class="purpose">Sənəd deyil, struktur — sətir = sahə</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="datadict"></svg>
+      <ol class="notes">
+        <li><b>Cədvəl, sənəd deyil.</b> Sahələr strukturla saxlanılır — sərbəst mətnə çevrilsə, heç nə çıxarmaq olmaz.</li>
+        <li><b>Sahə səviyyəsində istinad.</b> Hansı use case və iş bu sahəni istifadə edir — dəyişikliyin təsiri görünür.</li>
+        <li><b>AI üçün hazır sxem.</b> Strukturlaşmış resurs gələcək generasiya və sorğu üçün ən yaxşı xammaldır.</li>
+      </ol>
+    </figure>
+  </section>
+
+  <!-- ===================== 05 PEOPLE ===================== -->
+  <section class="section">
+    <div class="section-head">
+      <span class="idx">05</span><h2>People</h2>
+      <span class="sub">şirkət kataloqu · iki qatlı dərinlik</span>
+    </div>
+
+    <figure>
+      <div class="frame-head"><span class="num">09</span><h3>Kataloq</h3>
+        <span class="purpose">68 nəfər şirkət, 20 nəfər departament — fərqli dərinlik</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="people"></svg>
+      <ol class="notes">
+        <li><b>İki qatlı dərinlik.</b> Şirkət üzrə nazik profil, departamentdə zəngin profil — hamıya eyni səviyyə yığmaq dayanılmaz yükdür.</li>
+        <li><b>"Nə üçün yazmalı".</b> Kataloqun dəyəri bio deyil, "kimə nə üçün müraciət etməli" sualına cavabdır.</li>
+        <li><b>Son aktivlik.</b> Kimin sistemdə olduğunu göstərir; 50 nəfərin hesabı olmaması problem kimi göstərilmir.</li>
+      </ol>
+    </figure>
+
+    <figure>
+      <div class="frame-head"><span class="num">10</span><h3>Şəxs profili</h3>
+        <span class="purpose">Rol, layihələr, açıq işlər, məlumatın təzəliyi</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="person"></svg>
+      <ol class="notes">
+        <li><b>Person ≠ User.</b> Hesabı olmayan şəxs də kataloqdadır və işə təyin oluna bilər — modelin əsası budur.</li>
+        <li><b>"Son yoxlanıldı".</b> Əl ilə saxlanan məlumatın təzəliyini göstərir; köhnə profil səssiz qalmır.</li>
+        <li><b>Layihə rolu ayrıca.</b> Lead / Contributor — vəzifə ilə qarışdırılmır.</li>
+      </ol>
+    </figure>
+  </section>
+
+  <div class="outro">
+    <p><b>Növbəti addım:</b> bu eskizlər üzrə qərar nöqtələrini bağlamaq — work item tip modeli, dependency semantikası, rol matrisi.
+    Sonra eyni strukturu kliklənən prototipə çevirmək.</p>
+    <p><b>Nə qəsdən yoxdur:</b> rəng, ikon dəsti, animasiya, real mətn, mobil görünüş. Bunlar lo-fi mərhələsində müzakirəni yayındırır.</p>
+  </div>
+
+</div>
+
+<script src="vendor/rough.js"></script>
+<script src="core.js"></script>
+<script src="frames-a.js"></script>
+<script src="frames-b.js"></script>
+<script src="frames-c.js"></script>
+<script src="frames-d.js"></script>
+<script>
+  document.querySelectorAll('svg[data-frame]').forEach(function (svg) {
+    var fn = window.WF.frames[svg.getAttribute('data-frame')];
+    if (!fn) { console.warn('missing frame', svg.getAttribute('data-frame')); return; }
+    try { fn(new window.WF.Frame(svg)); }
+    catch (e) { console.error(svg.getAttribute('data-frame'), e); }
+  });
+</script>
+</body>
+</html>

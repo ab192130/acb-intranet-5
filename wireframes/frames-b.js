@@ -1,0 +1,266 @@
+/* frames-b.js : Projects — icmal, board, work item detalı */
+(function () {
+  'use strict';
+  var WF = window.WF, C = WF.C;
+  var frames = WF.frames;
+
+  /* shared project context sidebar (nested tree) */
+  function projectSidebar(f) {
+    f.line(324, WF.TOP, 324, WF.H, { color: C.line, sw: 1.2 });
+    f.text(100, 108, 'Layihələr', { size: 15, weight: 700 });
+    f.rrect(288, 92, 24, 24, 5, { fill: C.fill, stroke: C.line, rough: 0.7 });
+    f.text(300, 110, '+', { size: 15, anchor: 'middle' });
+
+    f.line(112, 152, 112, 320, { color: C.line, sw: 1, dash: [2, 4] });
+    f.line(128, 186, 128, 252, { color: C.line, sw: 1, dash: [2, 4] });
+    f.rrect(88, 154, 224, 30, 5, { fill: C.fill2, stroke: 'none', rough: 0.6 });
+
+    f.chev(96, 136, 'down', 5);
+    f.text(108, 141, 'Departament OS', { size: 13.5, weight: 700 });
+    f.text(120, 175, 'Ödəniş gateway', { size: 13, weight: 700 });
+    f.text(136, 209, '3DS inteqrasiyası', { size: 12.5, color: C.ink2 });
+    f.text(136, 243, 'Risk modeli', { size: 12.5, color: C.ink2 });
+    f.text(120, 277, 'Onboarding revamp', { size: 12.5, color: C.ink2 });
+    f.text(120, 311, 'Data platform', { size: 12.5, color: C.ink2 });
+
+    f.chev(96, 360, 'right', 5);
+    f.text(108, 365, 'Arxiv (4)', { size: 12.5, color: C.faint });
+    f.rrect(100, 700, 200, 36, 5, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
+    f.text(200, 723, '+ Yeni layihə', { size: 12.5, anchor: 'middle', color: C.ink2 });
+  }
+
+  /* ========================= 3. LAYİHƏ İCMALI ========================= */
+  frames.project = function (f) {
+    WF.shell(f, { crumb: 'Layihələr', active: 1 });
+    projectSidebar(f);
+
+    f.text(348, 90, 'Layihələr / Ödəniş gateway', { size: 12, color: C.faint });
+    f.text(348, 134, 'Ödəniş gateway', { size: 30, weight: 700 });
+    f.chip(596, 112, 'Aktiv', { h: 26, w: 68, size: 12 });
+    f.btn(1146, 100, 194, 'Work item yarat', { kind: 'primary', h: 40 });
+    f.text(1324, 126, '···', { size: 18, color: C.ink2 });
+
+    /* owner vs lead — two different accountabilities */
+    f.av(356, 174, 10, 'AM');
+    f.text(372, 179, 'Owner · A. Məmmədov', { size: 12.5, color: C.ink2 });
+    f.av(566, 174, 10, 'SƏ');
+    f.text(582, 179, 'Lead · S. Əliyeva', { size: 12.5, color: C.ink2 });
+    f.text(790, 179, '12 üzv', { size: 12.5, color: C.ink2 });
+    f.text(880, 179, 'Yenilənib 2 saat əvvəl', { size: 12, color: C.faint });
+
+    /* overview */
+    f.card(348, 196, 660, 220, 'İcmal', 'Redaktə');
+    f.plines(368, 236, 610, 3, 22);
+    f.text(368, 310, 'Məqsədlər', { size: 13, weight: 700 });
+    [['3DS 2.0 axınını 4 həftədə tamamlamaq', 334], ['Refund SLA-nı 48 → 24 saata endirmək', 358]].forEach(function (g) {
+      f.dot(372, g[1] - 4, 2.6, C.faint);
+      f.text(384, g[1], g[0], { size: 12.5, color: C.ink2 });
+    });
+
+    /* nested projects */
+    f.card(348, 432, 660, 206, 'Alt layihələr (2)', '+ Alt layihə');
+    [['3DS inteqrasiyası', 0.62, '3 açıq iş', ['SƏ', 'BA', 'NH'], 368],
+     ['Risk modeli', 0.30, '5 açıq iş', ['RQ', 'AM', 'EC'], 684]].forEach(function (p) {
+      var bx = p[4], by = 470;
+      f.rrect(bx, by, 300, 142, 5, { fill: C.fill, stroke: C.line, rough: 0.8 });
+      f.text(bx + 16, by + 28, p[0], { size: 13.5, weight: 700 });
+      f.rrect(bx + 16, by + 44, 268, 8, 4, { fill: C.fill2, stroke: 'none', rough: 0.5 });
+      f.rrect(bx + 16, by + 44, 268 * p[1], 8, 4, { fill: C.ink2, stroke: 'none', rough: 0.5 });
+      f.text(bx + 16, by + 74, p[2], { size: 11.5, color: C.ink2 });
+      f.avstack(bx + 16, by + 106, p[3], 10);
+    });
+
+    /* members */
+    f.card(348, 654, 660, 170, 'Üzvlər (12)', 'İdarə et');
+    var mem = [['AM', 'A. Məmmədov', 'Owner'], ['SƏ', 'S. Əliyeva', 'Lead'],
+               ['BA', 'B. Ağazadə', 'Dev'], ['NH', 'N. Həsənli', 'QA'],
+               ['RQ', 'R. Quliyev', 'BA'], ['EC', 'E. Cəfərova', 'Dev'],
+               ['Tİ', 'T. İsmayılov', 'Dev'], ['LN', 'L. Nəsirova', 'Design']];
+    mem.forEach(function (m, i) {
+      var bx = 368 + (i % 4) * 160, by = 688 + Math.floor(i / 4) * 44;
+      f.rrect(bx, by, 150, 32, 16, { fill: C.fill, stroke: C.line, rough: 0.7 });
+      f.av(bx + 18, by + 16, 9, m[0]);
+      f.text(bx + 32, by + 21, m[1], { size: 11 });
+      f.text(bx + 138, by + 21, m[2], { size: 9.5, color: C.faint, anchor: 'end' });
+    });
+
+    /* activity + version */
+    f.rrect(1032, 196, 308, 628, 6, { fill: C.white });
+    f.text(1056, 226, 'Fəaliyyət', { size: 15, weight: 700 });
+    f.chip(1212, 206, 'Versiya 12', { h: 24, w: 106, size: 11 });
+    var act = [
+      ['SƏ', 'ACB-142 → İcrada', '2 saat əvvəl'],
+      ['BA', '3DS sənədi yeniləndi (v7)', '4 saat əvvəl'],
+      ['RQ', 'Yeni resurs: UC-04', 'dünən'],
+      ['AM', 'Alt layihə: Risk modeli', 'dünən'],
+      ['NH', 'ACB-151-ə şərh', '2 gün əvvəl'],
+      ['··', 'Versiya 12 snapshot', '2 gün əvvəl']
+    ];
+    act.forEach(function (a, k) {
+      var ay = 258 + k * 92;
+      f.av(1062, ay, 11, a[0]);
+      f.text(1082, ay + 4, a[1], { size: 12.5 });
+      f.text(1082, ay + 24, a[2], { size: 10.5, color: C.faint });
+    });
+    f.text(1056, 812, 'Hamısı →', { size: 12, color: C.accent, weight: 700 });
+
+    f.anno(1, 88, 141);
+    f.anno(2, 532, 152, 556, 172);
+    f.anno(3, 1020, 500, 986, 520);
+    f.anno(4, 1020, 214, 1052, 238);
+  };
+
+  /* ============================ 4. BOARD ============================ */
+  frames.board = function (f) {
+    WF.shell(f, { crumb: 'Layihələr', active: 1 });
+    projectSidebar(f);
+
+    f.text(348, 90, 'Ödəniş gateway', { size: 12, color: C.faint });
+    f.text(348, 132, 'Work items', { size: 26, weight: 700 });
+    f.chip(486, 114, '18', { h: 22, w: 30, size: 11 });
+    f.text(548, 130, 'Board', { size: 13.5, weight: 700 });
+    f.line(548, 137, 590, 137, { color: C.ink, sw: 1.6 });
+    f.text(608, 130, 'Siyahı', { size: 13.5, color: C.faint });
+    f.text(668, 130, 'Xəritə', { size: 13.5, color: C.faint });
+    f.btn(1146, 100, 194, 'Work item yarat', { kind: 'primary', h: 40 });
+
+    /* filters */
+    f.chip(348, 158, 'Mənim', { active: true, h: 26, w: 76, size: 12 });
+    f.chip(432, 158, 'Bug', { h: 26, w: 58, size: 12 });
+    f.chip(498, 158, 'Bu həftə', { h: 26, w: 88, size: 12 });
+    f.chip(594, 158, '+ Filtr', { h: 26, w: 72, size: 12 });
+    f.text(1320, 176, 'Sıxlıq ▾', { size: 11.5, color: C.ink2, anchor: 'end' });
+
+    var cols = [
+      { x: 348, name: 'Todo', n: 3 },
+      { x: 600, name: 'İcrada', n: 2 },
+      { x: 852, name: 'Review', n: 2 },
+      { x: 1104, name: 'Bitdi', n: 1 }
+    ];
+    cols.forEach(function (c) {
+      f.text(c.x, 216, c.name, { size: 13.5, weight: 700 });
+      f.text(c.x + 74, 216, String(c.n), { size: 11, color: C.faint });
+      f.text(c.x + 226, 216, '+', { size: 15, color: C.faint, anchor: 'end' });
+      f.line(c.x, 226, c.x + 226, 226, { color: C.line, sw: 1.1 });
+    });
+
+    var cards = [
+      [0, 'ACB-160', 'Refund API kontraktı', 'Tapşırıq', '2', '3p', 'BA'],
+      [0, 'ACB-158', 'Retry siyasəti', 'Tapşırıq', '1', '2p', 'Tİ'],
+      [0, 'ACB-155', 'Webhook imzası', 'Bug', '3', '1p', 'EC'],
+      [1, 'ACB-142', '3DS redirect döngüsü', 'Bug', '2', '3p', 'BA'],
+      [1, 'ACB-147', 'Idempotency key', 'Tapşırıq', '', '2p', 'SƏ'],
+      [2, 'ACB-139', 'Refund use case v7', 'Tapşırıq', '', '1p', 'RQ'],
+      [2, 'ACB-151', 'Risk skorlaması', 'Bug', '1', '5p', 'NH'],
+      [3, 'ACB-133', 'payment_tx sxemi', 'Tapşırıq', '', '2p', 'AM']
+    ];
+    var seen = [0, 0, 0, 0];
+    cards.forEach(function (c) {
+      var col = cols[c[0]], cx = col.x, cy = 240 + seen[c[0]] * 116;
+      seen[c[0]]++;
+      f.rrect(cx, cy, 226, 104, 5, { fill: C.white });
+      f.text(cx + 14, cy + 22, c[1], { size: 10.5, color: C.faint });
+      f.av(cx + 206, cy + 18, 10, c[6]);
+      f.text(cx + 14, cy + 50, c[2], { size: 13 });
+      var cw = c[3] === 'Bug' ? 48 : 70;
+      f.chip(cx + 14, cy + 72, c[3], { h: 20, w: cw, size: 10.5 });
+      if (c[4]) {
+        var lx = cx + 22 + cw;
+        f.circle(lx, cy + 80, 7, { stroke: C.faint, sw: 1.1, rough: 0.6 });
+        f.circle(lx + 5, cy + 84, 7, { stroke: C.faint, sw: 1.1, rough: 0.6 });
+        f.text(lx + 14, cy + 87, c[4], { size: 10.5, color: C.ink2 });
+      }
+      f.text(cx + 212, cy + 87, c[5], { size: 10.5, color: C.faint, anchor: 'end' });
+    });
+    cols.forEach(function (c, i) {
+      var cy = 240 + seen[i] * 116 + 4;
+      f.rrect(c.x, cy, 226, 36, 5, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
+      f.text(c.x + 113, cy + 23, '+ Əlavə et', { size: 11.5, color: C.faint, anchor: 'middle' });
+    });
+
+    f.annoS(1, 336, 212);
+    f.annoS(2, 336, 256);
+    f.annoS(3, 336, 600);
+  };
+
+  /* ========================= WORK ITEM DETALI ========================= */
+  frames.workitem = function (f) {
+    WF.shell(f, { crumb: 'Layihələr', active: 1 });
+    projectSidebar(f);
+
+    f.text(348, 90, 'Ödəniş gateway / ACB-142', { size: 12, color: C.faint });
+    f.text(348, 128, '3DS redirect döngüsü', { size: 24, weight: 700 });
+    f.chip(348, 142, 'Bug', { h: 24, w: 50, size: 11.5 });
+    f.chip(408, 142, 'İcrada', { h: 24, w: 66, size: 11.5 });
+    f.chip(484, 142, 'P1', { h: 24, w: 40, size: 11.5, color: C.accent });
+    f.chip(534, 142, '3 gün açıq', { h: 24, w: 84, size: 11.5 });
+    f.btn(1150, 108, 100, 'Status', { h: 34, size: 12 });
+    f.btn(1258, 108, 60, '···', { h: 34, size: 12 });
+
+    /* description */
+    f.card(348, 182, 692, 148, 'Təsvir', 'Redaktə');
+    f.plines(368, 220, 640, 3, 24);
+
+    /* sub-items with contributing members (req 16) */
+    f.card(348, 344, 692, 250, 'Alt işlər (3)', '+ Əlavə et');
+    var subs = [
+      ['Redirect URL validasiyası', 'İcrada', ['SƏ', 'BA'], '3/5'],
+      ['Callback timeout', 'Todo', ['NH'], '1/3'],
+      ['Xəta mesajları', 'Bitdi', ['EC', 'BA', 'RQ'], '4/4']
+    ];
+    subs.forEach(function (s, k) {
+      var sy = 382 + k * 66;
+      f.line(368, sy + 48, 1020, sy + 48, { color: C.line, dash: [4, 6], sw: 1 });
+      f.check(368, sy + 12, k === 2);
+      f.text(392, sy + 26, s[0], { size: 13 });
+      f.chip(700, sy + 8, s[1], { h: 22, w: 64, size: 10.5 });
+      f.avstack(830, sy + 19, s[2], 9);
+      f.text(1016, sy + 26, s[3], { size: 11, color: C.faint, anchor: 'end' });
+    });
+
+    /* dependencies */
+    f.card(348, 610, 692, 116, 'Asılılıqlar', 'Xəritədə aç');
+    f.text(368, 664, 'Bloklayır:', { size: 12, color: C.ink2 });
+    f.chip(440, 648, 'ACB-151', { h: 24, w: 74, size: 11 });
+    f.chip(520, 648, 'ACB-160', { h: 24, w: 74, size: 11 });
+    f.text(368, 704, 'Bloklanır:', { size: 12, color: C.ink2 });
+    f.chip(440, 688, 'ACB-108', { h: 24, w: 74, size: 11, color: C.accent });
+
+    /* linked resources */
+    f.card(348, 742, 692, 106, 'Resurslar (2)', '+ Bağla');
+    [['UC-04 · Refund axını', 'v7'], ['DD · payment_tx', 'v3']].forEach(function (r, k) {
+      var ry = 792 + k * 30;
+      f.rrect(368, ry - 13, 12, 14, 2, { fill: 'none', stroke: C.ink2, rough: 0.6 });
+      f.text(390, ry, r[0], { size: 12.5 });
+      f.text(1020, ry, r[1], { size: 10.5, color: C.faint, anchor: 'end' });
+    });
+
+    /* meta panel */
+    f.rrect(1064, 182, 276, 420, 6, { fill: C.white });
+    f.text(1088, 212, 'Detallar', { size: 15, weight: 700 });
+    var meta = [['Assignee', 'B. Ağazadə'], ['Reporter', 'S. Əliyeva'], ['Prioritet', 'P1'],
+                ['Severity', 'Yüksək'], ['Mühit', 'Prod'], ['Estimate', '3 point'],
+                ['Son tarix', '30 okt'], ['Versiya', 'v4']];
+    meta.forEach(function (m, k) {
+      var my = 244 + k * 42;
+      f.text(1088, my, m[0], { size: 11, color: C.faint });
+      f.text(1320, my, m[1], { size: 12, anchor: 'end' });
+      f.line(1088, my + 12, 1320, my + 12, { color: C.line, sw: 0.9, dash: [3, 5] });
+    });
+
+    /* change log */
+    f.rrect(1064, 618, 276, 230, 6, { fill: C.white });
+    f.text(1088, 648, 'Dəyişikliklər', { size: 15, weight: 700 });
+    f.text(1320, 647, 'Hamısı', { size: 11, color: C.accent, anchor: 'end' });
+    [['v4', 'status → İcrada', '2 saat'], ['v3', 'təsvir yeniləndi', 'dünən'], ['v2', 'estimate 5p → 3p', '3 gün']].forEach(function (a, k) {
+      var ay = 682 + k * 52;
+      f.chip(1088, ay - 14, a[0], { h: 20, w: 34, size: 10 });
+      f.text(1132, ay, a[1], { size: 11.5 });
+      f.text(1132, ay + 16, a[2], { size: 10, color: C.faint });
+    });
+
+    f.annoS(1, 336, 380);
+    f.annoS(2, 336, 640);
+    f.annoS(3, 1200, 212);
+  };
+})();

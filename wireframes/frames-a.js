@@ -1,0 +1,171 @@
+/* frames-a.js : My Work OS — "Bugün" + "Günü balanslaşdır" */
+(function () {
+  'use strict';
+  var WF = window.WF, C = WF.C;
+  var frames = WF.frames = WF.frames || {};
+
+  /* ============================ 1. BUGÜN ============================ */
+  frames.today = function (f) {
+    WF.shell(f, { crumb: 'Bugün', active: 0 });
+
+    f.text(100, 112, 'Sabahın xeyir, Burhan', { size: 30, weight: 700 });
+    f.text(100, 140, '28 oktyabr, çərşənbə · 3 görüş · 5 açıq iş', { size: 14, color: C.ink2 });
+
+    /* role lens — same data, different view */
+    f.text(1012, 106, 'Görünüş', { size: 11.5, color: C.faint, anchor: 'end' });
+    var lens = [['Mənim', 72, true], ['Komanda', 104, false], ['Departament', 124, false]];
+    var lx = 1024;
+    lens.forEach(function (l) {
+      f.chip(lx, 88, l[0], { w: l[1], active: l[2], h: 30, size: 12.5 });
+      lx += l[1] + 8;
+    });
+
+    /* ---- workload: a number + a proposal, not a verdict ---- */
+    f.rrect(100, 160, 600, 104, 6, { fill: C.white });
+    f.text(124, 186, 'Bugünkü yük', { size: 12.5, color: C.ink2 });
+    f.text(124, 232, '68%', { size: 32, weight: 700 });
+    f.rrect(212, 202, 330, 13, 6, { fill: C.fill2, stroke: 'none', rough: 0.6 });
+    f.rrect(212, 202, 224, 13, 6, { fill: C.ink, stroke: 'none', rough: 0.6 });
+    f.text(212, 236, '1 tapşırıq sabaha keçirilməyi təklif olunur', { size: 12, color: C.ink2 });
+    f.text(580, 236, 'Bax →', { size: 12.5, weight: 700, anchor: 'end', color: C.accent });
+
+    /* ---- day timeline ---- */
+    f.rrect(100, 284, 600, 520, 6, { fill: C.white });
+    f.text(124, 314, 'Gün', { size: 15, weight: 700 });
+    f.text(676, 313, '09:00 – 18:00', { size: 11.5, color: C.faint, anchor: 'end' });
+
+    var y0 = 344, step = 55;
+    for (var i = 0; i <= 8; i++) {
+      var yy = y0 + i * step;
+      f.text(124, yy + 4, ('0' + (9 + i)).slice(-2) + ':00', { size: 11, color: C.faint });
+      f.line(180, yy, 676, yy, { color: C.line, sw: 1 });
+    }
+
+    function block(y1, y2, title, kind) {
+      if (kind === 'focus') {
+        f.rrect(186, y1, 486, y2 - y1, 4, { fill: 'none', stroke: C.ink2, dash: [5, 5], rough: 0.8 });
+      } else {
+        f.rrect(186, y1, 486, y2 - y1, 4, { fill: C.fill2, stroke: C.line, rough: 0.8 });
+      }
+      f.text(200, y1 + 18, title, { size: 12.5, color: kind === 'focus' ? C.ink2 : C.ink });
+    }
+    block(344, 399, 'Focus · ACB-142', 'focus');
+    block(399, 427, 'Daily 15′', 'meet');
+    block(509, 564, 'Design review · 6 nəfər', 'meet');
+    block(564, 674, 'Focus · refund use case', 'focus');
+    block(674, 702, '1:1 · S. Əliyeva', 'meet');
+
+    /* now marker */
+    f.line(180, 472, 676, 472, { color: C.accent, dash: [4, 4], sw: 1.4 });
+    f.dot(180, 472, 3.2, C.accent);
+    f.text(188, 466, 'indi', { size: 10.5, color: C.accent, weight: 700 });
+
+    /* ---- my work items ---- */
+    f.rrect(724, 160, 616, 270, 6, { fill: C.white });
+    f.text(748, 190, 'Mənim işlərim', { size: 15, weight: 700 });
+    f.text(1316, 189, '5 açıq · bu gün', { size: 11.5, color: C.faint, anchor: 'end' });
+
+    var items = [
+      ['3DS redirect döngüsünü araşdır', 'Ödəniş', '3p', true],
+      ['Refund use case-ini yenilə', 'Ödəniş', '2p', false],
+      ['Risk modeli icmalına bax', 'Risk', '1p', false],
+      ['payment_tx sahələrini təsdiqlə', 'Data', '2p', false]
+    ];
+    items.forEach(function (it, k) {
+      var ry = 208 + k * 54;
+      f.check(748, ry + 8, false);
+      f.text(776, ry + 23, it[0], { size: 13.5 });
+      f.text(1120, ry + 23, it[1], { size: 11.5, color: C.ink2, anchor: 'end' });
+      f.dot(1134, ry + 18, 3.4, it[3] ? C.accent : C.faint);
+      f.text(1320, ry + 23, it[2], { size: 11.5, color: C.faint, anchor: 'end' });
+    });
+
+    /* ---- needs attention ---- */
+    f.rrect(724, 446, 616, 170, 6, { fill: C.white });
+    f.text(748, 476, 'Diqqət tələb edir', { size: 15, weight: 700 });
+    f.chip(876, 458, '3', { h: 22, w: 26, size: 11.5 });
+    var att = [
+      ['S. Əliyeva səni ACB-151-də mention etdi', '5 dəq'],
+      ['ACB-142 iki gündür blokdadır', '2 gün'],
+      ['Review gözləyir: UC-04 refund axını', '1 gün']
+    ];
+    att.forEach(function (a, k) {
+      var ry = 492 + k * 38;
+      f.circle(756, ry + 6, 10, { sw: 1.2, rough: 0.7, stroke: C.accent });
+      f.text(774, ry + 11, a[0], { size: 12.5 });
+      f.text(1320, ry + 11, a[1], { size: 11, color: C.faint, anchor: 'end' });
+    });
+
+    /* ---- inbox aggregation ---- */
+    f.rrect(724, 632, 616, 170, 6, { fill: C.white });
+    f.text(748, 662, 'Gələnlər', { size: 15, weight: 700 });
+    f.text(1320, 661, 'hamısı →', { size: 11.5, color: C.ink2, anchor: 'end' });
+    var src = [['Teams', '4', '2 mention'], ['Email', '7', '1 təcili'], ['WhatsApp', '2', 'əl ilə yönləndirilib']];
+    src.forEach(function (s, k) {
+      var bx = 748 + k * 198;
+      f.rrect(bx, 676, 186, 100, 5, { fill: C.fill, stroke: C.line, rough: 0.8 });
+      f.text(bx + 14, 700, s[0], { size: 12.5, color: C.ink2 });
+      f.text(bx + 14, 736, s[1], { size: 24, weight: 700 });
+      f.text(bx + 14, 760, s[2], { size: 10.5, color: C.faint });
+    });
+
+    /* annotations */
+    f.anno(1, 90, 190);
+    f.anno(2, 90, 306);
+    f.anno(3, 998, 64, 1030, 84);
+    f.anno(4, 708, 646, 738, 668);
+  };
+
+  /* ======================= 2. GÜNÜ BALANSLAŞDIR ======================= */
+  frames.plan = function (f) {
+    WF.shell(f, { crumb: 'Bugün', active: 0 });
+
+    /* dimmed context behind the sheet */
+    [[100, 160, 600, 104], [100, 284, 600, 520], [724, 160, 616, 270],
+     [724, 446, 616, 170], [724, 632, 616, 170]].forEach(function (r) {
+      f.rrect(r[0], r[1], r[2], r[3], 6, { fill: C.fill, stroke: C.line, rough: 0.7 });
+    });
+    f.plines(124, 214, 380, 2, 26, { sw: 1.3 });
+    f.plines(748, 240, 400, 3, 46, { sw: 1.3 });
+    f.plainRect(0, 0, WF.W, WF.H, '#33302b', 0.12);
+
+    /* sheet */
+    f.rrect(390, 150, 660, 600, 8, { fill: C.white });
+    f.text(424, 198, 'Günü balanslaşdır', { size: 22, weight: 700 });
+    f.line(1006, 188, 1020, 202, { color: C.ink2, sw: 1.6 });
+    f.line(1020, 188, 1006, 202, { color: C.ink2, sw: 1.6 });
+    f.text(424, 226, '3 təklif · heç biri avtomatik tətbiq olunmur', { size: 13, color: C.ink2 });
+    f.line(424, 244, 1016, 244, { color: C.line, dash: [5, 5], sw: 1.2 });
+
+    var rows = [
+      ['Bloklanmış işi səhərə çək', 'ACB-142 səni bloklayır, əvvəl onu bitir', '09:00'],
+      ['Görüşdən sonra 90 dəq focus', '12:00 design review-dən sonra fasiləsiz blok', '13:00'],
+      ['Kiçik işləri bir yerə yığ', '3 × 15 dəq işi bir bloka birləşdir', '16:30']
+    ];
+    rows.forEach(function (r, k) {
+      var ry = 262 + k * 92;
+      if (k) f.line(424, ry - 8, 1016, ry - 8, { color: C.line, dash: [4, 6], sw: 1 });
+      /* drag handle */
+      f.line(426, ry + 34, 438, ry + 34, { color: C.faint, sw: 1.2 });
+      f.line(426, ry + 41, 438, ry + 41, { color: C.faint, sw: 1.2 });
+      /* toggle — off by default */
+      f.rrect(452, ry + 24, 46, 24, 12, { fill: C.fill, stroke: C.line, rough: 0.7 });
+      f.circle(464, ry + 36, 17, { fill: C.white, stroke: C.ink2, rough: 0.6 });
+      f.text(512, ry + 32, r[0], { size: 15 });
+      f.text(512, ry + 56, r[1], { size: 12, color: C.ink2 });
+      f.chip(936, ry + 18, r[2], { h: 26, w: 76, size: 12 });
+    });
+
+    f.line(424, 560, 1016, 560, { color: C.line, dash: [5, 5], sw: 1.2 });
+    f.rrect(424, 578, 592, 46, 5, { fill: C.fill, stroke: C.line, rough: 0.7 });
+    f.text(440, 606, 'Səbəb: bu gün 5 saat görüşün var, 2 focus bloku çatmır.', { size: 12, color: C.ink2 });
+
+    f.text(424, 652, 'Tətbiq etsən də istənilən vaxt geri qaytara bilərsən.', { size: 11.5, color: C.faint });
+    f.btn(654, 668, 178, 'Özüm düzəldəcəm', { h: 40, size: 12.5 });
+    f.btn(844, 668, 176, 'Tətbiq et (3)', { kind: 'primary', h: 40, size: 12.5 });
+
+    f.anno(1, 1090, 296, 1030, 296);
+    f.anno(2, 1090, 388, 1030, 388);
+    f.anno(3, 1090, 688, 1030, 688);
+  };
+})();
