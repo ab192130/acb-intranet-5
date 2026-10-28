@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ACB Intranet — Knowledge · lo-fi</title>
+<link rel="stylesheet" href="vendor/kalam.css">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="partnav">
+    <a href="index.html">← Eskizlər</a>
+    <span class="pnum">04 / 05</span>
+    <span class="ptitle">Knowledge</span>
+    <span class="pager">
+      <a href="03-map.html">← Xəritə</a>
+      <a href="05-people.html">People →</a>
+    </span>
+  </nav>
+
+  <!-- ===================== 04 KNOWLEDGE ===================== -->
+  <section class="section">
+    <div class="section-head">
+      <span class="idx">04</span><h2>Knowledge</h2>
+      <span class="sub">resurslar · use case · data dictionary</span>
+    </div>
+
+    <figure>
+      <div class="frame-head"><span class="num">07</span><h3>Resurs — use case</h3>
+        <span class="purpose">Nested resurs ağacı, tipli əlaqələr, versiyalar</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="doc"></svg>
+      <ol class="notes">
+        <li><b>Resurslar nested.</b> Breadcrumb dərinliyi göstərir; ağac sağda deyil, solda sabitdir (bənd 8).</li>
+        <li><b>Əlaqələr tiplidir.</b> "İstinad edir / asılıdır / valideyn" — sərbəst link deyil (bənd 9).</li>
+        <li><b>Versiyalar yan panelde.</b> Müqayisə ayrı ekran; gündəlik oxunuşu çətinləşdirmir.</li>
+      </ol>
+    </figure>
+
+    <figure>
+      <div class="frame-head"><span class="num">08</span><h3>Data dictionary</h3>
+        <span class="purpose">Sənəd deyil, struktur — sətir = sahə</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="datadict"></svg>
+      <ol class="notes">
+        <li><b>Cədvəl, sənəd deyil.</b> Sahələr strukturla saxlanılır — sərbəst mətnə çevrilsə, heç nə çıxarmaq olmaz.</li>
+        <li><b>Sahə səviyyəsində istinad.</b> Hansı use case və iş bu sahəni istifadə edir — dəyişikliyin təsiri görünür.</li>
+        <li><b>AI üçün hazır sxem.</b> Strukturlaşmış resurs gələcək generasiya və sorğu üçün ən yaxşı xammaldır.</li>
+      </ol>
+    </figure>
+  </section>
+
+  <div class="partfoot">
+    <a href="03-map.html">← Xəritə</a>
+    <span class="hint">lo-fi · qərar sənədi, dizayn deyil</span>
+    <a class="next" href="05-people.html">People →</a>
+  </div>
+</div>
+
+<script src="vendor/rough.js"></script>
+<script src="core.js"></script>
+<script>
+/* Xəritə — bir qraf mühərriki, üç kontekst */
+(function () {
+  'use strict';
+  var WF = window.WF, C = WF.C;
+  var frames = WF.frames;
+
+  function knowledgeSidebar(f) {
+    f.line(324, WF.TOP, 324, WF.H, { color: C.line, sw: 1.2 });
+    f.text(100, 108, 'Bilik bazası', { size: 15, weight: 700 });
+    f.rrect(288, 92, 24, 24, 5, { fill: C.fill, stroke: C.line, rough: 0.7 });
+    f.text(300, 110, '+', { size: 15, anchor: 'middle' });
+    f.rrect(88, 214, 224, 30, 5, { fill: C.fill2, stroke: 'none', rough: 0.6 });
+
+    f.chev(96, 160, 'down', 5);
+    f.text(108, 165, 'Use case-lər', { size: 13, weight: 700 });
+    f.text(136, 199, 'UC-01 Ödəniş axını', { size: 12.5, color: C.ink2 });
+    f.text(136, 233, 'UC-04 Refund axını', { size: 12.5, weight: 700 });
+
+    f.chev(96, 268, 'down', 5);
+    f.text(108, 273, 'Data dictionary', { size: 13, weight: 700 });
+    f.text(136, 307, 'payment_tx', { size: 12.5, color: C.ink2 });
+    f.text(136, 341, 'refund', { size: 12.5, color: C.ink2 });
+
+    f.chev(96, 376, 'right', 5);
+    f.text(108, 381, 'Sənədlər (6)', { size: 13, weight: 700 });
+    f.chev(96, 414, 'right', 5);
+    f.text(108, 419, 'Arxiv (12)', { size: 12.5, color: C.faint });
+
+    f.rrect(100, 700, 200, 36, 5, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
+    f.text(200, 723, '+ Yeni resurs', { size: 12.5, anchor: 'middle', color: C.ink2 });
+  }
+
+  /* ======================= 7. RESURS — SƏNƏD ======================= */
+  frames.doc = function (f) {
+    WF.shell(f, { crumb: 'Bilik', active: 2 });
+    knowledgeSidebar(f);
+
+    f.text(348, 92, 'Bilik / Use case-lər / UC-04', { size: 12, color: C.faint });
+    f.text(348, 132, 'UC-04 · Refund axını', { size: 24, weight: 700 });
+    f.av(358, 162, 10, 'SƏ');
+    f.text(374, 167, 'S. Əliyeva · sahib', { size: 12, color: C.ink2 });
+    f.chip(556, 148, 'Use case', { h: 24, w: 78, size: 11 });
+    f.chip(642, 148, 'v7', { h: 24, w: 40, size: 11 });
+    f.text(700, 167, '3 gün əvvəl yenilənib', { size: 11.5, color: C.faint });
+
+    /* body */
+    f.text(348, 208, 'Aktorlar', { size: 14, weight: 700 });
+    f.text(348, 232, 'Müştəri, dəstək əməkdaşı, ödəniş servisi', { size: 12.5, color: C.ink2 });
+
+    f.text(348, 276, 'İlkin şərtlər', { size: 14, weight: 700 });
+    f.plines(348, 300, 620, 2, 22);
+
+    f.text(348, 360, 'Əsas axın', { size: 14, weight: 700 });
+    [0, 1, 2, 3].forEach(function (i) {
+      var ny = 392 + i * 30;
+      f.text(348, ny, String(i + 1) + '.', { size: 12, color: C.faint });
+      f.pline(372, ny - 4, 560 - i * 24);
+    });
+
+    f.text(348, 528, 'Alternativ axın', { size: 14, weight: 700 });
+    f.plines(348, 552, 620, 2, 22);
+
+    f.text(348, 612, 'Əlaqəli data', { size: 14, weight: 700 });
+    f.chip(348, 626, 'payment_tx', { h: 26, w: 100, size: 11.5 });
+    f.chip(458, 626, 'refund', { h: 26, w: 74, size: 11.5 });
+
+    f.text(348, 700, 'Şərhlər (3)', { size: 13, weight: 700 });
+    f.plines(348, 722, 620, 2, 22, { sw: 1.3 });
+
+    /* right column */
+    f.rrect(1052, 182, 288, 300, 6, { fill: C.white });
+    f.text(1074, 212, 'Əlaqəli resurslar', { size: 14, weight: 700 });
+    [['istinad edir', 'DD · payment_tx'], ['asılıdır', 'ACB-142'],
+     ['valideyn', 'UC-01 Ödəniş axını'], ['istifadə edir', 'Risk modeli']].forEach(function (r, k) {
+      var ry = 244 + k * 58;
+      f.text(1074, ry, r[0], { size: 9.5, color: C.faint });
+      f.text(1074, ry + 18, r[1], { size: 12.5 });
+      if (k < 3) f.line(1074, ry + 32, 1318, ry + 32, { color: C.line, dash: [4, 5], sw: 1 });
+    });
+
+    f.rrect(1052, 498, 288, 244, 6, { fill: C.white });
+    f.text(1074, 528, 'Versiyalar', { size: 14, weight: 700 });
+    [['v7', '3 gün əvvəl', 'SƏ'], ['v6', '2 həftə əvvəl', 'RQ'], ['v5', '1 ay əvvəl', 'SƏ']].forEach(function (v, k) {
+      var vy = 560 + k * 46;
+      f.chip(1074, vy - 15, v[0], { h: 22, w: 34, size: 10.5 });
+      f.text(1120, vy, v[1], { size: 11.5 });
+      f.text(1318, vy, v[2], { size: 10.5, color: C.faint, anchor: 'end' });
+    });
+    f.btn(1074, 700, 244, 'Müqayisə et', { h: 30, size: 11.5, kind: 'ghost' });
+
+    f.annoS(1, 522, 88);
+    f.annoS(2, 1040, 208);
+    f.annoS(3, 1040, 520);
+  };
+
+  /* ====================== 8. DATA DICTIONARY ====================== */
+  frames.datadict = function (f) {
+    WF.shell(f, { crumb: 'Bilik', active: 2 });
+    knowledgeSidebar(f);
+
+    f.text(348, 92, 'Bilik / Data dictionary / payment_tx', { size: 12, color: C.faint });
+    f.text(348, 132, 'payment_tx', { size: 24, weight: 700 });
+    f.chip(510, 114, 'Data dictionary', { h: 24, w: 118, size: 11 });
+    f.chip(638, 114, 'v3', { h: 24, w: 40, size: 11 });
+    f.btn(1146, 108, 194, 'Sahə əlavə et', { kind: 'primary', h: 38 });
+
+    f.input(348, 164, 300, 'Sahə axtar…', { h: 34 });
+    f.chip(664, 168, '6 sahə', { h: 26, w: 66, size: 11.5 });
+    f.text(746, 186, 'Son dəyişiklik: 5 gün əvvəl', { size: 11.5, color: C.faint });
+
+    f.rrect(348, 214, 752, 448, 6, { fill: C.white });
+    var cols = [['Sahə', 372], ['Tip', 560], ['Məcburi', 690], ['Mənbə', 792], ['Təsvir', 944]];
+    cols.forEach(function (c) {
+      f.text(c[1], 246, c[0], { size: 11, color: C.faint, weight: 700 });
+    });
+    f.line(368, 258, 1080, 258, { color: C.ink2, sw: 1.4 });
+
+    var rows = [
+      ['tx_id', 'uuid', '✓', 'POS', 'Unikal əməliyyat identifikatoru'],
+      ['amount', 'numeric', '✓', 'POS', 'Məbləğ, minor units (qəpik)'],
+      ['currency', 'char(3)', '✓', 'POS', 'ISO 4217 valyuta kodu'],
+      ['status', 'enum', '✓', 'Gateway', 'created / captured / refunded'],
+      ['created_at', 'timestamp', '✓', 'Gateway', 'Yaradılma anı (UTC)'],
+      ['idempotency_key', 'text', '—', 'Client', 'Təkrar sorğuların bloklanması']
+    ];
+    rows.forEach(function (r, k) {
+      var ry = 288 + k * 64;
+      if (k) f.line(368, ry - 22, 1080, ry - 22, { color: C.line, dash: [4, 6], sw: 1 });
+      f.text(372, ry, r[0], { size: 12.5, weight: 700 });
+      f.text(560, ry, r[1], { size: 12, color: C.ink2 });
+      f.text(690, ry, r[2], { size: 12, color: r[2] === '✓' ? C.ink : C.faint });
+      f.text(792, ry, r[3], { size: 12, color: C.ink2 });
+      f.text(944, ry, r[4], { size: 12, color: C.ink2 });
+    });
+
+    f.text(368, 700, '+ Sətir əlavə et', { size: 12, color: C.faint });
+
+    /* right panel */
+    f.rrect(1128, 214, 212, 448, 6, { fill: C.white });
+    f.text(1148, 244, 'Bu sahəni istifadə edir', { size: 11.5, weight: 700 });
+    f.text(1148, 264, 'tx_id', { size: 11, color: C.faint });
+    [['UC-04', 'Refund axını'], ['ACB-142', '3DS redirect'], ['API kontraktı', 'v2']].forEach(function (r, k) {
+      var ry = 296 + k * 50;
+      f.text(1148, ry, r[0], { size: 12, weight: 700 });
+      f.text(1148, ry + 16, r[1], { size: 10.5, color: C.faint });
+    });
+    f.line(1148, 452, 1320, 452, { color: C.line, dash: [4, 5], sw: 1 });
+    f.text(1148, 478, 'Dəyişikliklər', { size: 11.5, weight: 700 });
+    [['v3', 'currency əlavə edildi'], ['v2', 'idempotency_key']].forEach(function (r, k) {
+      var ry = 506 + k * 46;
+      f.chip(1148, ry - 14, r[0], { h: 20, w: 32, size: 10 });
+      f.text(1190, ry, r[1], { size: 10.5, color: C.ink2 });
+    });
+    f.text(1148, 640, 'Sahə səviyyəsində', { size: 10.5, color: C.faint });
+
+    f.annoS(1, 1004, 242);
+    f.annoS(2, 1116, 244);
+  };
+})();
+</script>
+<script>
+  /* ---- render every frame ---- */
+  document.querySelectorAll('svg[data-frame]').forEach(function (svg) {
+    var fn = window.WF.frames[svg.getAttribute('data-frame')];
+    if (!fn) { console.warn('missing frame', svg.getAttribute('data-frame')); return; }
+    try { fn(new window.WF.Frame(svg)); }
+    catch (e) { console.error(svg.getAttribute('data-frame'), e); }
+  });
+
+  /* ---- solo mode: #board, #today, ... ---- */
+  (function () {
+    var id = location.hash.replace('#', '');
+    if (!id) return;
+    var svg = document.querySelector('svg[data-frame="' + id + '"]');
+    if (!svg) return;
+    var fig = svg.closest('figure');
+    document.body.classList.add('solo');
+    if (fig) fig.classList.add('solo');
+  })();
+</script>
+</body>
+</html>

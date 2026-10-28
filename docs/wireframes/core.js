@@ -333,6 +333,9 @@
   window.WF = {
     W: W, H: H, RAIL: RAIL, TOP: TOP, C: C, FONT: FONT,
     Frame: Frame, shell: shell, el: el, tw: tw, rrPath: rrPath,
-    NAV: NAV, navIcon: navIcon
+    NAV: NAV, navIcon: navIcon,
+    /* registry — pages register their own frames here; core.js creates it
+       so any page can run standalone without a frames-*.js bootstrap. */
+    frames: {}
   };
 })();

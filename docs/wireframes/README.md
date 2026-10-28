@@ -5,28 +5,36 @@ eskizləri. Məqsəd dizaynı "göstərmək" deyil — **struktur və axın bar�
 
 ## Necə açmaq
 
-`docs/wireframes/index.html` faylını brauzerdə aç (iki dəfə klik). Build yoxdur, server
-lazım deyil, internet lazım deyil — rough.js və Kalam şrifti `vendor/` içində lokaldır.
+`docs/wireframes/index.html` faylını brauzerdə aç (iki dəfə klik). Oradan bölmələrə keç.
+Build yoxdur, server lazım deyil, internet lazım deyil — rough.js və Kalam şrifti
+`vendor/` içində lokaldır.
 
-PDF üçün: `Ctrl+P` → "Save as PDF" (hər ekran ayrı səhifədə).
+PDF üçün: bölmə səhifəsini aç → `Ctrl+P` → "Save as PDF" (hər ekran ayrı səhifədə).
 
 ## Fayl strukturu
 
 ```
 docs/wireframes/
-  index.html    səhifə + 10 ekranın kodu (inline <script>) + annotasiyalar
-  core.js       ortaq DSL: hand-drawn primitivlər + qlobal shell  ← reuse edilir
-  README.md     bu fayl
-  vendor/       rough.js + kalam.css + Kalam woff2 (latin / latin-ext)
+  index.html            giriş: örtük, dizayn prinsipləri, bölmələrin siyahısı
+  01-my-work-os.html    Bugün · Günü balanslaşdır
+  02-projects.html      Layihə icmalı · Board · Work item detalı
+  03-map.html           Asılılıq xəritəsi
+  04-knowledge.html     Resurs — use case · Data dictionary
+  05-people.html        Kataloq · Şəxs profili
+  deck.css              səhifə karkası: örtük, bölmə, annotasiya, solo rejim
+  core.js               ortaq DSL: hand-drawn primitivlər + qlobal shell  ← reuse edilir
+  README.md             bu fayl
+  vendor/               rough.js + kalam.css + Kalam woff2 (latin / latin-ext)
 ```
 
-`index.html` tək fayldır: ekranların kodu içindədir, ona görə birbaşa paylaşıla bilər.
-`core.js` isə **ayrı qalır** — yeni prototip səhifələri eyni vizual dili ondan götürür.
+Hər bölmə səhifəsi **özü tamdır**: ekran kodu həmin faylın içindədir, başqa səhifədən
+asılı deyil. Ortaq olan yalnız üç şeydir — `core.js` (çəkmə DSL-i), `deck.css`
+(səhifə görünüşü) və `vendor/` (şrift + rough.js).
 
 ## core.js-i başqa səhifədə işlətmək
 
 ```html
-<link rel="stylesheet" href="vendor/kalam.css">   <!-- və ya öz @font-face-lərin -->
+<link rel="stylesheet" href="vendor/kalam.css">
 <script src="vendor/rough.js"></script>
 <script src="core.js"></script>
 <svg viewBox="0 0 1440 900" width="1440" height="900" id="s"></svg>
@@ -38,11 +46,12 @@ docs/wireframes/
 </script>
 ```
 
-`core.js` qlobal `WF` obyekti verir: `WF.Frame`, `WF.shell`, `WF.C` (rənglər), `WF.W/H`.
+`core.js` qlobal `WF` obyekti verir: `WF.Frame`, `WF.shell`, `WF.C` (rənglər), `WF.W/H`,
+`WF.frames` (ekran reyestri).
 
 ## Ekran əlavə etmək
 
-1. `index.html` içindəki inline `<script>`-də `frames.yeni_ad = function (f) { ... }` yaz.
+1. Uyğun bölmə səhifəsindəki inline `<script>`-də `frames.yeni_ad = function (f) { ... }` yaz.
 2. Gövdədə `<svg class="frame" viewBox="0 0 1440 900" data-frame="yeni_ad"></svg>` qoy.
 3. Altına `<ol class="notes">` ilə annotasiyaları yaz — nömrələr avtomatikdir.
 
@@ -69,20 +78,26 @@ bunlar müzakirəni yayındırır.
 
 - `f.anno(n, x, y, tx, ty)` — böyük nömrə (r=11), istəyə bağlı dashed leader xətti ilə.
 - `f.annoS(n, x, y)` — kiçik nömrə (r=8), başlıq/sətir yanında inline marker.
-- Hər nömrə `index.html`-dəki `<ol class="notes">` siyahısında izah olunur.
+- Hər nömrə həmin səhifədəki `<ol class="notes">` siyahısında izah olunur.
   Ekranda izahsız nömrə qalmamalıdır.
 
 ## Tək ekranı PNG kimi çıxarmaq
 
-`index.html#<frame>` rejimi yalnız həmin ekranı 1440 × 900 full-bleed göstərir:
+`<səhifə>.html#<frame>` rejimi yalnız həmin ekranı 1440 × 900 full-bleed göstərir —
+naviqasiya, başlıq və annotasiyalar gizlədilir:
 
 ```powershell
 $chrome = "C:\Program Files\Google\Chrome\Application\chrome.exe"
-$url = "file:///C:/.../docs/wireframes/index.html#board"
+$url = "file:///C:/.../docs/wireframes/02-projects.html#board"
 & $chrome --headless=new --disable-gpu --hide-scrollbars `
   --window-size=1440,900 --user-data-dir="$env:TEMP\wf" `
   --screenshot="board.png" $url
 ```
 
-`#` dəyərləri: `today`, `plan`, `project`, `board`, `workitem`, `map`, `doc`,
-`datadict`, `people`, `person`.
+| Səhifə | `#` dəyərləri |
+|---|---|
+| `01-my-work-os.html` | `today`, `plan` |
+| `02-projects.html` | `project`, `board`, `workitem` |
+| `03-map.html` | `map` |
+| `04-knowledge.html` | `doc`, `datadict` |
+| `05-people.html` | `people`, `person` |

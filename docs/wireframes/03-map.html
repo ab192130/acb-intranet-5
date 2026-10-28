@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ACB Intranet — Xəritə · lo-fi</title>
+<link rel="stylesheet" href="vendor/kalam.css">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="partnav">
+    <a href="index.html">← Eskizlər</a>
+    <span class="pnum">03 / 05</span>
+    <span class="ptitle">Xəritə</span>
+    <span class="pager">
+      <a href="02-projects.html">← Projects</a>
+      <a href="04-knowledge.html">Knowledge →</a>
+    </span>
+  </nav>
+
+  <!-- ===================== 03 MAP ===================== -->
+  <section class="section">
+    <div class="section-head">
+      <span class="idx">03</span><h2>Xəritə</h2>
+      <span class="sub">bir qraf mühərriki · üç kontekst</span>
+    </div>
+
+    <figure>
+      <div class="frame-head"><span class="num">06</span><h3>Asılılıq xəritəsi</h3>
+        <span class="purpose">Layihə / work item / resurs — eyni qraf, fərqli fokus</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="map"></svg>
+      <ol class="notes">
+        <li><b>İki fərqli ox.</b> Bərk xətt iyerarxiya, kəsik xətt asılılıq — bunlar qarışdırılmır (bənd 9–11).</li>
+        <li><b>Asılılıq istiqamətlidir.</b> Ox "bloklayır" mənasını verir; istiqamətsiz link planlaşdırma üçün yararsızdır.</li>
+        <li><b>Dövr aşkarlanır.</b> Dövri asılılıq accent rəngi ilə işarələnir — səssiz qalmır.</li>
+        <li><b>Dərinlik limiti.</b> Default 2 səviyyə; "hər şeyi göstər" oxunaqlığı öldürür.</li>
+      </ol>
+    </figure>
+  </section>
+
+  <div class="partfoot">
+    <a href="02-projects.html">← Projects</a>
+    <span class="hint">lo-fi · qərar sənədi, dizayn deyil</span>
+    <a class="next" href="04-knowledge.html">Knowledge →</a>
+  </div>
+</div>
+
+<script src="vendor/rough.js"></script>
+<script src="core.js"></script>
+<script>
+/* Xəritə — bir qraf mühərriki, üç kontekst */
+(function () {
+  'use strict';
+  var WF = window.WF, C = WF.C;
+  var frames = WF.frames;
+
+  /* ============================== 6. XƏRİTƏ ============================== */
+  frames.map = function (f) {
+    WF.shell(f, { crumb: 'Xəritə', active: 4 });
+
+    f.text(100, 122, 'Xəritə', { size: 26, weight: 700 });
+    f.text(100, 148, 'Ödəniş gateway · 8 node · dərinlik 2', { size: 12.5, color: C.ink2 });
+
+    f.chip(430, 100, 'Layihə', { h: 28, w: 74, size: 12 });
+    f.chip(512, 100, 'Work item', { h: 28, w: 96, size: 12 });
+    f.chip(616, 100, 'Resurs', { h: 28, w: 74, size: 12, active: true });
+    f.chip(1044, 100, 'Dərinlik: 2 ▾', { h: 28, w: 116, size: 12 });
+    f.chip(1168, 100, 'Yalnız asılılıqlar', { h: 28, w: 158, size: 12 });
+
+    f.rrect(100, 176, 1010, 660, 6, { fill: C.white, stroke: C.line });
+
+    function node(cx, cy, w, h, label, tag, o) {
+      o = o || {};
+      f.rrect(cx - w / 2, cy - h / 2, w, h, 6, {
+        fill: o.fill || C.fill, stroke: o.stroke || C.ink2, sw: o.sw || 1.4, rough: 0.9
+      });
+      f.text(cx, cy + 5, label, { size: o.size || 12.5, anchor: 'middle', weight: 700 });
+      if (tag) f.text(cx - w / 2 + 8, cy - h / 2 + 14, tag, { size: 9, color: C.faint });
+    }
+
+    /* hierarchy (solid) */
+    f.line(500, 398, 500, 280, { color: C.ink2, sw: 1.4 });
+    f.line(440, 414, 352, 320, { color: C.ink2, sw: 1.4 });
+    f.line(605, 428, 690, 420, { color: C.ink2, sw: 1.4 });
+    /* dependencies (dashed) */
+    f.arrow(430, 452, 380, 534, { dash: [6, 5] });
+    f.arrow(405, 572, 480, 608, { dash: [6, 5] });
+    f.arrow(760, 446, 722, 674, { dash: [6, 5] });
+    f.arrow(818, 438, 884, 476, { dash: [6, 5] });
+    /* the cycle */
+    f.arrow(886, 494, 828, 456, { dash: [6, 5], color: C.accent });
+
+    node(500, 430, 210, 64, 'Ödəniş gateway', 'LAYİHƏ', { fill: C.fill2, size: 13.5 });
+    node(500, 250, 190, 56, '3DS inteqrasiyası', 'ALT LAYİHƏ');
+    node(270, 300, 160, 56, 'Risk modeli', 'ALT LAYİHƏ');
+    node(760, 420, 140, 48, 'ACB-142', 'WORK ITEM', { stroke: C.ink, sw: 2.1 });
+    node(930, 500, 140, 48, 'ACB-151', 'WORK ITEM');
+    node(330, 560, 150, 48, 'UC-04 Refund', 'RESURS');
+    node(560, 620, 160, 48, 'DD payment_tx', 'RESURS');
+    node(700, 700, 140, 48, 'ACB-160', 'WORK ITEM');
+
+    f.text(872, 430, 'dövr', { size: 10.5, color: C.accent, weight: 700 });
+
+    /* legend */
+    f.rrect(120, 742, 360, 74, 5, { fill: C.white, stroke: C.line, rough: 0.7 });
+    f.annoS(1, 142, 762);
+    f.line(164, 762, 206, 762, { color: C.ink2, sw: 1.4 });
+    f.text(216, 766, 'iyerarxiya (parent/child)', { size: 10.5, color: C.ink2 });
+    f.annoS(2, 142, 784);
+    f.line(164, 784, 206, 784, { color: C.ink2, sw: 1.4, dash: [6, 5] });
+    f.text(216, 788, 'asılılıq (blocks / relates)', { size: 10.5, color: C.ink2 });
+    f.annoS(3, 142, 806);
+    f.line(164, 806, 206, 806, { color: C.accent, sw: 1.4, dash: [6, 5] });
+    f.text(216, 810, 'dövr — xəbərdarlıq', { size: 10.5, color: C.accent });
+
+    /* zoom */
+    f.text(1076, 812, '−   100%   +', { size: 12, color: C.ink2, anchor: 'end' });
+
+    /* inspector */
+    f.rrect(1130, 176, 210, 660, 6, { fill: C.white });
+    f.text(1150, 206, 'Seçilmiş node', { size: 11, color: C.faint });
+    f.text(1150, 236, 'ACB-142', { size: 17, weight: 700 });
+    f.chip(1150, 248, 'Work item', { h: 22, w: 84, size: 10.5 });
+    f.chip(1242, 248, 'İcrada', { h: 22, w: 62, size: 10.5 });
+    f.line(1150, 286, 1320, 286, { color: C.line, dash: [4, 5], sw: 1 });
+    f.text(1150, 310, 'Bağlı node-lar (4)', { size: 11.5, weight: 700 });
+    [['↑ parent', 'Ödəniş gateway'], ['→ bloklayır', 'ACB-151'], ['← bloklanır', 'ACB-108'],
+     ['⌐ istinad', 'UC-04 Refund']].forEach(function (r, k) {
+      var ry = 338 + k * 44;
+      f.text(1150, ry, r[0], { size: 9.5, color: C.faint });
+      f.text(1150, ry + 16, r[1], { size: 12 });
+    });
+    f.btn(1150, 526, 170, 'Kontekstdə aç', { h: 34, size: 12 });
+    f.btn(1150, 568, 170, 'Fokusla', { h: 34, size: 12, kind: 'ghost' });
+    f.line(1150, 620, 1320, 620, { color: C.line, dash: [4, 5], sw: 1 });
+    f.text(1150, 646, 'Qeyd', { size: 11.5, weight: 700 });
+    f.plines(1150, 664, 170, 3, 18, { sw: 1.3 });
+
+    f.anno(4, 1030, 114, 1054, 114);
+  };
+})();
+</script>
+<script>
+  /* ---- render every frame ---- */
+  document.querySelectorAll('svg[data-frame]').forEach(function (svg) {
+    var fn = window.WF.frames[svg.getAttribute('data-frame')];
+    if (!fn) { console.warn('missing frame', svg.getAttribute('data-frame')); return; }
+    try { fn(new window.WF.Frame(svg)); }
+    catch (e) { console.error(svg.getAttribute('data-frame'), e); }
+  });
+
+  /* ---- solo mode: #board, #today, ... ---- */
+  (function () {
+    var id = location.hash.replace('#', '');
+    if (!id) return;
+    var svg = document.querySelector('svg[data-frame="' + id + '"]');
+    if (!svg) return;
+    var fig = svg.closest('figure');
+    document.body.classList.add('solo');
+    if (fig) fig.classList.add('solo');
+  })();
+</script>
+</body>
+</html>
