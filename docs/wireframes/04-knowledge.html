@@ -23,11 +23,23 @@
   <section class="section">
     <div class="section-head">
       <span class="idx">04</span><h2>Knowledge</h2>
-      <span class="sub">resurslar · use case · data dictionary</span>
+      <span class="sub">sənəd · use case · data dictionary</span>
     </div>
 
     <figure>
-      <div class="frame-head"><span class="num">07</span><h3>Resurs — use case</h3>
+      <div class="frame-head"><span class="num">07</span><h3>Sənəd — ümumi baxış</h3>
+        <span class="purpose">Sərbəst mətn: başlıqlar, paraqraflar, tipli istinadlar</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="document"></svg>
+      <ol class="notes">
+        <li><b>Sərbəst mətn qəsdən strukturlaşdırılmır.</b> Hər sənəd eyni sahələrə sığmır; başlıq və paraqraf oxunan mətn üçün kifayətdir, sahə cədvəli isə onu süni şəkildə bölərdi.</li>
+        <li><b>Tipli istinad mətnin içindədir.</b> UC-04 və payment_tx çipləri sərbəst link deyil — tipi bilinir, ona görə resursun nəyə bağlı olduğu və dəyişikliyin təsiri oxuyarkən görünür.</li>
+        <li><b>Mündəricat sağdadır.</b> Uzun mətnin oxu eni daralmır; başlıqlar arasında keçid isə həmişə əlçatan qalır.</li>
+        <li><b>Versiyalar və şərhlər kontekstdədir.</b> Sağ relsdə qalırlar — oxumağı kəsmir, müqayisə və müzakirə ayrıca ekrana çıxmır.</li>
+      </ol>
+    </figure>
+
+    <figure>
+      <div class="frame-head"><span class="num">08</span><h3>Resurs — use case</h3>
         <span class="purpose">Nested resurs ağacı, tipli əlaqələr, versiyalar</span></div>
       <svg class="frame" viewBox="0 0 1440 900" data-frame="doc"></svg>
       <ol class="notes">
@@ -38,7 +50,7 @@
     </figure>
 
     <figure>
-      <div class="frame-head"><span class="num">08</span><h3>Data dictionary</h3>
+      <div class="frame-head"><span class="num">09</span><h3>Data dictionary</h3>
         <span class="purpose">Sənəd deyil, struktur — sətir = sahə</span></div>
       <svg class="frame" viewBox="0 0 1440 900" data-frame="datadict"></svg>
       <ol class="notes">
@@ -59,39 +71,135 @@
 <script src="vendor/rough.js"></script>
 <script src="core.js"></script>
 <script>
-/* 04 Knowledge — inline frames: use case + data dictionary */
+/* 04 Knowledge — inline frames: document + use case + data dictionary */
 (function () {
   'use strict';
   var WF = window.WF, C = WF.C;
   var frames = WF.frames;
 
-  function knowledgeSidebar(f) {
+  function knowledgeSidebar(f, active) {
     f.line(324, WF.TOP, 324, WF.H, { color: C.line, sw: 1.2 });
     f.text(100, 108, 'Bilik bazası', { size: 15, weight: 700 });
     f.rrect(288, 92, 24, 24, 5, { fill: C.fill, stroke: C.line, rough: 0.7 });
     f.text(300, 110, '+', { size: 15, anchor: 'middle' });
-    f.rrect(88, 214, 224, 30, 5, { fill: C.fill2, stroke: 'none', rough: 0.6 });
+    if (active !== 'document') f.rrect(88, 214, 224, 30, 5, { fill: C.fill2, stroke: 'none', rough: 0.6 });
 
     f.chev(96, 160, 'down', 5);
     f.text(108, 165, 'Use case-lər', { size: 13, weight: 700 });
     f.text(136, 199, 'UC-01 Ödəniş axını', { size: 12.5, color: C.ink2 });
-    f.text(136, 233, 'UC-04 Refund axını', { size: 12.5, weight: 700 });
+    f.text(136, 233, 'UC-04 Refund axını', {
+      size: 12.5, color: active === 'document' ? C.ink2 : C.ink,
+      weight: active === 'document' ? 400 : 700
+    });
 
     f.chev(96, 268, 'down', 5);
     f.text(108, 273, 'Data dictionary', { size: 13, weight: 700 });
     f.text(136, 307, 'payment_tx', { size: 12.5, color: C.ink2 });
     f.text(136, 341, 'refund', { size: 12.5, color: C.ink2 });
 
-    f.chev(96, 376, 'right', 5);
-    f.text(108, 381, 'Sənədlər (6)', { size: 13, weight: 700 });
-    f.chev(96, 414, 'right', 5);
-    f.text(108, 419, 'Arxiv (12)', { size: 12.5, color: C.faint });
+    if (active === 'document') {
+      /* sənəd freymində üç qrup açıqdır; aktiv resurs Sənədlər içindədir */
+      f.chev(96, 376, 'down', 5);
+      f.text(108, 381, 'Sənədlər (6)', { size: 13, weight: 700 });
+      f.rrect(88, 396, 224, 30, 5, { fill: C.fill2, stroke: 'none', rough: 0.6 });
+      f.text(136, 415, 'Ödəniş axını — ümumi baxış', { size: 12.5, weight: 700 });
+      f.text(136, 449, 'Refund siyasəti', { size: 12.5, color: C.ink2 });
+      f.chev(96, 482, 'right', 5);
+      f.text(108, 487, 'Arxiv (12)', { size: 12.5, color: C.faint });
+    } else {
+      f.chev(96, 376, 'right', 5);
+      f.text(108, 381, 'Sənədlər (6)', { size: 13, weight: 700 });
+      f.chev(96, 414, 'right', 5);
+      f.text(108, 419, 'Arxiv (12)', { size: 12.5, color: C.faint });
+    }
 
     f.rrect(100, 700, 200, 36, 5, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
     f.text(200, 723, '+ Yeni resurs', { size: 12.5, anchor: 'middle', color: C.ink2 });
   }
 
-  /* ======================= 7. RESURS — SƏNƏD ======================= */
+  /* ======================= 7. SƏNƏD — ÜMUMİ BAXIŞ ======================= */
+  frames.document = function (f) {
+    WF.shell(f, { crumb: 'Bilik', active: 2 });
+    knowledgeSidebar(f, 'document');
+
+    f.text(348, 92, 'Bilik / Sənədlər / Ödəniş axını', { size: 12, color: C.faint });
+    f.text(348, 132, 'Ödəniş axını — ümumi baxış', { size: 24, weight: 700 });
+    f.av(358, 162, 10, 'SƏ');
+    f.text(374, 167, 'S. Əliyeva · sahib', { size: 12, color: C.ink2 });
+    f.chip(500, 148, 'Sənəd', { h: 24, w: 70, size: 11 });
+    f.chip(582, 148, 'v4', { h: 24, w: 40, size: 11 });
+    f.text(636, 167, '5 gün əvvəl yenilənib', { size: 11.5, color: C.faint });
+    f.btn(1146, 108, 194, 'Redaktə et', { kind: 'primary', h: 38 });
+
+    /* body: oxunan mətn — başlıq + paraqraf xətləri */
+    f.text(348, 208, 'Məqsəd', { size: 14, weight: 700 });
+    f.plines(348, 232, 660, 3, 22);
+
+    f.text(348, 312, 'Axın icmalı', { size: 14, weight: 700 });
+    f.text(348, 336, 'Əsas axın', { size: 12.5, color: C.ink2 });
+    f.chip(412, 322, 'UC-04', { h: 24, w: 56, size: 11 });
+    f.text(476, 336, 'use case-inə və', { size: 12.5, color: C.ink2 });
+    f.chip(577, 322, 'payment_tx', { h: 24, w: 84, size: 11 });
+    f.text(669, 336, 'cədvəlinə istinad edir.', { size: 12.5, color: C.ink2 });
+    f.plines(348, 362, 660, 2, 22);
+
+    /* qeyd / callout */
+    f.rrect(348, 404, 660, 76, 6, { fill: C.fill, stroke: C.line, dash: [5, 4] });
+    f.text(368, 428, 'Qeyd', { size: 12, weight: 700 });
+    f.plines(368, 446, 580, 2, 18, { last: 0.5 });
+
+    f.text(348, 516, 'Risklər', { size: 14, weight: 700 });
+    [0, 1, 2].forEach(function (i) {
+      var by = 548 + i * 30;
+      f.dot(354, by - 4, 2.6, C.ink2);
+      f.pline(366, by - 4, 560 - i * 30);
+    });
+
+    f.text(348, 656, 'Qərarlar', { size: 14, weight: 700 });
+    f.plines(348, 680, 660, 3, 22);
+
+    /* right rail */
+    f.rrect(1052, 182, 288, 660, 6, { fill: C.white });
+    f.text(1074, 212, 'Mündəricat', { size: 14, weight: 700 });
+    ['Məqsəd', 'Axın icmalı', 'Risklər', 'Qərarlar'].forEach(function (h, k) {
+      var ty = 246 + k * 24;
+      f.text(1074, ty, String(k + 1) + '.', { size: 11, color: C.faint });
+      f.text(1096, ty, h, { size: 12.5, color: C.ink2 });
+    });
+    f.line(1074, 344, 1318, 344, { color: C.line, dash: [4, 5], sw: 1 });
+
+    f.text(1074, 376, 'Əlaqəli resurslar', { size: 14, weight: 700 });
+    [['istinad edir', 'UC-04 · Refund axını'], ['asılıdır', 'payment_tx'],
+     ['valideyn', 'UC-01 · Ödəniş axını']].forEach(function (r, k) {
+      var ry = 402 + k * 44;
+      f.text(1074, ry, r[0], { size: 9.5, color: C.faint });
+      f.text(1074, ry + 18, r[1], { size: 12.5 });
+    });
+    f.line(1074, 526, 1318, 526, { color: C.line, dash: [4, 5], sw: 1 });
+
+    f.text(1074, 556, 'Versiyalar', { size: 14, weight: 700 });
+    [['v4', '5 gün əvvəl', 'SƏ'], ['v3', '2 həftə əvvəl', 'RQ'], ['v2', '1 ay əvvəl', 'SƏ']].forEach(function (v, k) {
+      var vy = 590 + k * 32;
+      f.chip(1074, vy - 15, v[0], { h: 22, w: 34, size: 10.5 });
+      f.text(1120, vy, v[1], { size: 11.5 });
+      f.text(1318, vy, v[2], { size: 10.5, color: C.faint, anchor: 'end' });
+    });
+    f.line(1074, 684, 1318, 684, { color: C.line, dash: [4, 5], sw: 1 });
+
+    f.text(1074, 712, 'Şərhlər (2)', { size: 14, weight: 700 });
+    [['RQ', 'R. Quliyev · 2 gün əvvəl', 744], ['SƏ', 'S. Əliyeva · 1 gün əvvəl', 790]].forEach(function (c) {
+      f.av(1090, c[2], 8, c[0]);
+      f.text(1106, c[2] - 4, c[1], { size: 10, color: C.faint });
+      f.pline(1106, c[2] + 8, 190);
+    });
+
+    f.annoS(1, 412, 204);
+    f.annoS(2, 840, 336);
+    f.annoS(3, 1038, 224);
+    f.annoS(4, 1038, 566);
+  };
+
+  /* ======================= 8. RESURS — USE CASE ======================= */
   frames.doc = function (f) {
     WF.shell(f, { crumb: 'Bilik', active: 2 });
     knowledgeSidebar(f);
@@ -154,7 +262,7 @@
     f.annoS(3, 1040, 520);
   };
 
-  /* ====================== 8. DATA DICTIONARY ====================== */
+  /* ====================== 9. DATA DICTIONARY ====================== */
   frames.datadict = function (f) {
     WF.shell(f, { crumb: 'Bilik', active: 2 });
     knowledgeSidebar(f);
