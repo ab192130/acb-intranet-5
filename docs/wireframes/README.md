@@ -74,6 +74,18 @@ asılı deyil. Ortaq olan yalnız üç şeydir — `core.js` (çəkmə DSL-i), `
 Rəng, ikon dəsti, animasiya və real data **qəsdən yoxdur** — lo-fi mərhələsində
 bunlar müzakirəni yayındırır.
 
+## People kataloqu — kart şəbəkəsi
+
+Kataloq cədvəl deyil, kart axınıdır (Higgsfield-ın media-first feed patterni):
+kartın üst qatında avatar, şöbə və sistem statusu; altında ad, rol, "nə üçün
+yazmalı" və layihə komandası. Hover/fokusda kartın üzərində "Profil aç" və
+sürətli əməliyyat çıxır. Axtarış, "Hamısı" + "Rəqəmsallaşdırma", rol və
+sıralama tək sıradadır; bu səhifədə qlobal shell axtarışı gizlədilir ki, iki
+axtarış sahəsi olmasın.
+
+Cədvəl görünüşü qəsdən yoxdur: eyni məlumat kartda bir baxışda oxunur, sütun
+başlığı tələb etmir və dar ekrana birbaşa düşür.
+
 ## Annotasiya konvensiyası
 
 - `f.anno(n, x, y, tx, ty)` — böyük nömrə (r=11), istəyə bağlı dashed leader xətti ilə.

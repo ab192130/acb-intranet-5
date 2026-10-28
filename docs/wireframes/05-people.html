@@ -15,7 +15,6 @@
     <span class="ptitle">People</span>
     <span class="pager">
       <a href="04-knowledge.html">← Knowledge</a>
-
     </span>
   </nav>
 
@@ -23,17 +22,18 @@
   <section class="section">
     <div class="section-head">
       <span class="idx">05</span><h2>People</h2>
-      <span class="sub">şirkət kataloqu · iki qatlı dərinlik</span>
+      <span class="sub">şirkət kataloqu · kart axını</span>
     </div>
 
     <figure>
       <div class="frame-head"><span class="num">09</span><h3>Kataloq</h3>
-        <span class="purpose">68 nəfər şirkət, 20 nəfər departament — fərqli dərinlik</span></div>
+        <span class="purpose">Kart şəbəkəsi — şəxs = kart, tək toolbar</span></div>
       <svg class="frame" viewBox="0 0 1440 900" data-frame="people"></svg>
       <ol class="notes">
-        <li><b>İki qatlı dərinlik.</b> Şirkət üzrə nazik profil, departamentdə zəngin profil — hamıya eyni səviyyə yığmaq dayanılmaz yükdür.</li>
-        <li><b>"Nə üçün yazmalı".</b> Kataloqun dəyəri bio deyil, "kimə nə üçün müraciət etməli" sualına cavabdır.</li>
-        <li><b>Son aktivlik.</b> Kimin sistemdə olduğunu göstərir; 50 nəfərin hesabı olmaması problem kimi göstərilmir.</li>
+        <li><b>Cədvəl → kart.</b> Sütun başlığı və sətir zolağı yoxdur; hər şəxs bir kartdır. Ad, rol, şöbə və "nə üçün" bir baxışda oxunur.</li>
+        <li><b>Tək toolbar, iki şöbə çipi.</b> Axtarış, Hamısı ↔ Rəqəmsallaşdırma, rol və sıralama bir sıradadır; digər şöbələr kataloqda görünür.</li>
+        <li><b>Hover — hərəkət kartın üstündə.</b> "Profil aç" və sürətli əməliyyat yalnız hover/fokusda görünür; kartın özü keçiddir.</li>
+        <li><b>Hesabı olmayan şəxs neytraldır.</b> "Hesab yoxdur" xəbərdarlıq deyil — Person ≠ User; kataloqda qalır və işə təyin oluna bilər.</li>
       </ol>
     </figure>
 
@@ -59,7 +59,7 @@
 <script src="vendor/rough.js"></script>
 <script src="core.js"></script>
 <script>
-/* frames-d.js : People — kataloq + profil */
+/* 05 People — inline frames: kart kataloqu + profil */
 (function () {
   'use strict';
   var WF = window.WF, C = WF.C;
@@ -67,57 +67,89 @@
 
   /* =========================== 9. KATALOQ =========================== */
   frames.people = function (f) {
-    WF.shell(f, { crumb: 'İnsanlar', active: 3 });
+    WF.shell(f, { crumb: 'İnsanlar', active: 3, search: false });
 
-    f.text(100, 120, 'İnsanlar', { size: 28, weight: 700 });
+    /* title */
+    f.text(100, 122, 'İnsanlar', { size: 28, weight: 700 });
     f.chip(238, 98, '68', { h: 24, w: 42, size: 11.5 });
 
-    f.input(620, 96, 360, 'Ad, vəzifə, bacarıq axtar…', { h: 36 });
-    f.chip(1040, 100, 'Şöbə ▾', { h: 28, w: 88, size: 12 });
-    f.chip(1136, 100, 'Rol ▾', { h: 28, w: 74, size: 12 });
-    f.chip(1218, 100, 'Sistemdə aktiv', { h: 28, w: 122, size: 12 });
+    /* one toolbar: search + department (v1: all vs ours) + role | sort */
+    f.input(100, 148, 300, 'Ad, rol, bacarıq axtar…', { h: 32 });
 
-    /* two-tier scope: whole company vs department */
-    f.rrect(100, 148, 280, 32, 16, { fill: C.fill, stroke: C.line, rough: 0.7 });
-    f.rrect(100, 148, 140, 32, 16, { fill: C.ink, stroke: C.ink, rough: 0.7 });
-    f.text(170, 169, 'Şirkət 68', { size: 12, anchor: 'middle', color: C.white, weight: 700 });
-    f.text(310, 169, 'Departament 20', { size: 12, anchor: 'middle', color: C.ink2 });
+    f.chip(412, 148, 'Hamısı 68', { active: true, h: 32, w: 80, size: 11.5 });
+    f.chip(498, 148, 'Rəqəmsallaşdırma 18', { h: 32, w: 146, size: 11.5 });
+    f.chip(650, 148, 'Rol ▾', { h: 32, w: 64, size: 11.5 });
 
-    /* table */
-    f.rrect(100, 206, 1240, 504, 6, { fill: C.white });
-    var cols = [['Ad', 130], ['Vəzifə', 400], ['Şöbə', 620], ['Nə üçün yazmalı', 820], ['Layihə', 1096], ['Son aktiv', 1246]];
-    cols.forEach(function (c) { f.text(c[1], 240, c[0], { size: 11, color: C.faint, weight: 700 }); });
-    f.line(120, 252, 1320, 252, { color: C.ink2, sw: 1.4 });
+    /* sort sits at the right edge of the same row */
+    f.chip(1190, 148, 'Sırala: Əlifba ▾', { h: 32, w: 130, size: 11.5 });
 
-    var rows = [
-      ['BA', 'Burhan Ağazadə', 'burhan@acb.az', 'Product Engineer', 'Departament', 'Sistem sahibi, prioritetlər', '6', 'bu gün'],
-      ['SƏ', 'Sevil Əliyeva', 'sevil@acb.az', 'Project Lead', 'Ödəniş', 'Layihə statusu, bloklar', '3', '2 saat'],
-      ['AM', 'Anar Məmmədov', 'anar@acb.az', 'Departament rəhbəri', 'Departament', 'Təsdiq, büdcə, eskalasiya', '—', 'bu gün'],
-      ['NH', 'Nigar Həsənli', 'nigar@acb.az', 'QA Engineer', 'Ödəniş', 'Test, bug triaj', '2', 'dünən'],
-      ['RQ', 'Rəşad Quliyev', 'rashad@acb.az', 'Business Analyst', 'Data', 'Tələblər, use case', '2', 'dünən'],
-      ['EC', 'Elvin Cəfərov', 'elvin@acb.az', 'Backend Developer', 'Ödəniş', '3DS, gateway inteqrasiyası', '3', '3 gün'],
-      ['LN', 'Leyla Nəsirova', 'leyla@acb.az', 'Product Designer', 'Məhsul', 'UX, prototip, dizayn sistemi', '1', '5 gün'],
-      ['Tİ', 'Tural İsmayılov', 'tural@acb.az', 'DevOps', 'İnfra', 'Deploy, mühit, monitorinq', '1', '1 həftə']
+    var cardW = 290, cardH = 286, gap = 20, gridX = 100, gridY = 208;
+
+    function personCard(p, cx, cy) {
+      var team = p[5], hasAccount = p[8];
+
+      f.rrect(cx, cy, cardW, cardH, 8, { fill: C.white });
+
+      /* cover: avatar stands in for the photo, badges sit on top */
+      f.rrect(cx, cy, cardW, 120, 8, { fill: C.fill2, stroke: 'none', rough: 0.6 });
+      f.plainRect(cx, cy + 112, cardW, 8, C.fill2);
+
+      f.text(cx + 16, cy + 24, p[3], { size: 9, color: C.faint, ls: 1.3 });
+      if (hasAccount) {
+        f.dot(cx + cardW - 62, cy + 20, 2.8, C.accent);
+        f.text(cx + cardW - 16, cy + 24, 'sistemdə', { size: 9.5, color: C.ink2, anchor: 'end' });
+      } else {
+        f.text(cx + cardW - 16, cy + 24, 'hesab yoxdur', { size: 9.5, color: C.faint, anchor: 'end' });
+      }
+
+      f.av(cx + 44, cy + 70, 26, p[0]);
+
+      /* identity */
+      f.text(cx + 16, cy + 150, p[1], { size: 14.5, weight: 700 });
+      f.text(cx + 16, cy + 172, p[2], { size: 11.5, color: C.ink2 });
+      f.text(cx + 16, cy + 198, '“' + p[4] + '”', { size: 11.5 });
+
+      /* meta: project team + freshness */
+      f.line(cx + 16, cy + 218, cx + cardW - 16, cy + 218, { color: C.line, dash: [3, 5], sw: 1 });
+      if (team.length) {
+        var end = f.avstack(cx + 16, cy + 244, team, 8);
+        f.text(end + 4, cy + 248, p[6], { size: 10.5, color: C.ink2 });
+      } else {
+        f.text(cx + 16, cy + 248, '— layihə', { size: 10.5, color: C.faint });
+      }
+      f.text(cx + cardW - 16, cy + 248, p[7], { size: 10.5, color: C.faint, anchor: 'end' });
+    }
+
+    /* card = one person; 4×2 visible, the rest behind "load more" */
+    var people = [
+      ['BA', 'Burhan Ağazadə', 'Product Engineer', 'RƏQƏMSALLAŞDIRMA', 'Sistem sahibi, prioritetlər', ['SƏ', 'RQ', 'LN'], '6 layihə', 'bu gün', true],
+      ['SƏ', 'Sevil Əliyeva', 'Project Lead', 'ÖDƏNİŞ', 'Layihə statusu, bloklar', ['BA', 'NH', 'EC'], '3 layihə', '2 saat', true],
+      ['AM', 'Anar Məmmədov', 'Rəqəmsallaşdırma rəhbəri', 'RƏQƏMSALLAŞDIRMA', 'Təsdiq, büdcə, eskalasiya', [], '— layihə', 'bu gün', true],
+      ['NH', 'Nigar Həsənli', 'QA Engineer', 'ÖDƏNİŞ', 'Test, bug triaj', ['SƏ', 'EC'], '2 layihə', 'dünən', true],
+      ['RQ', 'Rəşad Quliyev', 'Business Analyst', 'DATA', 'Tələblər, use case', ['BA', 'LN'], '2 layihə', 'dünən', true],
+      ['EC', 'Elvin Cəfərov', 'Backend Developer', 'ÖDƏNİŞ', '3DS, gateway inteqrasiyası', ['SƏ', 'NH', 'Tİ'], '3 layihə', '3 gün', true],
+      ['LN', 'Leyla Nəsirova', 'Product Designer', 'MƏHSUL', 'UX, prototip, dizayn sistemi', ['BA'], '1 layihə', '5 gün', true],
+      ['AQ', 'Aysel Quliyeva', 'Mühasib', 'MALİYYƏ', 'Büdcə, hesab-faktura', [], '— layihə', 'kataloqda', false]
     ];
-    rows.forEach(function (r, k) {
-      var ty = 252 + k * 56;
-      f.av(148, ty + 28, 14, r[0]);
-      f.text(172, ty + 23, r[1], { size: 13 });
-      f.text(172, ty + 40, r[2], { size: 10, color: C.faint });
-      f.text(400, ty + 32, r[3], { size: 12, color: C.ink2 });
-      f.text(620, ty + 32, r[4], { size: 12, color: C.ink2 });
-      f.text(820, ty + 32, r[5], { size: 12 });
-      f.text(1096, ty + 32, r[6], { size: 12, color: C.ink2 });
-      f.text(1246, ty + 32, r[7], { size: 11.5, color: C.faint });
-      if (k < 7) f.line(120, ty + 56, 1320, ty + 56, { color: C.line, dash: [4, 6], sw: 1 });
+    people.forEach(function (p, i) {
+      personCard(p, gridX + (i % 4) * (cardW + gap), gridY + Math.floor(i / 4) * (cardH + gap));
     });
 
-    f.text(100, 744, '68 nəfər · 20 sistem istifadəçisi · kataloqu 2 nəfər saxlayır', { size: 11.5, color: C.faint });
-    f.text(1320, 744, '1  2  3  ›', { size: 12, color: C.ink2, anchor: 'end' });
+    /* hover state on card 2: border + actions replace the meta line */
+    var hx = gridX + cardW + gap, hy = gridY;
+    f.rrect(hx, hy, cardW, cardH, 8, { fill: 'none', stroke: C.accent, sw: 2.2 });
+    f.plainRect(hx + 6, hy + 230, cardW - 12, 46, C.white, 0.97);
+    f.btn(hx + 16, hy + 238, 120, 'Profil aç', { kind: 'primary', h: 30, size: 11.5 });
+    f.btn(hx + cardW - 48, hy + 238, 30, '···', { h: 30, size: 11.5 });
 
-    f.annoS(1, 392, 164);
-    f.annoS(2, 928, 234);
-    f.annoS(3, 1312, 234);
+    /* feed footer */
+    f.text(100, 842, '68 nəfər · 20 sistem istifadəçisi · kataloqu 2 nəfər saxlayır', { size: 11.5, color: C.faint });
+    f.btn(1154, 820, 166, 'Daha çox göstər', { h: 34, size: 12, kind: 'ghost' });
+
+    f.annoS(1, 86, 196);
+    f.annoS(2, 540, 192);
+    f.annoS(3, hx + cardW - 14, hy + 100);
+    f.annoS(4, 1228, 540);
   };
 
   /* ============================ 10. PROFİL ============================ */
@@ -127,7 +159,7 @@
     f.text(100, 94, '← İnsanlar', { size: 12, color: C.ink2 });
     f.av(150, 168, 38, 'BA');
     f.text(208, 158, 'Burhan Ağazadə', { size: 26, weight: 700 });
-    f.text(208, 184, 'Product Engineer · Departament', { size: 13.5, color: C.ink2 });
+    f.text(208, 184, 'Product Engineer · Rəqəmsallaşdırma', { size: 13.5, color: C.ink2 });
     f.chip(208, 196, 'Sistemdə aktiv', { h: 26, w: 122, size: 11.5 });
     f.chip(340, 196, '6 layihə', { h: 26, w: 82, size: 11.5 });
 

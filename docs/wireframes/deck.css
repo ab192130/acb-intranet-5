@@ -64,7 +64,7 @@
     .frame-head .purpose{display:none}
   }
 
-  /* ---- solo mode: index.html#board renders one frame, full-bleed (PNG export) ---- */
+/* ---- solo mode: 02-projects.html#board, 05-people.html#person, ... ---- */
   body.solo{background:#fbfaf5}
   body.solo .wrap{padding:0; max-width:none}
   body.solo .cover, body.solo .principles, body.solo .section-head, body.solo .outro{display:none}
