@@ -1,6 +1,6 @@
 # Layihə Overview — ssenari kataloqu
 
-> **Status:** Approved · D1–D8 və V1 təsdiqləndi; vayrfreym növbəti
+> **Status:** In wireframe · 2/7 (default + inline edit)
 >
 > **Konteks:** ACB Intranet → Projects → Layihə səhifəsi → **Overview** tabı
 >
@@ -54,14 +54,14 @@ health isə icranın **törəyən sağlamlıq siqnalıdır**.
 | Ölçü | Nədir | Dəyərlər | Kim dəyişir |
 |---|---|---|---|
 | **Status** | Layihənin həyat dövrü | `Qaralama`, `Aktiv`, `Dayandırılıb`, `Bitdi`, `Arxivlənib` | Owner/Lead (əl ilə) |
-| **Health** | İcranın sağlamlığı | `Yaxşı`, `Diqqət`, `Riskdə`, `Bloklanıb` | Sistem (törəyən) |
+| **Health** | İcranın sağlamlığı | `Sağlam`, `Diqqət`, `Riskdə`, `Bloklanıb` | Sistem (törəyən) |
 
 **Törəmə qaydaları (təklif):**
 
 - `Bloklanıb` — ən azı bir kritik/yüksək prioritetli iş bloklanıb.
 - `Riskdə` — gecikmiş milestone, yüksək risk siqnalı və ya işlərin 30%+ hissəsi bloklanıb.
 - `Diqqət` — 14 gün aktivlik yoxdur və ya milestone 7 günə yaxınlaşır.
-- `Yaxşı` — heç bir siqnal yoxdur.
+- `Sağlam` — heç bir siqnal yoxdur.
 - `Bitdi` / `Arxivlənib` halında health göstərilmir.
 - Hər siqnalın səbəbi görünməlidir: “2 iş bloklanıb”, “1 milestone gecikib”, “14 gün aktivlik yoxdur”.
 
@@ -104,7 +104,7 @@ health isə icranın **törəyən sağlamlıq siqnalıdır**.
 | [U3](#u3) | Məqsədləri anlamaq | Orientasiya | P0 | Bəli | Təsdiq gözləyir |
 | [U4](#u4) | Alt layihələri görmək | Orientasiya | P0 | Bəli | Təsdiq gözləyir |
 | [U5](#u5) | Komandanı tanımaq | Orientasiya | P0 | Bəli | Təsdiq gözləyir |
-| [U6](#u6) | İcmalı redaktə etmək | Məzmun | P0 | Bəli | Təsdiq gözləyir |
+| [U6](#u6) | İcmalı inline redaktə etmək | Məzmun | P0 | Bəli | In wireframe |
 | [U7](#u7) | Məqsədləri redaktə etmək — U6-ya birləşdi | Məzmun | P1 | Xeyr | Birləşdirildi |
 | [U8](#u8) | Bloklanmanı qeyd etmək | Məzmun | P1 | Bəli | Təsdiq gözləyir |
 | [U9](#u9) | Üzv əlavə etmək / rol dəyişmək | Komanda | P1 | Bəli | Təsdiq gözləyir |
@@ -176,7 +176,7 @@ layihə adı dəyişib, link köhnə adla gəlir.
 **Əsas axın:**
 
 1. Lifecycle status göstərilir: `Aktiv`, `Dayandırılıb`, `Bitdi`, `Arxivlənib`.
-2. Health ayrı göstərilir: `Yaxşı`, `Diqqət`, `Riskdə`, `Bloklanıb`.
+2. Health ayrı göstərilir: `Sağlam`, `Diqqət`, `Riskdə`, `Bloklanıb`.
 3. Progress work item və alt layihələrdən hesablanır.
 4. Növbəti milestone və açıq / bloklanmış iş sayı görünür.
 5. Health siqnalının səbəbi göstərilir.
@@ -298,35 +298,37 @@ bilmək.
 
 <a id="u6"></a>
 
-#### U6 — İcmalı redaktə etmək
+#### U6 — İcmalı inline redaktə etmək
 
-**Aktyor:** Owner / Lead · **Prioritet:** P0 · **Status:** Təsdiq gözləyir
+**Aktyor:** Owner / Lead · **Prioritet:** P0 · **Status:** In wireframe
 
-**Vayrfreym:** [project](../wireframes/02-projects.html#project)
+**Vayrfreym:** [project-edit](../wireframes/02-projects.html#project-edit)
 
-**Məqsəd:** Layihənin təsvirini, scope-unu və məqsədlərini yeniləmək.
+**Məqsəd:** Layihənin təsvirini və məqsədlərini yerində, modal açmadan yeniləmək.
 
-**Tetik:** “Redaktə” hərəkəti.
+**Tetik:** Təsvir və ya məqsədlər mətninə klik / fokus.
 
 **Əsas axın:**
 
-1. İstifadəçi “Redaktə”yə basır.
-2. Başlıq, təsvir, məqsədlər redaktə olunan vəziyyətə keçir (inline və ya panel).
-3. “Yadda saxla” / “Ləğv et” görünür.
-4. Yadda saxlananda versiya snapshot-u yaranır.
-5. Dəyişiklik fəaliyyət lentinə düşür.
+1. İstifadəçi mətnə klikləyir; həmin blok inline editora çevrilir.
+2. Təsvir markdown textarea; məqsədlər ayrıca sərbəst mətn textarea-sı olur.
+3. Yazarkən 800ms debounce ilə autosave; status “Yadda saxlanılır…” göstərir.
+4. Blur dərhal saxlayır; Esc son saxlanmış vəziyyətə qaytarır; ⌘/Ctrl+Enter dərhal saxlayır.
+5. Save versiya snapshot-u və activity yazısı yaradır.
 
 **Ekran tələbləri:**
 
-- Redaktə rejimi aydın görünməlidir (border/fon).
-- Sahələr: başlıq, qısa təsvir, məqsədlər, scope.
-- Saxlamadan çıxmaq istəyəndə xəbərdarlıq.
-- “Redaktə et” ikinci dərəcəli hərəkətdir; primary — `Work item yarat`.
-- Viewer/Owner olmayan üçün “Redaktə” görünmür.
+- Modal/panel yoxdur; layout jump minimaldır.
+- Toolbar: B / I / link / list (təsvir üçün).
+- Focus ring, caret və placeholder.
+- Autosave statusu: “Yadda saxlanılır…” → “Yadda saxlanıldı”; xəta inline.
+- Yalnız Owner/Lead; Viewer read-only.
+- “Redaktə” düyməsi yoxdur; mətnin özü editordur.
 
-**Data:** `Project`, `Project.goals`, `Version`, `Activity`.
+**Data:** `Project.about`, `Project.goals`, `Version`, `Activity`.
 
-**Kənar hallar:** paralel redaktə; şəbəkə xətası; boş başlıq; uzun mətn; icazə itkisi.
+**Kənar hallar:** debounce zamanı səhifədən çıxma; save xətası; paralel redaktə;
+boş sahə; uzun mətn; icazə itkisi.
 
 ---
 
@@ -759,16 +761,20 @@ Mövcud [Layihə icmalı](../wireframes/02-projects.html#project) freymində ola
 
 | # | Vayrfreym / vəziyyət | Ssenarilər | Nə göstərir |
 |---|---|---|---|
-| 1 | **Overview — default** | U1–U5, U11–U13 | Dolu layihə; status + health, progress, məqsədlər, alt layihələr, komanda, fəaliyyət, növbəti milestone |
+| 1 | **Overview — default** | U1–U5, U11–U13 | Dolu layihə; status + health, progress, növbəti milestone, məqsədlər, alt layihələr, komanda, resurs xülasəsi, fəaliyyət |
 | 2 | **Overview — riskdə** | U2, U8, U18 | Törəyən health səbəbi, bloklanmış işlər, risk banneri |
 | 3 | **Overview — boş** | U16 | 3 addımlı onboarding checklist |
-| 4 | **İcmal redaktə paneli** | U6 | Inline/panel redaktə, save/cancel, versiya |
+| 4 | **Layihə haqqında — inline redaktə** | U6 | Inline textarea + toolbar + autosave debounce; Esc/⌘Enter |
 | 5 | **Komanda və rollar paneli** | U9 | Üzv axtarışı, rol dəyişmə, çıxarma |
 | 6 | **Read-only Viewer** | U17 | Gizlədilmiş/deaktiv hərəkətlər, səbəb izahı |
 | 7 | **Quick create work item** | U11 | Default üzərində modal; kontekst əvvəlcədən dolu |
 
 > Təklif: 1, 3, 4, 6, 7 mütləq; 2 və 5 ikinci dövrədə. Bu, 6–7 freymlə Overview-ı
 > tam əhatə edir.
+
+**Tətbiq:** 1 — [Overview default](../wireframes/02-projects.html#project),
+4 — [inline redaktə](../wireframes/02-projects.html#project-edit) çəkildi (29 oktyabr 2026).
+Qalan freymlər növbəti.
 
 ---
 
@@ -778,7 +784,7 @@ Mövcud [Layihə icmalı](../wireframes/02-projects.html#project) freymində ola
 
 | # | Sual | Variantlar | Təklif | Təsdiq |
 |---|---|---|---|---|
-| D1 | Status modeli | Tək status və ya status + health | **Təsdiqləndi:** lifecycle statusu (`Qaralama / Aktiv / Dayandırılıb / Bitdi / Arxivlənib`) + ayrı health (`Yaxşı / Diqqət / Riskdə / Bloklanıb`) | ✅ |
+| D1 | Status modeli | Tək status və ya status + health | **Təsdiqləndi:** lifecycle statusu (`Qaralama / Aktiv / Dayandırılıb / Bitdi / Arxivlənib`) + ayrı health (`Sağlam / Diqqət / Riskdə / Bloklanıb`) | ✅ |
 | D2 | Progress | Əl ilə % və ya işlərdən avtomatik | **Təsdiqləndi:** work item + alt layihələrdən avtomatik | ✅ |
 | D3 | Məqsədlər | Sərbəst mətn və ya ayrıca obyekt | **Təsdiqləndi:** sərbəst mətn | ✅ |
 | D4 | Risk | Ayrıca risk və ya bloklanmış işdən törəmə | **Təsdiqləndi:** törəyən (bloklanmış iş / gecikmiş milestone) | ✅ |
@@ -786,9 +792,10 @@ Mövcud [Layihə icmalı](../wireframes/02-projects.html#project) freymində ola
 | D6 | Primary action | `Work item yarat` və ya `İcmalı redaktə et` | **Təsdiqləndi:** `Work item yarat`; redaktə ikinci dərəcəli | ✅ |
 | D7 | Viewer read-only | V1-də və ya sonra | **Təsdiqləndi:** V1-də ayrıca vəziyyət | ✅ |
 | D8 | Versiya müqayisəsi | Ayrıca route və ya full-screen modal | **Təsdiqləndi:** v1 full-screen modal/drawer; ayrıca route sonra | ✅ |
+| D9 | İcmal redaktəsi | Panel vs inline | **Təsdiqləndi:** inline; autosave debounce 800ms; Esc ləğv; ⌘/Ctrl+Enter save | ✅ |
 
-**D1–D8 bağlandı.** Status/health modeli və versiya səthi təsdiqləndi. V1 vayrfreymləri
-üçün son addım: ssenari siyahısı və V1 dəstinin təsdiqi.
+**D1–D9 bağlandı.** Status/health modeli, inline redaktə və versiya səthi təsdiqləndi.
+V1 vayrfreymləri üçün əsas hazırdır.
 
 ### 7.1 Versiya müqayisəsi — “ayrıca ekran” nə deməkdir?
 
@@ -813,5 +820,6 @@ Mövcud [Layihə icmalı](../wireframes/02-projects.html#project) freymində ola
 - [x] V1 dəsti (1, 3, 4, 6, 7 + 2, 5) uyğundur.
 - [x] Status + health iki ayrı ox kimi təsdiqləndi.
 - [x] Versiya müqayisəsi səthi seçildi (modal vs ayrıca səhifə).
-- [x] D1–D8 qərarları bağlanıb.
+- [x] D1–D9 qərarları bağlanıb.
+- [x] İnline redaktə + autosave debounce təsdiqləndi.
 - [ ] Vayrfreym çəkməyə başlayaq.

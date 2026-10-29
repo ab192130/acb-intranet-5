@@ -6,6 +6,13 @@
 <title>ACB Intranet — Projects · lo-fi</title>
 <link rel="stylesheet" href="vendor/kalam.css">
 <link rel="stylesheet" href="deck.css">
+<style>
+  .state-tag{font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--accent)}
+  .state-notes{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 36px}
+  .state-notes li{font-size:13.5px;color:var(--ink2);line-height:1.45}
+  .state-notes b{color:var(--ink)}
+  @media (max-width:860px){.state-notes{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -28,14 +35,29 @@
 
     <figure>
       <div class="frame-head"><span class="num">03</span><h3>Layihə icmalı</h3>
-        <span class="purpose">Hər layihənin öz overview, komanda və fəaliyyət qatı</span></div>
+        <span class="purpose">Status + health, progress, milestone, komanda və fəaliyyət qatı</span></div>
       <svg class="frame" viewBox="0 0 1440 900" data-frame="project"></svg>
       <ol class="notes">
         <li><b>Nested layihələr ağacda.</b> Alt layihə gizlədilmir — dərinlik vizual olaraq görünür (bənd 2).</li>
         <li><b>Owner və Lead ayrıdır.</b> Owner məsuliyyət, Lead icra — eyni adam ola bilər, anlayış fərqlidir (bənd 5).</li>
         <li><b>Alt layihələr kart kimi.</b> İrəliləyiş + komanda bir baxışda; içinə girmədən vəziyyət oxunur.</li>
         <li><b>Fəaliyyət + versiya.</b> Snapshot işarələri generic audit qatından gəlir, hər modula ayrıca yazılmır (bənd 12).</li>
+        <li><b>Status və health ayrıdır.</b> Status lifecycle-dir (Aktiv); health törəyən siqnaldır (Sağlam). Növbəti milestone ayrıca göstərilir; Bitdi + Bloklanıb kimi ziddiyyət yaranmır.</li>
+        <li><b>Resurslar sağ relsdə.</b> Üç tip (sənəd, use case, data dictionary) xülasə kimi; tam siyahı Resources tabındadır.</li>
+        <li><b>Layihə haqqında inline redaktə olunur.</b> Mətnə klik → textarea; autosave debounce 800ms. Edit state: <code>03b</code>.</li>
       </ol>
+    </figure>
+
+    <figure>
+      <div class="frame-head"><span class="state-tag">03b</span><h3>Layihə icmalı — inline redaktə</h3>
+        <span class="purpose">Klik → inline editor · autosave debounce 800ms</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="project-edit"></svg>
+      <ul class="state-notes">
+        <li><b>Inline redaktə.</b> Modal/panel yoxdur; təsvir və məqsədlər yerində textarea olur, layout jump minimaldır.</li>
+        <li><b>Autosave debounce.</b> Yazarkən 800ms gözləyir; blur dərhal saxlayır. Status “Yadda saxlanılır…” → “Yadda saxlanıldı”.</li>
+        <li><b>Esc / ⌘Enter.</b> Esc son saxlanmış vəziyyətə qaytarır; ⌘/Ctrl+Enter dərhal saxlayır.</li>
+        <li><b>İcazə və versiya.</b> Yalnız Owner/Lead; hər save versiya snapshot-u və activity yazısı yaradır.</li>
+      </ul>
     </figure>
 
     <figure>
@@ -103,88 +125,137 @@
   }
 
   /* ========================= 3. LAYİHƏ İCMALI ========================= */
-  frames.project = function (f) {
+  function projectView(f, editing) {
     WF.shell(f, { crumb: 'Layihələr', active: 1 });
     projectSidebar(f);
 
     f.text(348, 90, 'Layihələr / Ödəniş gateway', { size: 12, color: C.faint });
     f.text(348, 134, 'Ödəniş gateway', { size: 30, weight: 700 });
-    f.chip(596, 112, 'Aktiv', { h: 26, w: 68, size: 12 });
+    WF.ui.badge(f, 596, 112, 'Aktiv', { h: 26, w: 70, fs: 11.5, variant: 'secondary' });
+    WF.ui.badge(f, 678, 112, 'Sağlam', { h: 26, w: 64, fs: 11.5, variant: 'outline' });
     f.btn(1146, 100, 194, 'Work item yarat', { kind: 'primary', h: 40 });
-    f.text(1324, 126, '···', { size: 18, color: C.ink2 });
+    f.text(1356, 126, '···', { size: 18, color: C.ink2, anchor: 'middle' });
 
-    /* owner vs lead — two different accountabilities */
+    /* context row — owner, lead, members, freshness */
     f.av(356, 174, 10, 'AM');
     f.text(372, 179, 'Owner · A. Məmmədov', { size: 12.5, color: C.ink2 });
     f.av(566, 174, 10, 'SƏ');
     f.text(582, 179, 'Lead · S. Əliyeva', { size: 12.5, color: C.ink2 });
-    f.text(790, 179, '12 üzv', { size: 12.5, color: C.ink2 });
-    f.text(880, 179, 'Yenilənib 2 saat əvvəl', { size: 12, color: C.faint });
+    f.text(710, 179, '12 üzv', { size: 12.5, color: C.ink2 });
+    f.text(800, 179, 'Yenilənib 2 saat əvvəl', { size: 12, color: C.faint });
 
     /* tabs — shadcn Tabs (WF.ui) */
     WF.ui.tabs(f, 348, 192, ['Overview', 'Resources', 'Works'], 0, { itemPad: 16 });
 
-    /* overview */
-    f.card(348, 232, 660, 220, 'İcmal', 'Redaktə');
-    f.plines(368, 272, 610, 3, 22);
-    f.text(368, 346, 'Məqsədlər', { size: 13, weight: 700 });
-    [['3DS 2.0 axınını 4 həftədə tamamlamaq', 370], ['Refund SLA-nı 48 → 24 saata endirmək', 394]].forEach(function (g) {
-      f.dot(372, g[1] - 4, 2.6, C.faint);
-      f.text(384, g[1], g[0], { size: 12.5, color: C.ink2 });
-    });
+    /* pulse strip — progress, metrics, next milestone: bir dəfə */
+    f.rrect(348, 252, 660, 88, 8, { fill: C.fill, stroke: C.line, rough: 0.8 });
+    f.text(368, 274, 'PROGRESS', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    WF.ui.progress(f, 368, 284, 220, 0.46, { h: 8 });
+    f.text(596, 290, '46%', { size: 11.5, color: C.ink2 });
+    f.text(368, 312, '8 açıq · 0 bloklanmış · 14 bitmiş', { size: 11.5, color: C.ink2 });
+    f.line(620, 266, 620, 334, { color: C.line, sw: 1, dash: [3, 4] });
+    f.text(644, 274, 'NÖVBƏTİ MILESTONE', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    f.text(644, 298, '3DS keçidi', { size: 13.5, weight: 700 });
+    f.text(644, 320, '5 noy · 7 gün qalıb', { size: 11.5, color: C.ink2 });
+    f.text(988, 298, 'Bax →', { size: 11.5, color: C.accent, weight: 700, anchor: 'end' });
 
-    /* nested projects */
-    f.card(348, 468, 660, 206, 'Alt layihələr (2)', '+ Alt layihə');
+    /* about the project — inline editing (Linear model) */
+    if (editing) {
+      f.card(348, 364, 660, 196, 'Layihə haqqında');
+      f.text(988, 390, 'Yadda saxlanılır… · 800ms', { size: 11, color: C.ink2, anchor: 'end' });
+      [['B', 368], ['I', 398], ['↗', 428], ['≡', 458]].forEach(function (t) {
+        f.rrect(t[1], 404, 24, 20, 4, { fill: C.white, stroke: C.line, sw: 1, rough: 0.6 });
+        f.text(t[1] + 12, 418, t[0], { size: 11, weight: 700, anchor: 'middle' });
+      });
+      f.rrect(368, 430, 610, 42, 5, { fill: C.white, stroke: C.ink, sw: 1.1, rough: 0 });
+      f.text(380, 450, '3DS 2.0 keçidi və refund axınının', { size: 12.5, color: C.ink2 });
+      f.text(380, 468, 'modernləşdirilməsi.', { size: 12.5, color: C.ink2 });
+      f.text(368, 488, 'Məqsədlər', { size: 13, weight: 700 });
+      f.rrect(368, 496, 610, 34, 5, { fill: C.white, stroke: C.line, sw: 1.1, rough: 0 });
+      f.text(380, 518, '3DS 2.0 axınını 4 həftədə tamamlamaq; refund SLA-nı 48 → 24 saata endirmək.', { size: 12.5, color: C.ink2 });
+      f.text(368, 546, 'Esc — ləğv et · ⌘/Ctrl + Enter — yadda saxla', { size: 11, color: C.faint });
+    } else {
+      f.card(348, 364, 660, 160, 'Layihə haqqında');
+      f.plines(368, 416, 610, 2, 20);
+      f.text(368, 468, 'Məqsədlər', { size: 13, weight: 700 });
+      f.text(368, 490, '3DS 2.0 axınını 4 həftədə tamamlamaq', { size: 12.5, color: C.ink2 });
+      f.text(368, 512, 'Refund SLA-nı 48 → 24 saata endirmək', { size: 12.5, color: C.ink2 });
+    }
+
+    var altY = editing ? 584 : 548;
+    var teamY = editing ? 804 : 768;
+
+    /* nested projects — progress alt layihələrdən roll-up */
+    f.card(348, altY, 660, 196, 'Alt layihələr (2)', '+ Alt layihə');
     [['3DS inteqrasiyası', 0.62, '3 açıq iş', ['SƏ', 'BA', 'NH'], 368],
      ['Risk modeli', 0.30, '5 açıq iş', ['RQ', 'AM', 'EC'], 684]].forEach(function (p) {
-      var bx = p[4], by = 506;
+      var bx = p[4], by = altY + 38;
       f.rrect(bx, by, 300, 142, 5, { fill: C.fill, stroke: C.line, rough: 0.8 });
       f.text(bx + 16, by + 28, p[0], { size: 13.5, weight: 700 });
-      f.rrect(bx + 16, by + 44, 268, 8, 4, { fill: C.fill2, stroke: 'none', rough: 0.5 });
-      f.rrect(bx + 16, by + 44, 268 * p[1], 8, 4, { fill: C.ink2, stroke: 'none', rough: 0.5 });
+      WF.ui.progress(f, bx + 16, by + 44, 268, p[1], { h: 8 });
       f.text(bx + 16, by + 74, p[2], { size: 11.5, color: C.ink2 });
       f.avstack(bx + 16, by + 106, p[3], 10);
     });
 
-    /* members */
-    f.card(348, 690, 660, 170, 'Üzvlər (12)', 'İdarə et');
-    var mem = [['AM', 'A. Məmmədov', 'Owner'], ['SƏ', 'S. Əliyeva', 'Lead'],
-               ['BA', 'B. Ağazadə', 'Dev'], ['NH', 'N. Həsənli', 'QA'],
-               ['RQ', 'R. Quliyev', 'BA'], ['EC', 'E. Cəfərova', 'Dev'],
-               ['Tİ', 'T. İsmayılov', 'Dev'], ['LN', 'L. Nəsirova', 'Design']];
-    mem.forEach(function (m, i) {
-      var bx = 368 + (i % 4) * 160, by = 724 + Math.floor(i / 4) * 44;
+    /* compact team — progressive disclosure */
+    f.card(348, teamY, 660, 84, 'Komanda', 'Hamısı →');
+    [['AM', 'A. Məmmədov', 'Owner'], ['SƏ', 'S. Əliyeva', 'Lead'],
+     ['BA', 'B. Ağazadə', 'Dev']].forEach(function (m, i) {
+      var bx = 368 + i * 160, by = teamY + 40;
       f.rrect(bx, by, 150, 32, 16, { fill: C.fill, stroke: C.line, rough: 0.7 });
       f.av(bx + 18, by + 16, 9, m[0]);
       f.text(bx + 32, by + 21, m[1], { size: 11 });
       f.text(bx + 138, by + 21, m[2], { size: 9.5, color: C.faint, anchor: 'end' });
     });
+    f.text(850, teamY + 61, '+9 nəfər', { size: 11.5, color: C.ink2 });
 
-    /* activity + version */
-    f.rrect(1032, 232, 308, 628, 6, { fill: C.white });
-    f.text(1056, 262, 'Fəaliyyət', { size: 15, weight: 700 });
-    f.chip(1212, 242, 'Versiya 12', { h: 24, w: 106, size: 11 });
+    /* right rail — grouped activity + resources */
+    f.rrect(1032, 252, 308, 528, 6, { fill: C.white });
+    f.text(1056, 294, 'Fəaliyyət', { size: 15, weight: 700 });
+    f.chip(1204, 274, 'Versiya 12 ›', { h: 24, w: 116, size: 10.5 });
+    f.chip(1056, 318, 'Hamısı', { active: true, h: 22, w: 60, size: 10 });
+    f.chip(1124, 318, 'İşlər', { h: 22, w: 50, size: 10 });
+    f.chip(1182, 318, 'Resurslar', { h: 22, w: 72, size: 10 });
+
+    f.text(1056, 358, 'BU GÜN', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    f.text(1056, 468, 'DÜNƏN', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    f.text(1056, 578, '2 GÜN ƏVVƏL', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+
     var act = [
-      ['SƏ', 'ACB-142 → İcrada', '2 saat əvvəl'],
-      ['BA', '3DS sənədi yeniləndi (v7)', '4 saat əvvəl'],
-      ['RQ', 'Yeni resurs: UC-04', 'dünən'],
-      ['AM', 'Alt layihə: Risk modeli', 'dünən'],
-      ['NH', 'ACB-151-ə şərh', '2 gün əvvəl'],
-      ['··', 'Versiya 12 snapshot', '2 gün əvvəl']
+      [380, 'SƏ', 'ACB-142 → İcrada', '2 saat əvvəl'],
+      [424, 'BA', 'İcmal yeniləndi (v4)', '4 saat əvvəl'],
+      [490, 'RQ', 'Yeni resurs: UC-04', 'dünən'],
+      [534, 'AM', 'Milestone: 3DS keçidi', 'dünən'],
+      [600, 'NH', 'ACB-151-ə şərh', '2 gün əvvəl'],
+      [644, '··', 'Versiya 12 snapshot', '2 gün əvvəl']
     ];
-    act.forEach(function (a, k) {
-      var ay = 294 + k * 92;
-      f.av(1062, ay, 11, a[0]);
-      f.text(1082, ay + 4, a[1], { size: 12.5 });
-      f.text(1082, ay + 24, a[2], { size: 10.5, color: C.faint });
+    act.forEach(function (a) {
+      f.av(1062, a[0], 11, a[1]);
+      f.text(1082, a[0] + 4, a[2], { size: 12.5 });
+      f.text(1082, a[0] + 20, a[3], { size: 10.5, color: C.faint });
     });
-    f.text(1056, 848, 'Hamısı →', { size: 12, color: C.accent, weight: 700 });
+    f.text(1056, 684, 'Hamısı →', { size: 12, color: C.accent, weight: 700 });
 
-    f.anno(1, 88, 141);
-    f.anno(2, 532, 152, 556, 172);
-    f.anno(3, 1020, 500, 986, 520);
-    f.anno(4, 1020, 214, 1204, 252);
-  };
+    f.line(1056, 706, 1318, 706, { color: C.line, sw: 1 });
+    f.text(1056, 726, 'Resurslar', { size: 14, weight: 700 });
+    f.text(1318, 725, 'Resurslar →', { size: 11, color: C.accent, weight: 700, anchor: 'end' });
+    f.text(1056, 754, 'Sənəd 8', { size: 11.5, color: C.ink2 });
+    f.text(1130, 754, 'Use case 4', { size: 11.5, color: C.ink2 });
+    f.text(1220, 754, 'Data dict. 3', { size: 11.5, color: C.ink2 });
+
+    if (!editing) {
+      f.anno(1, 88, 141);
+      f.anno(2, 532, 152, 556, 172);
+      f.anno(3, 1020, 500, 986, 590);
+      f.anno(4, 1020, 214, 1204, 272);
+      f.annoS(5, 772, 100);
+      f.annoS(6, 1020, 726);
+      f.annoS(7, 980, 384);
+    }
+  }
+
+  frames.project = function (f) { projectView(f, false); };
+  frames['project-edit'] = function (f) { projectView(f, true); };
 
   /* ============================ 4. BOARD ============================ */
   frames.board = function (f) {

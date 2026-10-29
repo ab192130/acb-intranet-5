@@ -7,13 +7,13 @@ vayrfreymlər üçün mənbədir: əvvəl ssenari razılaşdırılır, sonra ekr
 
 | Sənəd | Əhatə | Status |
 |---|---|---|
-| [Layihə Overview — ssenari kataloqu](project-overview.md) | U1–U19, mövcud vayrfreym boşluqları, V1 təklifi və D1–D8 qərarları | **Approved** — D1–D8 və V1 təsdiqləndi; vayrfreym növbəti |
+| [Layihə Overview — ssenari kataloqu](project-overview.md) | U1–U19, mövcud vayrfreym boşluqları, V1 təklifi və D1–D9 qərarları | **In wireframe** — 2/7 (default + inline edit) |
 
 ## Sürətli keçidlər
 
 - [Ssenari indeksi](project-overview.md#scenarios)
 - [V1 təklifi](project-overview.md#v1)
-- [Qərarlar (D1–D8)](project-overview.md#decisions)
+- [Qərarlar (D1–D9)](project-overview.md#decisions)
 - [Təsdiq yoxlaması](project-overview.md#next)
 
 ## Əlaqəli
