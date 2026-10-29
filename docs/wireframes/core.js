@@ -247,6 +247,8 @@
     s = s || 5;
     if (dir === 'right') this.line(x - s / 2, y - s, x + s / 2, y, { color: C.ink2, sw: 1.3 }),
       this.line(x + s / 2, y, x - s / 2, y + s, { color: C.ink2, sw: 1.3 });
+    else if (dir === 'up') this.line(x - s, y + s / 2, x, y - s / 2, { color: C.ink2, sw: 1.3 }),
+      this.line(x, y - s / 2, x + s, y + s / 2, { color: C.ink2, sw: 1.3 });
     else this.line(x - s, y - s / 2, x, y + s / 2, { color: C.ink2, sw: 1.3 }),
       this.line(x, y + s / 2, x + s, y - s / 2, { color: C.ink2, sw: 1.3 });
   };
@@ -330,10 +332,328 @@
     f.av(1346, 30, 13, 'BA');
   }
 
+  /* ---- shadcn-style component layer, drawn with the same rough.js DSL ----
+     All geometry is crisp (rough:0); copy stays Kalam. The layer is opt-in:
+     existing lo-fi frames keep using the primitives above. */
+  var UI = {};
+
+  UI.C = {
+    bg: C.white, fg: C.ink, muted: C.fill, mutedFg: C.ink2, border: C.line,
+    primary: C.ink, primaryFg: C.white, destructive: C.accent, destructiveFg: C.white,
+    ring: C.faint
+  };
+
+  UI.label = function (f, x, y, text) {
+    f.text(x, y, String(text).toUpperCase(), { size: 10.5, weight: 700, color: C.faint, ls: 1.2 });
+  };
+
+  UI.button = function (f, x, y, w, label, o) {
+    o = o || {};
+    var h = o.h || (o.size === 'sm' ? 32 : o.size === 'lg' ? 40 : 36);
+    var fs = o.fs || (o.size === 'sm' ? 12 : o.size === 'lg' ? 13.5 : 13);
+    var v = o.variant || 'default';
+    var fill = UI.C.primary, stroke = UI.C.primary, color = UI.C.primaryFg;
+    if (v === 'secondary') { fill = C.fill; stroke = C.fill; color = C.ink; }
+    else if (v === 'outline') { fill = 'none'; stroke = C.line; color = C.ink; }
+    else if (v === 'ghost') { fill = 'none'; stroke = 'none'; color = C.ink; }
+    else if (v === 'destructive') { fill = UI.C.destructive; stroke = UI.C.destructive; color = UI.C.destructiveFg; }
+    else if (v === 'link') { fill = 'none'; stroke = 'none'; color = C.ink; }
+    if (o.disabled) { fill = C.fill; stroke = C.line; color = C.faint; }
+    if (v !== 'link' && v !== 'ghost') f.rrect(x, y, w, h, 6, { fill: fill, stroke: stroke, sw: 1.1, rough: 0.8 });
+    f.text(x + w / 2, y + h / 2 + fs * 0.36, label, {
+      size: fs, weight: 700, anchor: 'middle', color: color
+    });
+    if (v === 'link') {
+      var lw = tw(label, fs);
+      f.line(x + (w - lw) / 2, y + h - 4, x + (w + lw) / 2, y + h - 4, { color: o.disabled ? C.faint : C.ink, sw: 1.1 });
+    }
+    if (o.focus) f.rrect(x - 3, y - 3, w + 6, h + 6, 8, {
+      fill: 'none', stroke: C.faint, sw: 1.2, dash: [3, 3], rough: 0.8
+    });
+    return { w: w, h: h };
+  };
+
+  UI.badge = function (f, x, y, label, o) {
+    o = o || {};
+    var v = o.variant || 'default', h = o.h || 22, fs = o.fs || 10.5;
+    var w = o.w || (tw(label, fs) + 20);
+    var fill = UI.C.primary, stroke = UI.C.primary, color = UI.C.primaryFg;
+    if (v === 'secondary') { fill = C.fill; stroke = C.fill; color = C.ink2; }
+    else if (v === 'outline') { fill = 'none'; stroke = C.line; color = C.ink2; }
+    else if (v === 'destructive') { fill = UI.C.destructive; stroke = UI.C.destructive; color = UI.C.destructiveFg; }
+    f.rrect(x, y, w, h, h / 2, { fill: fill, stroke: stroke, sw: 1, rough: 0.8 });
+    f.text(x + w / 2, y + h / 2 + fs * 0.36, label, {
+      size: fs, weight: 700, anchor: 'middle', color: color
+    });
+    return w;
+  };
+
+  UI.input = function (f, x, y, w, o) {
+    o = o || {};
+    var h = o.h || 36, fs = o.fs || 12.5, top = y;
+    if (o.label) { f.text(x, y + 12, o.label, { size: 12, weight: 700 }); top = y + 24; }
+    f.rrect(x, top, w, h, 6, {
+      fill: C.white, stroke: o.error ? C.accent : C.line, sw: 1.1, rough: 0.8
+    });
+    var val = o.value != null ? o.value : (o.placeholder || '');
+    f.text(x + 12, top + h / 2 + fs * 0.36, val, {
+      size: fs, color: o.value != null ? C.ink : C.faint
+    });
+    if (o.hint) f.text(x, top + h + 16, o.hint, { size: 11, color: o.error ? C.accent : C.faint });
+    return top + h + (o.hint ? 24 : 0) - y;
+  };
+
+  UI.select = function (f, x, y, w, o) {
+    o = o || {};
+    var h = o.h || 36, fs = 12.5, top = y;
+    if (o.label) { f.text(x, y + 12, o.label, { size: 12, weight: 700 }); top = y + 24; }
+    f.rrect(x, top, w, h, 6, { fill: C.white, stroke: C.line, sw: 1.1, rough: 0.8 });
+    f.text(x + 12, top + h / 2 + fs * 0.36, o.value || o.placeholder || '', {
+      size: fs, color: o.value ? C.ink : C.faint
+    });
+    f.chev(x + w - 14, top + h / 2, 'down', 4.5);
+    if (o.hint) f.text(x, top + h + 16, o.hint, { size: 11, color: C.faint });
+    return top + h + (o.hint ? 24 : 0) - y;
+  };
+
+  UI.textarea = function (f, x, y, w, o) {
+    o = o || {};
+    var h = o.h || 84, fs = 12.5, top = y;
+    if (o.label) { f.text(x, y + 12, o.label, { size: 12, weight: 700 }); top = y + 24; }
+    f.rrect(x, top, w, h, 6, { fill: C.white, stroke: C.line, sw: 1.1, rough: 0.8 });
+    f.text(x + 12, top + 22, o.placeholder || '', { size: fs, color: C.faint });
+    if (o.hint) f.text(x, top + h + 16, o.hint, { size: 11, color: C.faint });
+    return top + h + (o.hint ? 24 : 0) - y;
+  };
+
+  UI.checkbox = function (f, x, y, label, checked) {
+    var s = 16;
+    f.rrect(x, y, s, s, 3, {
+      fill: checked ? C.ink : C.white, stroke: checked ? C.ink : C.line, sw: 1.1, rough: 0.8
+    });
+    if (checked) {
+      f.line(x + 4, y + s * 0.55, x + s * 0.42, y + s - 4, { color: C.white, sw: 1.8 });
+      f.line(x + s * 0.42, y + s - 4, x + s - 3, y + 4, { color: C.white, sw: 1.8 });
+    }
+    f.text(x + s + 9, y + s / 2 + 4.5, label, { size: 12.5, color: C.ink });
+    return s;
+  };
+
+  UI.radio = function (f, x, y, label, checked) {
+    f.circle(x + 8, y + 8, 16, {
+      fill: C.white, stroke: checked ? C.ink : C.line, sw: 1.2, rough: 0.8
+    });
+    if (checked) f.dot(x + 8, y + 8, 4, C.ink);
+    f.text(x + 24, y + 12.5, label, { size: 12.5, color: C.ink });
+    return 16;
+  };
+
+  UI.switch = function (f, x, y, label, on) {
+    var w = 36, h = 20;
+    f.rrect(x, y, w, h, 10, {
+      fill: on ? C.ink : C.fill2, stroke: on ? C.ink : C.line, sw: 1, rough: 0.8
+    });
+    f.dot(x + (on ? w - 10 : 10), y + h / 2, 7, C.white);
+    f.text(x + w + 10, y + 13, label, { size: 12.5, color: C.ink });
+    return w;
+  };
+
+  UI.avatarGroup = function (f, x, y, names, r) {
+    r = r || 11;
+    names.forEach(function (n, i) {
+      var cx = x + i * (r * 1.7);
+      f.dot(cx, y, r + 2, C.white);
+      f.av(cx, y, r, n);
+    });
+    return x + names.length * (r * 1.7);
+  };
+
+  UI.tabs = function (f, x, y, items, active, o) {
+    o = o || {};
+    var h = o.h || 36, pad = o.pad == null ? 4 : o.pad, gap = o.gap == null ? 4 : o.gap;
+    var fs = o.size || 12.5, ip = o.itemPad == null ? 14 : o.itemPad;
+    var widths = items.map(function (label) { return tw(label, fs) + ip * 2; });
+    var total = pad * 2 + gap * (items.length - 1);
+    widths.forEach(function (w) { total += w; });
+    f.rrect(x, y, total, h, 9, { fill: C.fill, stroke: C.fill, rough: 0.8 });
+    var cx = x + pad;
+    items.forEach(function (label, i) {
+      if (i === active) f.rrect(cx, y + pad, widths[i], h - pad * 2, 7, {
+        fill: C.white, stroke: C.line, sw: 0.9, rough: 0.8
+      });
+      f.text(cx + widths[i] / 2, y + h / 2 + fs * 0.36, label, {
+        size: fs, weight: i === active ? 700 : 400,
+        anchor: 'middle', color: i === active ? C.ink : C.ink2
+      });
+      cx += widths[i] + gap;
+    });
+    return { w: total, h: h, widths: widths };
+  };
+
+  UI.card = function (f, x, y, w, h, title, desc) {
+    f.rrect(x, y, w, h, 8, { fill: C.white, stroke: C.line, sw: 1.1, rough: 0.8 });
+    if (title) f.text(x + 24, y + 34, title, { size: 15, weight: 700 });
+    if (desc) f.text(x + 24, y + 56, desc, { size: 11.5, color: C.ink2 });
+    return { x: x, y: y, w: w, h: h, bodyY: y + (title ? 84 : 24) };
+  };
+
+  UI.alert = function (f, x, y, w, h, title, text, o) {
+    o = o || {};
+    var danger = o.variant === 'destructive';
+    f.rrect(x, y, w, h, 6, {
+      fill: C.white, stroke: danger ? C.accent : C.line, sw: 1.1, rough: 0.8
+    });
+    f.circle(x + 18, y + 22, 12, { stroke: danger ? C.accent : C.ink2, sw: 1.2, rough: 0.7 });
+    f.text(x + 18, y + 26, '!', { size: 10, weight: 700, anchor: 'middle', color: danger ? C.accent : C.ink2 });
+    f.text(x + 34, y + 26, title, { size: 12.5, weight: 700, color: danger ? C.accent : C.ink });
+    f.text(x + 34, y + 46, text, { size: 11.5, color: C.ink2 });
+    return h;
+  };
+
+  UI.breadcrumb = function (f, x, y, items) {
+    var cx = x;
+    items.forEach(function (item, i) {
+      var last = i === items.length - 1;
+      f.text(cx, y, item, { size: 12, color: last ? C.ink : C.ink2, weight: last ? 700 : 400 });
+      cx += tw(item, 12) + 6;
+      if (!last) {
+        f.chev(cx + 5, y - 4, 'right', 4);
+        cx += 18;
+      }
+    });
+    return cx - x;
+  };
+
+  UI.menu = function (f, x, y, w, items) {
+    var rowH = 32, pad = 6, h = pad * 2;
+    items.forEach(function (it) { h += it.type === 'sep' ? 9 : rowH; });
+    f.rrect(x, y, w, h, 6, { fill: C.white, stroke: C.line, sw: 1.1, rough: 0.8 });
+    var cy = y + pad;
+    items.forEach(function (it) {
+      if (it.type === 'sep') {
+        f.line(x + 8, cy + 4, x + w - 8, cy + 4, { color: C.line, sw: 1 });
+        cy += 9;
+        return;
+      }
+      f.text(x + 12, cy + 21, it.label, { size: 12, color: it.danger ? C.accent : C.ink });
+      if (it.shortcut) f.text(x + w - 12, cy + 21, it.shortcut, {
+        size: 10, color: C.faint, anchor: 'end'
+      });
+      cy += rowH;
+    });
+    return h;
+  };
+
+  UI.dialog = function (f, x, y, w, h, title, desc, o) {
+    o = o || {};
+    f.rrect(x, y, w, h, 8, {
+      fill: C.fill, stroke: C.line, sw: 1.1, dash: [6, 5], rough: 0.8
+    });
+    var dx = x + 32, dy = y + 32, dw = w - 64, dh = h - 64;
+    f.rrect(dx, dy, dw, dh, 8, { fill: C.white, stroke: C.line, sw: 1.2, rough: 0.8 });
+    f.text(dx + 24, dy + 34, title, { size: 15, weight: 700 });
+    f.text(dx + 24, dy + 56, desc, { size: 11.5, color: C.ink2 });
+    f.plines(dx + 24, dy + 84, dw - 48, 2, 18, { last: 0.7 });
+    var bw = 96, bh = 32, by = dy + dh - 44;
+    f.rrect(dx + dw - 24 - bw, by, bw, bh, 6, {
+      fill: o.danger ? C.accent : C.ink, stroke: o.danger ? C.accent : C.ink, sw: 1, rough: 0.8
+    });
+    f.text(dx + dw - 24 - bw / 2, by + 20, o.confirm || 'Təsdiq', {
+      size: 11.5, weight: 700, anchor: 'middle', color: C.white
+    });
+    f.rrect(dx + dw - 34 - bw * 2, by, bw, bh, 6, {
+      fill: 'none', stroke: C.line, sw: 1.1, rough: 0.8
+    });
+    f.text(dx + dw - 34 - bw * 1.5, by + 20, o.cancel || 'Ləğv et', {
+      size: 11.5, anchor: 'middle', color: C.ink
+    });
+    return h;
+  };
+
+  UI.table = function (f, x, y, w, cols, rows, o) {
+    o = o || {};
+    var headH = o.headH || 38, rowH = o.rowH || 46;
+    var widths = cols.map(function (c) { return c.w || (w / cols.length); });
+    var h = headH + rows.length * rowH;
+    f.rrect(x, y, w, h, 6, { fill: C.white, stroke: C.line, sw: 1.1, rough: 0.8 });
+    var cx = x;
+    cols.forEach(function (c, i) {
+      f.text(cx + 14, y + 24, c.label, { size: 10.5, weight: 700, color: C.faint, ls: 1 });
+      cx += widths[i];
+    });
+    f.line(x, y + headH, x + w, y + headH, { color: C.line, sw: 1.1 });
+    rows.forEach(function (row, r) {
+      var ry = y + headH + r * rowH;
+      if (r) f.line(x, ry, x + w, ry, { color: C.line, sw: 1 });
+      var cx2 = x;
+      row.forEach(function (cell, i) {
+        if (cell && typeof cell === 'object') {
+          if (cell.badge) {
+            UI.badge(f, cx2 + 14, ry + (rowH - 22) / 2, cell.badge.label, { variant: cell.badge.variant });
+          } else if (cell.user) {
+            f.av(cx2 + 22, ry + rowH / 2, 9, cell.user.initials);
+            f.text(cx2 + 38, ry + rowH / 2 + 4.5, cell.user.name, { size: 11.5 });
+          }
+        } else {
+          f.text(cx2 + 14, ry + rowH / 2 + 4.5, cell || '', { size: 11.5, color: C.ink2 });
+        }
+        cx2 += widths[i];
+      });
+    });
+    return h;
+  };
+
+  UI.progress = function (f, x, y, w, value, o) {
+    var h = (o && o.h) || 8;
+    f.rrect(x, y, w, h, h / 2, { fill: C.fill, stroke: C.fill, rough: 0.4 });
+    var bw = Math.max(1, Math.min(1, value) * w);
+    f.rrect(x, y, bw, h, h / 2, { fill: C.ink, stroke: C.ink, rough: 0.4 });
+    return h;
+  };
+
+  UI.skeleton = function (f, x, y, w, h) {
+    h = h || 12;
+    f.rrect(x, y, w, h, h / 2, { fill: C.fill, stroke: C.fill, rough: 0.4 });
+    return h;
+  };
+
+  UI.separator = function (f, x, y, w) {
+    f.line(x, y, x + w, y, { color: C.line, sw: 1 });
+  };
+
+  UI.tooltip = function (f, x, y, label) {
+    var fs = 10.5, w = tw(label, fs) + 20, h = 26;
+    f.rrect(x, y, w, h, 5, { fill: C.ink, stroke: C.ink, sw: 1, rough: 0.8 });
+    f.text(x + w / 2, y + h / 2 + fs * 0.36, label, {
+      size: fs, anchor: 'middle', color: C.white
+    });
+    f.line(x + w / 2 - 5, y + h, x + w / 2, y + h + 6, { color: C.ink, sw: 1.2 });
+    f.line(x + w / 2 + 5, y + h, x + w / 2, y + h + 6, { color: C.ink, sw: 1.2 });
+    return { w: w, h: h };
+  };
+
+  UI.accordion = function (f, x, y, w, items, open) {
+    var rowH = 42, bodyH = 54, h = 0;
+    items.forEach(function (it, i) { h += rowH + (i === open ? bodyH : 0); });
+    f.rrect(x, y, w, h, 6, { fill: C.white, stroke: C.line, sw: 1.1, rough: 0.8 });
+    var cy = y;
+    items.forEach(function (it, i) {
+      if (i) f.line(x, cy, x + w, cy, { color: C.line, sw: 1 });
+      f.text(x + 16, cy + 26, it.title, { size: 12.5, weight: i === open ? 700 : 400 });
+      f.chev(x + w - 18, cy + 21, i === open ? 'up' : 'down', 4.5);
+      cy += rowH;
+      if (i === open) {
+        f.plines(x + 16, cy + 12, w - 32, 2, 16, { last: 0.7 });
+        cy += bodyH;
+      }
+    });
+    return h;
+  };
+
   window.WF = {
     W: W, H: H, RAIL: RAIL, TOP: TOP, C: C, FONT: FONT,
     Frame: Frame, shell: shell, el: el, tw: tw, rrPath: rrPath,
-    NAV: NAV, navIcon: navIcon,
+    NAV: NAV, navIcon: navIcon, ui: UI,
     /* registry — pages register their own frames here; core.js creates it
        so any page can run standalone without a frames-*.js bootstrap. */
     frames: {}

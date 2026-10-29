@@ -16,13 +16,14 @@ PDF üçün: bölmə səhifəsini aç → `Ctrl+P` → "Save as PDF" (hər ekran
 ```
 docs/wireframes/
   index.html            giriş: örtük, dizayn prinsipləri, bölmələrin siyahısı
+  components.html       shadcn anatomiyalı wireframe komponent kiti
   01-my-work-os.html    Bugün · Günü balanslaşdır
   02-projects.html      Layihə icmalı · Board · Work item detalı
   03-map.html           Asılılıq xəritəsi
-  04-knowledge.html     Resurs — use case · Data dictionary
+  04-knowledge.html     Resurs — sənəd · use case · data dictionary
   05-people.html        Kataloq · Şəxs profili
   deck.css              səhifə karkası: örtük, bölmə, annotasiya, solo rejim
-  core.js               ortaq DSL: hand-drawn primitivlər + qlobal shell  ← reuse edilir
+  core.js               ortaq DSL: hand-drawn primitivlər + WF.ui + qlobal shell
   README.md             bu fayl
   vendor/               rough.js + kalam.css + Kalam woff2 (latin / latin-ext)
 ```
@@ -48,6 +49,21 @@ asılı deyil. Ortaq olan yalnız üç şeydir — `core.js` (çəkmə DSL-i), `
 
 `core.js` qlobal `WF` obyekti verir: `WF.Frame`, `WF.shell`, `WF.C` (rənglər), `WF.W/H`,
 `WF.frames` (ekran reyestri).
+
+## Komponent qatı (WF.ui)
+
+`core.js` içindəki `WF.ui` shadcn anatomiyasını wireframe dilinə köçürür: button, badge,
+input/select/textarea, checkbox/radio/switch, avatar, tabs, card, alert, breadcrumb,
+dropdown menu, dialog, table, progress, skeleton, tooltip, accordion, separator.
+Həndəsə `rough: 0.8` (əl çəkməsi), mətn Kalam, palitra `C.*`-dir. Mövcud səhifələr köhnə
+primitivləri işlətməyə davam edir; yeni səhifələr birbaşa `WF.ui.*` çağıra bilər.
+
+```js
+WF.ui.tabs(f, 348, 192, ['Overview', 'Resources', 'Works'], 0, { itemPad: 16 });
+WF.ui.button(f, 72, 192, 120, 'Yadda saxla', { variant: 'outline' });
+```
+
+Canlı referans və anatomiya: `components.html`.
 
 ## Ekran əlavə etmək
 
@@ -111,5 +127,5 @@ $url = "file:///C:/.../docs/wireframes/02-projects.html#board"
 | `01-my-work-os.html` | `today`, `plan` |
 | `02-projects.html` | `project`, `board`, `workitem` |
 | `03-map.html` | `map` |
-| `04-knowledge.html` | `doc`, `datadict` |
+| `04-knowledge.html` | `document`, `doc`, `datadict` |
 | `05-people.html` | `people`, `person` |

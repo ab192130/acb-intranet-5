@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ACB Intranet — Komponent kiti · wireframe</title>
+<link rel="stylesheet" href="vendor/kalam.css">
+<link rel="stylesheet" href="deck.css">
+<style>
+  .kit-lede{max-width:840px;margin:0 0 18px;font-size:14px;line-height:1.55;color:var(--ink2)}
+  .kit-note{
+    max-width:900px;margin:0 0 42px;padding:14px 18px;border:1px solid var(--line);
+    border-radius:6px;background:var(--paper);font-size:13px;line-height:1.55;color:var(--ink2);
+  }
+  .kit-note b{color:var(--ink)}
+  .kit-tag{font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--accent)}
+  .kit-doc{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0 0}
+  .doc{border:1px solid var(--line);border-radius:6px;background:var(--paper);padding:14px 16px}
+  .doc h4{margin:0 0 4px;font-size:14px;font-weight:700}
+  .doc p{margin:0 0 8px;font-size:12.5px;line-height:1.5;color:var(--ink2)}
+  .doc p:last-child{margin-bottom:0}
+  code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11.5px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:1px 4px}
+  pre.api{
+    margin:0;padding:10px 12px;border:1px solid var(--line);border-radius:5px;background:var(--bg);
+    font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10.5px;line-height:1.5;
+    color:var(--ink2);overflow-x:auto;white-space:pre;
+  }
+  @media (max-width:860px){.kit-doc{grid-template-columns:1fr}}
+  body.solo .kit-lede,
+  body.solo .kit-note,
+  body.solo .kit-doc{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="partnav">
+    <a href="index.html">← Eskizlər</a>
+    <span class="pnum">KIT</span>
+    <span class="ptitle">Komponent kiti</span>
+    <span class="pager">
+      <a href="02-projects.html#project">Layihə nümunəsi →</a>
+    </span>
+  </nav>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="idx">KIT</span><h2>Komponent kiti</h2>
+      <span class="sub">shadcn anatomiyası · rough.js + Kalam</span>
+    </div>
+
+    <p class="kit-lede">
+      Gələcək wireframe-lər üçün referans. Bütün nümunələr <code>core.js</code>-dəki
+      <code>WF.ui</code> qatı ilə çəkilir: həndəsə <code>rough: 0.8</code> (shadcn anatomiyası,
+      əl çəkməsi), mətn Kalam, palitra <code>C.*</code>-dir. Mövcud lo-fi səhifələr dəyişmir — yeni səhifələr
+      birbaşa <code>WF.ui.*</code> çağırışları ilə qurulur.
+    </p>
+    <div class="kit-note">
+      <b>Necə istifadə:</b> səhifədə <code>core.js</code>-i qoş, sonra
+      <code>WF.ui.button(...)</code>, <code>WF.ui.tabs(...)</code>, <code>WF.ui.card(...)</code> kimi
+      çağırışlar et. Anatomiya bölmələrində hər komponentin hissələri və API nümunəsi var.
+      Canlı tətbiq: <a href="02-projects.html#project">Layihə icmalı →</a>
+    </div>
+
+    <!-- ============================ A. CONTROLS ============================ -->
+    <figure>
+      <div class="frame-head"><span class="kit-tag">A</span><h3>Kontrollar</h3>
+        <span class="purpose">Button · Badge · Input · Select · Textarea · Checkbox · Radio · Switch · Avatar</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="ui-controls"></svg>
+    </figure>
+    <div class="kit-doc">
+      <div class="doc">
+        <h4>Button</h4>
+        <p><b>Anatomiya:</b> Container + Label. Variant: default, secondary, outline, ghost, destructive, link. Ölçü: sm 32, default 36, lg 40, icon 36×36. Vəziyyət: hover, focus ring, disabled.</p>
+        <pre class="api">WF.ui.button(f, 72, 192, 120, 'Yadda saxla');
+WF.ui.button(f, 320, 192, 88, 'Bax', { variant: 'outline' });</pre>
+      </div>
+      <div class="doc">
+        <h4>Badge</h4>
+        <p><b>Anatomiya:</b> Pill + Label. Status üçün 4 variant: default, secondary, outline, destructive. Hündürlük 22px, radius tam.</p>
+        <pre class="api">WF.ui.badge(f, 72, 382, 'Aktiv', { variant: 'secondary' });</pre>
+      </div>
+      <div class="doc">
+        <h4>Input / Select / Textarea</h4>
+        <p><b>Anatomiya:</b> Label + Control + Hint. Error halında border accent olur, hint accent mətnə keçir. Select-də sağda chevron var.</p>
+        <pre class="api">WF.ui.input(f, 72, 502, 280, { label: 'Ad, soyad', value: 'Burhan Ağazadə' });
+WF.ui.select(f, 72, 602, 280, { label: 'Şöbə', value: 'Rəqəmsallaşdırma' });</pre>
+      </div>
+      <div class="doc">
+        <h4>Checkbox / Radio / Switch</h4>
+        <p><b>Anatomiya:</b> 16px kontrol + label. Checked halında primary ink; switch 36×20 track və 14px knob.</p>
+        <pre class="api">WF.ui.checkbox(f, 72, 812, 'Bildiriş', true);
+WF.ui.switch(f, 400, 812, 'Aktiv', true);</pre>
+      </div>
+      <div class="doc">
+        <h4>Avatar</h4>
+        <p><b>Anatomiya:</b> Image və ya fallback initials. Ölçü: sm 28, default 40, lg 56. Group overlap 10px, ağ ring.</p>
+        <pre class="api">f.av(870, 208, 20, 'BA');
+WF.ui.avatarGroup(f, 1000, 208, ['SƏ','BA','NH','RQ'], 14);</pre>
+      </div>
+    </div>
+
+    <!-- ============================ B. SURFACES ============================ -->
+    <figure>
+      <div class="frame-head"><span class="kit-tag">B</span><h3>Səthlər</h3>
+        <span class="purpose">Card · Alert · Tabs · Table</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="ui-surfaces"></svg>
+    </figure>
+    <div class="kit-doc">
+      <div class="doc">
+        <h4>Card</h4>
+        <p><b>Anatomiya:</b> Header (Title + Description) + Content + Footer. Border 1px, radius 8, ağ səth.</p>
+        <pre class="api">WF.ui.card(f, 72, 192, 600, 300, 'Ödəniş gateway',
+  '3DS 2.0 keçidi və refund axını');</pre>
+      </div>
+      <div class="doc">
+        <h4>Alert</h4>
+        <p><b>Anatomiya:</b> Icon + Title + Description. Destructive variant accent border və accent başlıq işlədir.</p>
+        <pre class="api">WF.ui.alert(f, 72, 568, 600, 72, 'Qeyd', 'Versiya 12 snapshot-u…');</pre>
+      </div>
+      <div class="doc">
+        <h4>Tabs</h4>
+        <p><b>Anatomiya:</b> TabsList (muted fon) + TabsTrigger (aktiv ağ pill) + TabsContent. Layihə səhifəsində Overview/Resources/Works.</p>
+        <pre class="api">WF.ui.tabs(f, 348, 192, ['Overview','Resources','Works'], 0,
+  { itemPad: 16 });</pre>
+      </div>
+      <div class="doc">
+        <h4>Table</h4>
+        <p><b>Anatomiya:</b> Header + Body + Row + Head/Cell. Hücrə mətni, badge və ya avatar+ad ola bilər; sətir ayırıcısı 1px.</p>
+        <pre class="api">WF.ui.table(f, 760, 406, 608, cols, rows);</pre>
+      </div>
+    </div>
+
+    <!-- ========================== C. NAVIGATION ========================== -->
+    <figure>
+      <div class="frame-head"><span class="kit-tag">C</span><h3>Naviqasiya və qatlar</h3>
+        <span class="purpose">Breadcrumb · Dropdown · Dialog · Tooltip · Progress · Skeleton · Accordion · Separator</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="ui-navigation"></svg>
+    </figure>
+    <div class="kit-doc">
+      <div class="doc">
+        <h4>Breadcrumb</h4>
+        <p><b>Anatomiya:</b> List + Item + Separator + Page. Son element cari səhifədir və bold göstərilir.</p>
+        <pre class="api">WF.ui.breadcrumb(f, 72, 198, ['Bilik','Sənədlər','Ödəniş axını']);</pre>
+      </div>
+      <div class="doc">
+        <h4>Dropdown menu</h4>
+        <p><b>Anatomiya:</b> Trigger + Content + Item + Separator. Dağıdıcı item accent rəngdədir; shortcut sağda göstərilir.</p>
+        <pre class="api">WF.ui.menu(f, 72, 340, 220, [
+  { label: 'Profilə bax', shortcut: '⌘P' },
+  { label: 'Arxivləşdir', danger: true }
+]);</pre>
+      </div>
+      <div class="doc">
+        <h4>Dialog</h4>
+        <p><b>Anatomiya:</b> Overlay (dashed stage) + Content + Header (Title + Description) + Footer. Danger halında təsdiq düyməsi accent olur.</p>
+        <pre class="api">WF.ui.dialog(f, 760, 192, 608, 320,
+  'Layihəni arxivləşdirək?', 'Ödəniş gateway arxivə köçürüləcək.',
+  { confirm: 'Arxivləşdir', danger: true });</pre>
+      </div>
+      <div class="doc">
+        <h4>Tooltip / Progress / Skeleton / Separator</h4>
+        <p><b>Anatomiya:</b> Tooltip = trigger + qısa mətn; Progress = track + indicator; Skeleton = yüklənmə formaları; Separator = 1px ayırıcı.</p>
+        <pre class="api">WF.ui.tooltip(f, 92, 610, 'Kopyala');
+WF.ui.progress(f, 72, 768, 380, 0.62);
+WF.ui.skeleton(f, 500, 768, 160, 12);
+WF.ui.separator(f, 760, 850, 608);</pre>
+      </div>
+      <div class="doc">
+        <h4>Accordion</h4>
+        <p><b>Anatomiya:</b> Item + Trigger + Content. Eyni anda bir item açıqdır; açıq trigger bold və yuxarı chevron göstərir.</p>
+        <pre class="api">WF.ui.accordion(f, 760, 606, 608, items, 0);</pre>
+      </div>
+    </div>
+
+    <div class="partfoot">
+      <a href="index.html">← Eskizlər</a>
+      <span class="hint">rough.js + Kalam · shadcn anatomiyası</span>
+      <a class="next" href="02-projects.html#project">Layihə nümunəsi →</a>
+    </div>
+  </section>
+</div>
+
+<script src="vendor/rough.js"></script>
+<script src="core.js"></script>
+<script>
+/* components.html — shadcn anatomiyası, rough.js + Kalam */
+(function () {
+  'use strict';
+  var WF = window.WF, C = WF.C, UI = WF.ui;
+  var frames = WF.frames;
+
+  /* ============================ A. KONTROLLAR ============================ */
+  frames['ui-controls'] = function (f) {
+    f.text(72, 86, 'Kontrollar', { size: 26, weight: 700 });
+    f.text(72, 112, 'Button · Badge · Input · Select · Textarea · Checkbox · Radio · Switch · Avatar', { size: 12, color: C.faint });
+    f.line(72, 136, 1368, 136, { color: C.line, sw: 1.1 });
+
+    /* buttons */
+    UI.label(f, 72, 176, 'Button');
+    var bx = 72;
+    [['Yadda saxla', 'default', 120], ['Ləğv et', 'secondary', 104], ['Bax', 'outline', 88],
+     ['Bağla', 'ghost', 76], ['Sil', 'destructive', 88], ['Ətraflı', 'link', 70]].forEach(function (b) {
+      UI.button(f, bx, 192, b[2], b[0], { variant: b[1] });
+      bx += b[2] + 12;
+    });
+    bx = 72;
+    [['Kiçik', 'default', 'sm', 90], ['Orta', 'default', 'default', 104],
+     ['Böyük', 'default', 'lg', 110], ['+', 'default', 'icon', 36]].forEach(function (b) {
+      UI.button(f, bx, 244, b[3], b[0], { variant: b[1], size: b[2] });
+      bx += b[3] + 12;
+    });
+    UI.button(f, bx, 244, 104, 'Deaktiv', { disabled: true });
+    f.text(72, 306, 'Button = container + label · variant × ölçü × vəziyyət', { size: 11.5, color: C.ink2 });
+
+    /* badges */
+    UI.label(f, 72, 366, 'Badge');
+    bx = 72;
+    [['Yeni', 'default'], ['Aktiv', 'secondary'], ['Gözləyir', 'outline'],
+     ['Bloklandı', 'destructive'], ['v4', 'secondary'], ['12 üzv', 'outline']].forEach(function (b) {
+      var bw = UI.badge(f, bx, 382, b[0], { variant: b[1] });
+      bx += bw + 8;
+    });
+    f.text(72, 430, 'Badge = pill + label · status üçün 4 variant', { size: 11.5, color: C.ink2 });
+
+    /* inputs */
+    UI.label(f, 72, 486, 'Input');
+    UI.input(f, 72, 502, 280, { label: 'Ad, soyad', value: 'Burhan Ağazadə', hint: 'Şirkət profili' });
+    UI.input(f, 372, 502, 280, { label: 'E-poçt', placeholder: 'ad@acb.az', error: true, hint: 'Düzgün e-poçt daxil edin.' });
+    UI.select(f, 72, 602, 280, { label: 'Şöbə', value: 'Rəqəmsallaşdırma' });
+    UI.textarea(f, 372, 602, 280, { label: 'Təsvir', placeholder: 'Qısa kontekst…' });
+    f.text(72, 746, 'Input = Label + Control + Hint · error halında accent border', { size: 11.5, color: C.ink2 });
+
+    /* selection */
+    UI.label(f, 72, 796, 'Selection');
+    UI.checkbox(f, 72, 812, 'Bildiriş', true);
+    UI.radio(f, 260, 812, 'İcrada', true);
+    UI.switch(f, 400, 812, 'Aktiv', true);
+    f.text(72, 852, 'Checkbox / Radio / Switch = 16px kontrol + label', { size: 11.5, color: C.ink2 });
+
+    /* avatars */
+    UI.label(f, 800, 176, 'Avatar');
+    f.av(814, 208, 14, 'SƏ');
+    f.av(870, 208, 20, 'BA');
+    f.av(942, 208, 28, 'AM');
+    UI.avatarGroup(f, 1000, 208, ['SƏ', 'BA', 'NH', 'RQ'], 14);
+    f.text(1112, 212, '+8 nəfər', { size: 11.5, color: C.faint });
+    f.text(800, 264, 'Avatar = image / fallback · group overlap 10px', { size: 11.5, color: C.ink2 });
+
+    /* anatomy cards */
+    UI.card(f, 800, 300, 568, 220, 'Button anatomiyası', 'shadcn: container + label; vəziyyət ayrı qatdır.');
+    [['Container: h 36 · radius 6 · px 16', 384], ['Label: 13px · 700', 410],
+     ['Variant: 6 · Ölçü: sm / default / lg / icon', 436], ['State: hover · focus ring · disabled', 462]].forEach(function (l) {
+      f.dot(824, l[1] - 4, 2.2, C.faint);
+      f.text(836, l[1], l[0], { size: 11.5, color: C.ink2 });
+    });
+
+    UI.card(f, 800, 540, 568, 300, 'Nə vaxt?', 'Bir ekranda bir primary hərəkət.');
+    [['Primary: yalnız əsas hərəkət üçün.', 624], ['Secondary: ləğv, geri, alternativ.', 650],
+     ['Outline / ghost: ikinci dərəcəli hərəkətlər.', 676], ['Destructive: geri qaytarılmayan əməliyyat.', 702],
+     ['Formada sm, hero-da lg istifadə et.', 728], ['Focus ring yalnız klaviatura fokusunda.', 754]].forEach(function (l) {
+      f.dot(824, l[1] - 4, 2.2, C.faint);
+      f.text(836, l[1], l[0], { size: 11.5, color: C.ink2 });
+    });
+  };
+
+  /* ============================= B. SƏTHLƏR ============================= */
+  frames['ui-surfaces'] = function (f) {
+    f.text(72, 86, 'Səthlər', { size: 26, weight: 700 });
+    f.text(72, 112, 'Card · Alert · Tabs · Table — shadcn anatomiyası', { size: 12, color: C.faint });
+    f.line(72, 136, 1368, 136, { color: C.line, sw: 1.1 });
+
+    /* card */
+    UI.label(f, 72, 176, 'Card');
+    UI.card(f, 72, 192, 600, 300, 'Ödəniş gateway', '3DS 2.0 keçidi və refund axınının modernləşdirilməsi.');
+    UI.progress(f, 96, 280, 552, 0.62);
+    f.text(96, 306, '62% tamamlanıb · 8 açıq iş', { size: 11.5, color: C.ink2 });
+    UI.avatarGroup(f, 96, 340, ['SƏ', 'BA', 'NH', 'RQ'], 10);
+    UI.button(f, 96, 420, 120, 'Layihəni aç', { size: 'sm' });
+    UI.button(f, 228, 420, 90, 'Paylaş', { variant: 'outline', size: 'sm' });
+    f.text(72, 512, 'Card = Header (Title + Description) + Content + Footer', { size: 11.5, color: C.ink2 });
+
+    /* alerts */
+    UI.label(f, 72, 552, 'Alert');
+    UI.alert(f, 72, 568, 600, 72, 'Qeyd', 'Versiya 12 snapshot-u 2 gün əvvəl yaradılıb.');
+    UI.alert(f, 72, 656, 600, 72, 'Diqqət', 'Bu əməliyyat geri qaytarılmır.', { variant: 'destructive' });
+    f.text(72, 752, 'Alert = icon + title + description · destructive variant accent border', { size: 11.5, color: C.ink2 });
+
+    /* tabs */
+    UI.label(f, 760, 176, 'Tabs');
+    UI.tabs(f, 760, 192, ['Hesab', 'Parol', 'Bildirişlər'], 0);
+    f.text(760, 246, 'TabsList + TabsTrigger + TabsContent', { size: 11.5, color: C.ink2 });
+    UI.tabs(f, 760, 286, ['Overview', 'Resources', 'Works'], 0, { itemPad: 16 });
+    f.text(760, 340, 'Layihə səhifəsi: Overview aktiv, ağ pill', { size: 11.5, color: C.ink2 });
+
+    /* table */
+    UI.label(f, 760, 390, 'Table');
+    UI.table(f, 760, 406, 608, [
+      { label: 'İş', w: 250 }, { label: 'Status', w: 130 }, { label: 'Məsul', w: 228 }
+    ], [
+      ['ACB-160 · Refund API', { badge: { label: 'Todo', variant: 'outline' } }, { user: { initials: 'BA', name: 'B. Ağazadə' } }],
+      ['ACB-142 · 3DS redirect', { badge: { label: 'İcrada', variant: 'default' } }, { user: { initials: 'SƏ', name: 'S. Əliyeva' } }],
+      ['ACB-151 · Risk skorlaması', { badge: { label: 'Review', variant: 'secondary' } }, { user: { initials: 'NH', name: 'N. Həsənli' } }],
+      ['ACB-133 · payment_tx', { badge: { label: 'Bitdi', variant: 'secondary' } }, { user: { initials: 'AM', name: 'A. Məmmədov' } }]
+    ]);
+    f.text(760, 640, 'Table = Header + Body + Row + Head / Cell', { size: 11.5, color: C.ink2 });
+
+    /* composition note */
+    UI.label(f, 72, 800, 'Tətbiq');
+    f.text(72, 824, 'Layihə səhifəsi: başlıq + WF.ui.tabs + Overview məzmunu', { size: 11.5, color: C.ink2 });
+    f.rrect(72, 840, 1296, 34, 6, { fill: C.fill, stroke: C.fill, rough: 0.8 });
+    f.text(92, 862, 'Canlı nümunə: 02-projects.html#project — Overview / Resources / Works tabları.', { size: 11.5, color: C.ink2 });
+  };
+
+  /* ========================= C. NAVİQASİYA VƏ QATLAR ========================= */
+  frames['ui-navigation'] = function (f) {
+    f.text(72, 86, 'Naviqasiya və qatlar', { size: 26, weight: 700 });
+    f.text(72, 112, 'Breadcrumb · Dropdown · Dialog · Tooltip · Progress · Skeleton · Accordion · Separator', { size: 12, color: C.faint });
+    f.line(72, 136, 1368, 136, { color: C.line, sw: 1.1 });
+
+    /* breadcrumb */
+    UI.label(f, 72, 176, 'Breadcrumb');
+    UI.breadcrumb(f, 72, 198, ['Bilik', 'Sənədlər', 'Ödəniş axını']);
+    f.text(72, 232, 'Breadcrumb = List + Item + Separator + Page', { size: 11.5, color: C.ink2 });
+
+    /* dropdown */
+    UI.label(f, 72, 280, 'Dropdown');
+    UI.button(f, 72, 296, 140, 'Əməliyyatlar', { variant: 'outline', size: 'sm' });
+    UI.menu(f, 72, 340, 220, [
+      { label: 'Profilə bax', shortcut: '⌘P' },
+      { label: 'Redaktə et', shortcut: '⌘E' },
+      { label: 'Paylaş' },
+      { type: 'sep' },
+      { label: 'Arxivləşdir', danger: true }
+    ]);
+    f.text(72, 540, 'Menu = Trigger + Content + Item + Separator', { size: 11.5, color: C.ink2 });
+
+    /* tooltip */
+    UI.label(f, 72, 590, 'Tooltip');
+    UI.tooltip(f, 92, 610, 'Kopyala');
+    UI.button(f, 72, 646, 110, 'ACB-142', { variant: 'outline', size: 'sm' });
+    f.text(72, 700, 'Tooltip = trigger + content · qısa, bir sözlük mətn', { size: 11.5, color: C.ink2 });
+
+    /* progress */
+    UI.label(f, 72, 748, 'Progress');
+    UI.progress(f, 72, 768, 380, 0.62);
+    f.text(468, 775, '62%', { size: 11.5, color: C.ink2 });
+    f.text(72, 800, 'Progress = track + indicator · faiz mətni ayrıdır', { size: 11.5, color: C.ink2 });
+
+    /* skeleton */
+    UI.label(f, 500, 748, 'Skeleton');
+    UI.skeleton(f, 500, 768, 160, 12);
+    UI.skeleton(f, 500, 788, 220, 12);
+    UI.skeleton(f, 500, 808, 120, 12);
+    f.text(500, 840, 'Skeleton = yüklənmə formaları · real mətn yoxdur', { size: 11.5, color: C.ink2 });
+
+    /* dialog */
+    UI.label(f, 760, 176, 'Dialog');
+    UI.dialog(f, 760, 192, 608, 320, 'Layihəni arxivləşdirək?', 'Ödəniş gateway arxivə köçürüləcək.', {
+      confirm: 'Arxivləşdir', cancel: 'Ləğv et', danger: true
+    });
+    f.text(760, 540, 'Dialog = Overlay + Content + Header + Footer', { size: 11.5, color: C.ink2 });
+
+    /* accordion */
+    UI.label(f, 760, 590, 'Accordion');
+    UI.accordion(f, 760, 606, 608, [
+      { title: 'Versiya nə vaxt yaradılır?' },
+      { title: 'Şərhlər versiyaya daxildir?' }
+    ], 0);
+    f.text(760, 790, 'Accordion = Item + Trigger + Content · bir açıq item', { size: 11.5, color: C.ink2 });
+
+    /* separator */
+    UI.label(f, 760, 830, 'Separator');
+    UI.separator(f, 760, 850, 608);
+  };
+})();
+</script>
+<script>
+  /* ---- render every frame ---- */
+  document.querySelectorAll('svg[data-frame]').forEach(function (svg) {
+    var fn = window.WF.frames[svg.getAttribute('data-frame')];
+    if (!fn) { console.warn('missing frame', svg.getAttribute('data-frame')); return; }
+    try { fn(new window.WF.Frame(svg)); }
+    catch (e) { console.error(svg.getAttribute('data-frame'), e); }
+  });
+
+  /* ---- solo mode: #ui-controls, #ui-surfaces, #ui-navigation ---- */
+  (function () {
+    var id = location.hash.replace('#', '');
+    if (!id) return;
+    var svg = document.querySelector('svg[data-frame="' + id + '"]');
+    if (!svg) return;
+    var fig = svg.closest('figure');
+    document.body.classList.add('solo');
+    if (fig) fig.classList.add('solo');
+  })();
+</script>
+</body>
+</html>

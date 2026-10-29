@@ -121,20 +121,23 @@
     f.text(790, 179, '12 üzv', { size: 12.5, color: C.ink2 });
     f.text(880, 179, 'Yenilənib 2 saat əvvəl', { size: 12, color: C.faint });
 
+    /* tabs — shadcn Tabs (WF.ui) */
+    WF.ui.tabs(f, 348, 192, ['Overview', 'Resources', 'Works'], 0, { itemPad: 16 });
+
     /* overview */
-    f.card(348, 196, 660, 220, 'İcmal', 'Redaktə');
-    f.plines(368, 236, 610, 3, 22);
-    f.text(368, 310, 'Məqsədlər', { size: 13, weight: 700 });
-    [['3DS 2.0 axınını 4 həftədə tamamlamaq', 334], ['Refund SLA-nı 48 → 24 saata endirmək', 358]].forEach(function (g) {
+    f.card(348, 232, 660, 220, 'İcmal', 'Redaktə');
+    f.plines(368, 272, 610, 3, 22);
+    f.text(368, 346, 'Məqsədlər', { size: 13, weight: 700 });
+    [['3DS 2.0 axınını 4 həftədə tamamlamaq', 370], ['Refund SLA-nı 48 → 24 saata endirmək', 394]].forEach(function (g) {
       f.dot(372, g[1] - 4, 2.6, C.faint);
       f.text(384, g[1], g[0], { size: 12.5, color: C.ink2 });
     });
 
     /* nested projects */
-    f.card(348, 432, 660, 206, 'Alt layihələr (2)', '+ Alt layihə');
+    f.card(348, 468, 660, 206, 'Alt layihələr (2)', '+ Alt layihə');
     [['3DS inteqrasiyası', 0.62, '3 açıq iş', ['SƏ', 'BA', 'NH'], 368],
      ['Risk modeli', 0.30, '5 açıq iş', ['RQ', 'AM', 'EC'], 684]].forEach(function (p) {
-      var bx = p[4], by = 470;
+      var bx = p[4], by = 506;
       f.rrect(bx, by, 300, 142, 5, { fill: C.fill, stroke: C.line, rough: 0.8 });
       f.text(bx + 16, by + 28, p[0], { size: 13.5, weight: 700 });
       f.rrect(bx + 16, by + 44, 268, 8, 4, { fill: C.fill2, stroke: 'none', rough: 0.5 });
@@ -144,13 +147,13 @@
     });
 
     /* members */
-    f.card(348, 654, 660, 170, 'Üzvlər (12)', 'İdarə et');
+    f.card(348, 690, 660, 170, 'Üzvlər (12)', 'İdarə et');
     var mem = [['AM', 'A. Məmmədov', 'Owner'], ['SƏ', 'S. Əliyeva', 'Lead'],
                ['BA', 'B. Ağazadə', 'Dev'], ['NH', 'N. Həsənli', 'QA'],
                ['RQ', 'R. Quliyev', 'BA'], ['EC', 'E. Cəfərova', 'Dev'],
                ['Tİ', 'T. İsmayılov', 'Dev'], ['LN', 'L. Nəsirova', 'Design']];
     mem.forEach(function (m, i) {
-      var bx = 368 + (i % 4) * 160, by = 688 + Math.floor(i / 4) * 44;
+      var bx = 368 + (i % 4) * 160, by = 724 + Math.floor(i / 4) * 44;
       f.rrect(bx, by, 150, 32, 16, { fill: C.fill, stroke: C.line, rough: 0.7 });
       f.av(bx + 18, by + 16, 9, m[0]);
       f.text(bx + 32, by + 21, m[1], { size: 11 });
@@ -158,9 +161,9 @@
     });
 
     /* activity + version */
-    f.rrect(1032, 196, 308, 628, 6, { fill: C.white });
-    f.text(1056, 226, 'Fəaliyyət', { size: 15, weight: 700 });
-    f.chip(1212, 206, 'Versiya 12', { h: 24, w: 106, size: 11 });
+    f.rrect(1032, 232, 308, 628, 6, { fill: C.white });
+    f.text(1056, 262, 'Fəaliyyət', { size: 15, weight: 700 });
+    f.chip(1212, 242, 'Versiya 12', { h: 24, w: 106, size: 11 });
     var act = [
       ['SƏ', 'ACB-142 → İcrada', '2 saat əvvəl'],
       ['BA', '3DS sənədi yeniləndi (v7)', '4 saat əvvəl'],
@@ -170,17 +173,17 @@
       ['··', 'Versiya 12 snapshot', '2 gün əvvəl']
     ];
     act.forEach(function (a, k) {
-      var ay = 258 + k * 92;
+      var ay = 294 + k * 92;
       f.av(1062, ay, 11, a[0]);
       f.text(1082, ay + 4, a[1], { size: 12.5 });
       f.text(1082, ay + 24, a[2], { size: 10.5, color: C.faint });
     });
-    f.text(1056, 812, 'Hamısı →', { size: 12, color: C.accent, weight: 700 });
+    f.text(1056, 848, 'Hamısı →', { size: 12, color: C.accent, weight: 700 });
 
     f.anno(1, 88, 141);
     f.anno(2, 532, 152, 556, 172);
     f.anno(3, 1020, 500, 986, 520);
-    f.anno(4, 1020, 214, 1052, 238);
+    f.anno(4, 1020, 214, 1204, 252);
   };
 
   /* ============================ 4. BOARD ============================ */
