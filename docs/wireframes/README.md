@@ -28,6 +28,12 @@ docs/wireframes/
   vendor/               rough.js + kalam.css + Kalam woff2 (latin / latin-ext)
 ```
 
+## Use case-lər
+
+Layihə ssenariləri ayrı qovluqda saxlanılır:
+[`docs/use-cases`](../use-cases/README.md) →
+[Layihə Overview ssenariləri](../use-cases/project-overview.md).
+
 Hər bölmə səhifəsi **özü tamdır**: ekran kodu həmin faylın içindədir, başqa səhifədən
 asılı deyil. Ortaq olan yalnız üç şeydir — `core.js` (çəkmə DSL-i), `deck.css`
 (səhifə görünüşü) və `vendor/` (şrift + rough.js).
