@@ -45,7 +45,7 @@
         <li><b>Status və health ayrıdır.</b> Status lifecycle-dir (Aktiv); health törəyən siqnaldır (Sağlam). Növbəti milestone ayrıca göstərilir; Bitdi + Bloklanıb kimi ziddiyyət yaranmır.</li>
         <li><b>Resurslar sağ relsdə.</b> Üç tip (sənəd, use case, data dictionary) xülasə kimi; tam siyahı Resources tabındadır.</li>
         <li><b>Layihə haqqında inline redaktə olunur.</b> Mətnə klik → textarea; autosave debounce 800ms.</li>
-        <li><b>Layihə ikonu.</b> Klik → emoji picker; seçim ikonu dəyişir, “Sil” ikonu çıxarır. State: <code>03c</code>.</li>
+        <li><b>Layihə ikonu.</b> Klik → emoji picker; seçim ikonu dəyişir, “Sil” ikonu çıxarır. Seçilmiş ikon sol ağacda layihə sətrində də görünür. State: <code>03c</code>.</li>
         <li><b>Cover.</b> Notion üslubu; “Dəyişdir” → gradient / upload / link, “Sil” coveri çıxarır.</li>
         <li><b>Layihə actionları breadcrumb row-undadır.</b> Kiçik `Work item yarat` + `···` menyu (Redaktə et, Paylaş, Arxivləşdir).</li>
         <li><b>Axtarış sol rail-dədir.</b> Top bar yoxdur; ⌘K / klik → cmdk command palette.</li>
@@ -107,6 +107,14 @@
   var WF = window.WF, C = WF.C;
   var frames = WF.frames;
 
+  /* layihə sətri — emoji ikon header-dəki layihə ikonu ilə eynidir */
+  function projRow(f, x, y, icon, label, o) {
+    o = o || {};
+    f.rrect(x, y - 12, 16, 16, 4, { fill: C.white, stroke: C.line, sw: 1, rough: 0.7 });
+    f.text(x + 8, y, icon, { size: 11, anchor: 'middle' });
+    f.text(x + 24, y, label, { size: o.size || 12.5, weight: o.weight, color: o.color || C.ink2 });
+  }
+
   /* shared project context sidebar (nested tree) */
   function projectSidebar(f) {
     f.line(324, 0, 324, WF.H, { color: C.line, sw: 1.2 });
@@ -120,11 +128,11 @@
 
     f.chev(96, 76, 'down', 5);
     f.text(108, 81, 'Departament OS', { size: 13.5, weight: 700 });
-    f.text(120, 115, 'Ödəniş gateway', { size: 13, weight: 700 });
-    f.text(136, 149, '3DS inteqrasiyası', { size: 12.5, color: C.ink2 });
-    f.text(136, 183, 'Risk modeli', { size: 12.5, color: C.ink2 });
-    f.text(120, 217, 'Onboarding revamp', { size: 12.5, color: C.ink2 });
-    f.text(120, 251, 'Data platform', { size: 12.5, color: C.ink2 });
+    projRow(f, 116, 115, '💳', 'Ödəniş gateway', { size: 13, weight: 700, color: C.ink });
+    projRow(f, 132, 149, '🔒', '3DS inteqrasiyası');
+    projRow(f, 132, 183, '📊', 'Risk modeli');
+    projRow(f, 116, 217, '🧭', 'Onboarding revamp');
+    projRow(f, 116, 251, '🗂️', 'Data platform');
 
     f.chev(96, 300, 'right', 5);
     f.text(108, 305, 'Arxiv (4)', { size: 12.5, color: C.faint });
