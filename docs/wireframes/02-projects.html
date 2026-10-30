@@ -85,9 +85,9 @@
         <li><b>Header təkrarlanmır.</b> Cover, ikon, ad, status chipləri və komanda sətri yalnız Overview-dadır; Works tabı breadcrumb + tabs ilə başlayır.</li>
         <li><b>Cədvəl deyil, status feed-i.</b> Sütun başlığı, sətir zolağı, separator xətti və item sayğacı yoxdur — hər iş 44px hündürlüyündə öz sətrindədir; siyahı tabs-altından məzmun sütununun tam eni ilə başlayır.</li>
         <li><b>Hər status öz qrupudur.</b> Backlog (1), Todo (2), In Progress (3), In Review (1), Done (1), Canceled (1) — 1–3 işlik altı qrup. Statusu söz deyil, soldakı glyph verir: kəsikli ring / boş ring / accent target / ring + üç nöqtə / dairə içində check / dairə içində ×. Qrup artıq statusun adını deyir, ona görə sətirdə status etiketi təkrarlanmır.</li>
-        <li><b>Başlıq yeganə vurğudur.</b> ID, məsul və tarix solğun meta-dadır; tarix sağ kənara hizalanır. Done və Canceled sətirləri solğun tonla geri çəkilir.</li>
+        <li><b>Başlıq yeganə vurğudur.</b> Sətir tək sətirdir: solda status glyph, başlıq və yanında solğun ID; sağ sonunda məsul avatarı və tarix. Done və Canceled sətirləri solğun tonla geri çəkilir.</li>
         <li><b>Qrup başlığı düymədir.</b> Tam enli, 30px hündürlüklü düymə — solda chevron (açıqda aşağı, yığılıda sağa), yanında kiçik gap ilə say, sağ sonundakı ayrıca “+” həmin statusda yeni iş yaradır. Bütün qruplar açıq göstərilib, chevron ilə yığılır.</li>
-        <li><b>Hover və klaviatura eyni vəziyyəti paylaşır.</b> Ağ fon + accent haşiyə; sağda aç / tamamla / ··· action-ları çıxır, tarix sola sürüşür. ↑↓ sətirlər arasında, Enter açır, X tamamlayır.</li>
+        <li><b>Hover və klaviatura eyni vəziyyəti paylaşır.</b> Ağ fon + accent haşiyə; soldakı status glyph-i seçim checkbox-ına çevrilir, sağdakı tarix yerini “···” menyu düyməsinə verir, avatar yerində qalır. ↑↓ sətirlər arasında, Enter açır, X tamamlayır.</li>
         <li><b>Board redizaynı sonra planlanır.</b> Works tabı kompakt status feed-i göstərir; board və work item detalı bu dəstdən çıxarılıb.</li>
         <li><b>View action-ları tabs sətrinin sağ sonunda.</b> Filter, display options və sağ paneli yığan ikon düymələri hər iki məzmun tabında eyni yerdədir; sağ rels və ikonlar “···” menyu düyməsinin sağı ilə hizalanır, məzmun sahəsi də həmin sütuna qədər genişlənir; sağ panel yığılanda məzmun tam enə keçir.</li>
       </ul>
@@ -348,33 +348,39 @@
           });
         }
 
-        statusIcon(left + 11, ry + rowH / 2, r[2]);
-        f.text(left + 34, ry + 18, r[1], {
-          size: 12.5, weight: done ? 400 : 700, color: done ? C.ink2 : C.ink
-        });
-        f.av(left + 41, ry + 33, 6, r[3]);
-        f.text(left + 52, ry + 35, r[0] + ' · ' + r[4], { size: 9.5, color: C.faint });
-        f.text(hover ? right - 82 : right, ry + 18, r[5], {
-          size: 10, color: C.faint, anchor: 'end'
-        });
+        /* tək sətir: solda status glyph + başlıq + solğun ID,
+           sağ sonunda məsul avatarı və tarix */
+        var rowMid = ry + rowH / 2, titleX = left + 34;
 
         if (hover) {
-          /* sürətli action-lar sağda — tarix sola sürüşür, itmir */
-          var bw = 22, gap = 5, bx = right - bw;
+          /* hover-də status glyph-i seçim checkbox-ına çevrilir */
+          var cb = 16, cbx = left + 11 - cb / 2, cby = rowMid - cb / 2;
+          f.rrect(cbx, cby, cb, cb, 4, {
+            fill: C.white, stroke: C.accent, sw: 1.3, rough: 0.5
+          });
+        } else {
+          statusIcon(left + 11, rowMid, r[2]);
+        }
+        f.text(titleX, rowMid + 4.5, r[1], {
+          size: 12.5, weight: done ? 400 : 700, color: done ? C.ink2 : C.ink
+        });
+        f.text(titleX + WF.tw(r[1], 12.5) + 8, rowMid + 4, '· ' + r[0], {
+          size: 9.5, color: C.faint
+        });
 
-          f.rrect(bx, ry + 11, bw, bw, 5, { fill: C.fill, stroke: C.line, sw: 1, rough: 0.6 });
-          f.text(bx + bw / 2, ry + 26, '···', { size: 11, anchor: 'middle', color: C.ink2 });
+        f.av(right - 56, rowMid, 8, r[3]);
 
-          bx -= bw + gap;                        /* tamamla */
-          f.rrect(bx, ry + 11, bw, bw, 5, { fill: C.fill, stroke: C.line, sw: 1, rough: 0.6 });
-          f.line(bx + 6, ry + 22, bx + 10, ry + 26, { color: C.ink2, sw: 1.3 });
-          f.line(bx + 10, ry + 26, bx + 16, ry + 17, { color: C.ink2, sw: 1.3 });
-
-          bx -= bw + gap;                        /* aç */
-          f.rrect(bx, ry + 11, bw, bw, 5, { fill: C.fill, stroke: C.line, sw: 1, rough: 0.6 });
-          f.line(bx + 7, ry + 27, bx + 15, ry + 19, { color: C.ink2, sw: 1.2 });
-          f.line(bx + 9, ry + 18, bx + 16, ry + 18, { color: C.ink2, sw: 1.2 });
-          f.line(bx + 16, ry + 18, bx + 16, ry + 25, { color: C.ink2, sw: 1.2 });
+        if (hover) {
+          /* hover-də tarix yerini ··· menyu düyməsinə verir; avatar yerində qalır */
+          var bw = 22, bx = right - bw, by = ry + (rowH - bw) / 2;
+          f.rrect(bx, by, bw, bw, 5, { fill: C.fill, stroke: C.line, sw: 1, rough: 0.6 });
+          f.text(bx + bw / 2, by + bw / 2 + 4, '···', {
+            size: 11, anchor: 'middle', color: C.ink2
+          });
+        } else {
+          f.text(right, rowMid + 3.5, r[5], {
+            size: 10, color: C.faint, anchor: 'end'
+          });
         }
 
         ry += rowH;
