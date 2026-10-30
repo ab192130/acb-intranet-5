@@ -223,11 +223,8 @@
     WF.shell(f, { crumb: 'Layihələr', active: 1, header: false });
     projectSidebar(f);
 
-    /* breadcrumb row — page padding + project actions */
-    var crumb = 'Layihələr / Ödəniş gateway';
-    if (view === 'resources') crumb += ' / Resurslar';
-    if (view === 'works') crumb += ' / Works';
-    f.text(348, 30, crumb, { size: 12, color: C.faint });
+    /* breadcrumb row — page padding + project actions (tab adı təkrarlanmır) */
+    f.text(348, 30, 'Layihələr / Ödəniş gateway', { size: 12, color: C.faint });
     f.btn(1236, 16, 132, 'Work item yarat', { kind: 'primary', h: 28, size: 11.5 });
     f.rrect(1380, 16, 28, 28, 6, { fill: 'none', stroke: C.line, sw: 1.1, rough: 0.7 });
     f.text(1394, 35, '···', { size: 14, color: C.ink2, anchor: 'middle' });
