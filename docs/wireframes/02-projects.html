@@ -45,7 +45,7 @@
         <li><b>Status və health ayrıdır.</b> Status lifecycle-dir (Aktiv); health törəyən siqnaldır (Sağlam). Növbəti milestone ayrıca göstərilir; Bitdi + Bloklanıb kimi ziddiyyət yaranmır.</li>
         <li><b>Resurslar sağ relsdə.</b> Üç tip (sənəd, use case, data dictionary) xülasə kimi; tam siyahı Resources tabındadır.</li>
         <li><b>Layihə haqqında inline redaktə olunur.</b> Mətnə klik → textarea; autosave debounce 800ms.</li>
-        <li><b>Layihə ikonu.</b> Klik → emoji picker; seçim ikonu dəyişir, “Sil” ikonu çıxarır. Seçilmiş ikon sol ağacda layihə sətrində də görünür. State: <code>03c</code>.</li>
+        <li><b>Layihə ikonu.</b> Klik → emoji picker; seçim ikonu dəyişir, “Sil” ikonu çıxarır. Seçilmiş ikon sol ağacda layihə sətrində və breadcrumb-da adın solunda görünür. State: <code>03c</code>.</li>
         <li><b>Cover.</b> Notion üslubu; “Dəyişdir” → gradient / upload / link, “Sil” coveri çıxarır.</li>
         <li><b>Layihə actionları breadcrumb row-undadır.</b> Kiçik `Work item yarat` + `···` menyu (Redaktə et, Paylaş, Arxivləşdir). Layihə adının sağındakı ulduz favorit keçididir — klik boş `☆` və dolu `★` vəziyyətini dəyişir.</li>
         <li><b>Axtarış sol rail-dədir.</b> Top bar yoxdur; ⌘K / klik → cmdk command palette.</li>
@@ -107,11 +107,16 @@
   var WF = window.WF, C = WF.C;
   var frames = WF.frames;
 
-  /* layihə sətri — emoji ikon header-dəki layihə ikonu ilə eynidir */
-  function projRow(f, x, y, icon, label, o) {
-    o = o || {};
+  /* layihə ikonu — header-dəki emoji ikonla eyni kiçik qutu */
+  function projIcon(f, x, y, icon) {
     f.rrect(x, y - 12, 16, 16, 4, { fill: C.white, stroke: C.line, sw: 1, rough: 0.7 });
     f.text(x + 8, y, icon, { size: 11, anchor: 'middle' });
+  }
+
+  /* layihə sətri — ikon + ad */
+  function projRow(f, x, y, icon, label, o) {
+    o = o || {};
+    projIcon(f, x, y, icon);
     f.text(x + 24, y, label, { size: o.size || 12.5, weight: o.weight, color: o.color || C.ink2 });
   }
 
@@ -261,10 +266,14 @@
     projectSidebar(f);
 
     /* breadcrumb row — page padding + project actions (tab adı təkrarlanmır) */
-    var crumb = 'Layihələr / Ödəniş gateway';
-    f.text(348, 30, crumb, { size: 12, color: C.faint });
+    var crumbParent = 'Layihələr / ', crumbName = 'Ödəniş gateway';
+    f.text(348, 30, crumbParent, { size: 12, color: C.faint });
+    var crumbX = 348 + WF.tw(crumbParent, 12) + 2;
+    projIcon(f, crumbX, 30, '💳');
+    var crumbNameX = crumbX + 22;
+    f.text(crumbNameX, 30, crumbName, { size: 12, color: C.faint });
     /* layihə adının sağında favorit ulduzu — boş ☆ / dolu ★ vəziyyəti var */
-    f.text(348 + WF.tw(crumb, 12) + 4, 30, '☆', { size: 14, color: C.ink2 });
+    f.text(crumbNameX + WF.tw(crumbName, 12) + 4, 30, '☆', { size: 14, color: C.ink2 });
     f.btn(1236, 16, 132, 'Work item yarat', { kind: 'primary', h: 28, size: 11.5 });
     f.rrect(1380, 16, 28, 28, 6, { fill: 'none', stroke: C.line, sw: 1.1, rough: 0.7 });
     f.text(1394, 35, '···', { size: 14, color: C.ink2, anchor: 'middle' });
