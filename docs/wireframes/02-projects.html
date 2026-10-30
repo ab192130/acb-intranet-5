@@ -84,8 +84,8 @@
       <ul class="state-notes">
         <li><b>Header təkrarlanmır.</b> Cover, ikon, ad, status chipləri və komanda sətri yalnız Overview-dadır; Works tabı breadcrumb + tabs ilə başlayır.</li>
         <li><b>Cədvəl deyil, status feed-i.</b> Sütun başlığı, sətir zolağı, separator xətti və item sayğacı yoxdur — hər iş 44px hündürlüyündə öz sətrindədir; siyahı tabs-altından məzmun sütununun tam eni ilə başlayır.</li>
-        <li><b>Hər status öz qrupudur.</b> Backlog (1), Todo (2), In Progress (3), In Review (1), Done (1), Canceled (1), Duplicate (1) — 1–3 işlik yeddi qrup. Statusu söz deyil, soldakı glyph verir: kəsikli ring / boş ring / accent target / ring + üç nöqtə / check / × / iki üst-üstə kvadrat. Qrup artıq statusun adını deyir, ona görə sətirdə status etiketi təkrarlanmır.</li>
-        <li><b>Başlıq yeganə vurğudur.</b> ID, məsul və tarix solğun meta-dadır; tarix sağ kənara hizalanır. Done, Canceled və Duplicate sətirləri solğun tonla geri çəkilir.</li>
+        <li><b>Hər status öz qrupudur.</b> Backlog (1), Todo (2), In Progress (3), In Review (1), Done (1), Canceled (1) — 1–3 işlik altı qrup. Statusu söz deyil, soldakı glyph verir: kəsikli ring / boş ring / accent target / ring + üç nöqtə / dairə içində check / dairə içində ×. Qrup artıq statusun adını deyir, ona görə sətirdə status etiketi təkrarlanmır.</li>
+        <li><b>Başlıq yeganə vurğudur.</b> ID, məsul və tarix solğun meta-dadır; tarix sağ kənara hizalanır. Done və Canceled sətirləri solğun tonla geri çəkilir.</li>
         <li><b>Qrup başlığı düymədir.</b> Tam enli, 30px hündürlüklü düymə — solda chevron (açıqda aşağı, yığılıda sağa), yanında kiçik gap ilə say, sağ sonundakı ayrıca “+” həmin statusda yeni iş yaradır. Bütün qruplar açıq göstərilib, chevron ilə yığılır.</li>
         <li><b>Hover və klaviatura eyni vəziyyəti paylaşır.</b> Ağ fon + accent haşiyə; sağda aç / tamamla / ··· action-ları çıxır, tarix sola sürüşür. ↑↓ sətirlər arasında, Enter açır, X tamamlayır.</li>
         <li><b>Board redizaynı sonra planlanır.</b> Works tabı kompakt status feed-i göstərir; board və work item detalı bu dəstdən çıxarılıb.</li>
@@ -265,22 +265,20 @@
     var left = 348, right = 1076, rowH = 44, headH = 30;
 
     /* bağlanmış statuslar geri çəkilir */
-    var closed = { Done: 1, Canceled: 1, Duplicate: 1 };
+    var closed = { Done: 1, Canceled: 1 };
 
     /* status glyph-i — 22px, tile yoxdur; statusun adını qrup başlığı deyir */
     function statusIcon(cx, cy, status) {
       if (status === 'Done') {
-        f.line(cx - 8, cy, cx - 2, cy + 6, { color: C.ink2, sw: 1.5 });
-        f.line(cx - 2, cy + 6, cx + 8, cy - 6, { color: C.ink2, sw: 1.5 });
+        /* dairə içində check */
+        f.circle(cx, cy, 20, { stroke: C.ink2, sw: 1.4, rough: 0.6 });
+        f.line(cx - 5, cy, cx - 1, cy + 4, { color: C.ink2, sw: 1.4 });
+        f.line(cx - 1, cy + 4, cx + 6, cy - 4, { color: C.ink2, sw: 1.4 });
       } else if (status === 'Canceled') {
-        f.line(cx - 6, cy - 6, cx + 6, cy + 6, { color: C.faint, sw: 1.4 });
-        f.line(cx + 6, cy - 6, cx - 6, cy + 6, { color: C.faint, sw: 1.4 });
-      } else if (status === 'Duplicate') {
-        /* iki üst-üstə düşən kvadrat — “kopya” */
-        f.rrect(cx - 8, cy - 8, 12, 12, 3, { stroke: C.faint, sw: 1.1, rough: 0.5 });
-        f.rrect(cx - 3, cy - 3, 12, 12, 3, {
-          fill: C.white, stroke: C.faint, sw: 1.1, rough: 0.5
-        });
+        /* dairə içində × */
+        f.circle(cx, cy, 20, { stroke: C.faint, sw: 1.3, rough: 0.5 });
+        f.line(cx - 4, cy - 4, cx + 4, cy + 4, { color: C.faint, sw: 1.3 });
+        f.line(cx + 4, cy - 4, cx - 4, cy + 4, { color: C.faint, sw: 1.3 });
       } else if (status === 'In Progress') {
         f.circle(cx, cy, 20, { stroke: C.accent, sw: 1.6, rough: 0.6 });
         f.dot(cx, cy, 3.8, C.accent);
@@ -316,9 +314,6 @@
       ] },
       { label: 'Canceled', rows: [
         ['ACB-121', 'Köhnə webhook axını', 'Canceled', 'EC', 'E. Cəfərova', '20 okt']
-      ] },
-      { label: 'Duplicate', rows: [
-        ['ACB-137', '3DS retry bugı', 'Duplicate', 'NH', 'N. Həsənli', '18 okt']
       ] }
     ];
 
