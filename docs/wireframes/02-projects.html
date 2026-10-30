@@ -47,7 +47,7 @@
         <li><b>Layihə haqqında inline redaktə olunur.</b> Mətnə klik → textarea; autosave debounce 800ms.</li>
         <li><b>Layihə ikonu.</b> Klik → emoji picker; seçim ikonu dəyişir, “Sil” ikonu çıxarır. Seçilmiş ikon sol ağacda layihə sətrində də görünür. State: <code>03c</code>.</li>
         <li><b>Cover.</b> Notion üslubu; “Dəyişdir” → gradient / upload / link, “Sil” coveri çıxarır.</li>
-        <li><b>Layihə actionları breadcrumb row-undadır.</b> Kiçik `Work item yarat` + `···` menyu (Redaktə et, Paylaş, Arxivləşdir).</li>
+        <li><b>Layihə actionları breadcrumb row-undadır.</b> Kiçik `Work item yarat` + `···` menyu (Redaktə et, Paylaş, Arxivləşdir). Layihə adının sağındakı ulduz favorit keçididir — klik boş `☆` və dolu `★` vəziyyətini dəyişir.</li>
         <li><b>Axtarış sol rail-dədir.</b> Top bar yoxdur; ⌘K / klik → cmdk command palette.</li>
       </ol>
     </figure>
@@ -261,7 +261,10 @@
     projectSidebar(f);
 
     /* breadcrumb row — page padding + project actions (tab adı təkrarlanmır) */
-    f.text(348, 30, 'Layihələr / Ödəniş gateway', { size: 12, color: C.faint });
+    var crumb = 'Layihələr / Ödəniş gateway';
+    f.text(348, 30, crumb, { size: 12, color: C.faint });
+    /* layihə adının sağında favorit ulduzu — boş ☆ / dolu ★ vəziyyəti var */
+    f.text(348 + WF.tw(crumb, 12) + 8, 30, '☆', { size: 14, color: C.ink2 });
     f.btn(1236, 16, 132, 'Work item yarat', { kind: 'primary', h: 28, size: 11.5 });
     f.rrect(1380, 16, 28, 28, 6, { fill: 'none', stroke: C.line, sw: 1.1, rough: 0.7 });
     f.text(1394, 35, '···', { size: 14, color: C.ink2, anchor: 'middle' });
