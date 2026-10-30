@@ -73,7 +73,7 @@
         <li><b>Preview tipi açmadan oxunur.</b> Sənəd — mətn sətirləri, use case — nömrəli addımlar, data dictionary — mini cədvəl. Tip badge-i bunu təkrarlayır.</li>
         <li><b>Boş yer “yeni resurs” kartı ilə doldurulur.</b> Yaradma əməliyyatı siyahıdan çıxmır; kart həm də boş vəziyyəti göstərir. Hover-də “⋯” action-ları açılır.</li>
         <li><b>Progress zolağı yoxdur.</b> Bu tab resurs kitabxanasıdır, icra paneli deyil; 46% / milestone Overview və Works-də qalır, burada yer kart şəbəkəsinə verilir.</li>
-        <li><b>Tab sətrinin sağ sonunda view action-ları.</b> Filter, display options (sıxlıq/görünüş) və sağ paneli yığan (collapse) ikon düymələri — Overview-da yoxdur, çünki orada header və progress bloku tam eni tutur.</li>
+        <li><b>Tab sətrinin sağ sonunda view action-ları.</b> Filter, display options (sıxlıq/görünüş) və sağ paneli yığan (collapse) ikon düymələri — Overview-da yoxdur, çünki orada header və progress bloku tam eni tutur. Üçü də header-dəki “···” menyu düyməsinin sağı ilə eyni xətdədir.</li>
       </ul>
     </figure>
 
@@ -85,7 +85,7 @@
         <li><b>Header təkrarlanmır.</b> Cover, ikon, ad, status chipləri və komanda sətri yalnız Overview-dadır; Works tabı breadcrumb + tabs ilə başlayır.</li>
         <li><b>Work items siyahısı.</b> Status, məsul və tarix bir sətirdə; filtr yuxarıda.</li>
         <li><b>Board redizaynı sonra planlanır.</b> Works tabı kompakt siyahı göstərir; board və work item detalı bu dəstdən çıxarılıb.</li>
-        <li><b>View action-ları tabs sətrinin sağ sonunda.</b> Filter, display options və sağ paneli yığan ikon düymələri hər iki məzmun tabında eyni yerdədir; sağ panel yığılanda məzmun tam enə keçir.</li>
+        <li><b>View action-ları tabs sətrinin sağ sonunda.</b> Filter, display options və sağ paneli yığan ikon düymələri hər iki məzmun tabında eyni yerdədir; sağ rels və ikonlar “···” menyu düyməsinin sağı ilə hizalanır, məzmun kartı da həmin sütuna qədər genişlənir; sağ panel yığılanda məzmun tam enə keçir.</li>
       </ul>
     </figure>
 
@@ -134,14 +134,14 @@
 
   /* Resources tab — project header yoxdur, tabs + kart şəbəkəsi */
   function projectResources(f, top) {
-    f.card(348, top, 660, 670, 'Resurslar');
+    f.card(348, top, 728, 670, 'Resurslar');
     f.input(368, top + 40, 200, 'Resurs axtar…', { h: 30 });
     f.chip(580, top + 42, 'Hamısı', { active: true, h: 26, w: 64, size: 10.5 });
     f.chip(652, top + 42, 'Sənəd', { h: 26, w: 56, size: 10.5 });
     f.chip(716, top + 42, 'Use case', { h: 26, w: 74, size: 10.5 });
     f.chip(798, top + 42, 'Data dict.', { h: 26, w: 84, size: 10.5 });
-    f.text(988, top + 59, '5 resurs', { size: 10.5, color: C.faint, anchor: 'end' });
-    f.line(368, top + 84, 988, top + 84, { color: C.line, sw: 1, dash: [4, 5] });
+    f.text(1056, top + 59, '5 resurs', { size: 10.5, color: C.faint, anchor: 'end' });
+    f.line(368, top + 84, 1056, top + 84, { color: C.line, sw: 1, dash: [4, 5] });
 
     /* asset-library kartları: preview + tip + sahib + yenilənmə */
     var cards = [
@@ -153,47 +153,48 @@
     ];
     var bw = { 'Sənəd': 44, 'Use case': 60, 'Data dict.': 64 };
     cards.forEach(function (c, i) {
-      var x = 368 + (i % 3) * 214, y = top + 100 + Math.floor(i / 3) * 286;
-      f.rrect(x, y, 192, 262, 6, { fill: C.white });
-      f.rrect(x + 1, y + 1, 190, 160, 5, { fill: C.fill2, stroke: 'none', rough: 0.6 });
-      f.line(x + 1, y + 161, x + 191, y + 161, { color: C.line, sw: 1 });
+      var x = 368 + (i % 3) * 236, y = top + 100 + Math.floor(i / 3) * 286;
+      f.rrect(x, y, 216, 262, 6, { fill: C.white });
+      f.rrect(x + 1, y + 1, 214, 160, 5, { fill: C.fill2, stroke: 'none', rough: 0.6 });
+      f.line(x + 1, y + 161, x + 215, y + 161, { color: C.line, sw: 1 });
 
       if (c[1] === 'doc') {
         f.line(x + 10, y + 66, x + 74, y + 66, { color: C.ink2, sw: 1.8 });
-        f.plines(x + 10, y + 88, 160, 4, 14, { color: C.faint, sw: 1.2 });
+        f.plines(x + 10, y + 88, 184, 4, 14, { color: C.faint, sw: 1.2 });
       } else if (c[1] === 'uc') {
         [0, 1, 2, 3].forEach(function (j) {
           f.text(x + 11, y + 78 + j * 16, String(j + 1) + '.', { size: 9, color: C.faint });
-          f.pline(x + 24, y + 76 + j * 16, 150, { color: C.faint, sw: 1.2 });
+          f.pline(x + 24, y + 76 + j * 16, 174, { color: C.faint, sw: 1.2 });
         });
       } else {
         [78, 92, 106].forEach(function (ly) {
-          f.line(x + 10, y + ly, x + 172, y + ly, { color: C.faint, sw: 1.1 });
+          f.line(x + 10, y + ly, x + 196, y + ly, { color: C.faint, sw: 1.1 });
         });
-        [72, 124].forEach(function (lx) {
+        [72, 148].forEach(function (lx) {
           f.line(x + lx, y + 64, x + lx, y + 116, { color: C.faint, sw: 1.1 });
         });
       }
-      f.text(x + 178, y + 23, '⋯', { size: 12, color: C.faint, anchor: 'end' });
+      f.text(x + 202, y + 23, '⋯', { size: 12, color: C.faint, anchor: 'end' });
       WF.ui.badge(f, x + 10, y + 10, c[0], { h: 18, w: bw[c[0]], fs: 8.5, variant: c[1] === 'uc' ? 'outline' : 'secondary' });
       f.text(x + 12, y + 196, c[2], { size: 12 });
       f.av(x + 18, y + 236, 8, c[3]);
       f.text(x + 30, y + 239, c[4], { size: 9.5, color: C.ink2 });
-      f.text(x + 178, y + 239, c[5], { size: 9, color: C.faint, anchor: 'end' });
+      f.text(x + 202, y + 239, c[5], { size: 9, color: C.faint, anchor: 'end' });
     });
 
     /* boş vəziyyət: yaratma kartı şəbəkənin sonunda qalır */
-    var cx = 368 + 2 * 214, cy = top + 386;
-    f.rrect(cx, cy, 192, 262, 6, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
-    f.text(cx + 96, cy + 110, '+', { size: 20, anchor: 'middle', color: C.faint });
-    f.text(cx + 96, cy + 140, 'Yeni resurs', { size: 11.5, anchor: 'middle', color: C.ink2 });
-    f.text(cx + 96, cy + 158, 'Sənəd · use case · data dict.', { size: 8.5, anchor: 'middle', color: C.faint });
+    var cx = 368 + 2 * 236, cy = top + 386;
+    f.rrect(cx, cy, 216, 262, 6, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
+    f.text(cx + 108, cy + 110, '+', { size: 20, anchor: 'middle', color: C.faint });
+    f.text(cx + 108, cy + 140, 'Yeni resurs', { size: 11.5, anchor: 'middle', color: C.ink2 });
+    f.text(cx + 108, cy + 158, 'Sənəd · use case · data dict.', { size: 8.5, anchor: 'middle', color: C.faint });
   }
 
   /* Tabs sətrinin sağ sonu — Overview-dan başqa tablarda view action-ları:
      filter · display options · sağ paneli yığ (collapse). */
   function tabRowActions(f, y) {
-    var s = 28, gap = 6, right = 1340;         /* sağ kənar = fəaliyyət kartının sağı */
+    /* sağ kənar = header-dəki "···" menyu düyməsinin sağı = sağ relsin sağı */
+    var s = 28, gap = 6, right = 1408;
     var cx = right - s;                       /* sağ paneli yığ — ən sağda */
 
     f.rrect(cx, y, s, s, 6, { fill: 'none', stroke: C.line, sw: 1.1, rough: 0.7 });
@@ -218,12 +219,12 @@
 
   /* Works tab — project header yoxdur, tabs + work items siyahısı */
   function projectWorks(f, top) {
-    f.card(348, top, 660, 670, 'Work items', 'Hamısı →');
+    f.card(348, top, 728, 670, 'Work items', 'Hamısı →');
     f.chip(368, top + 40, 'Hamısı', { active: true, h: 26, w: 70, size: 10.5 });
     f.chip(446, top + 40, 'Mənim', { h: 26, w: 64, size: 10.5 });
     f.chip(518, top + 40, 'Bug', { h: 26, w: 54, size: 10.5 });
     f.chip(580, top + 40, 'Bu həftə', { h: 26, w: 80, size: 10.5 });
-    f.line(368, top + 84, 988, top + 84, { color: C.line, sw: 1, dash: [4, 5] });
+    f.line(368, top + 84, 1056, top + 84, { color: C.line, sw: 1, dash: [4, 5] });
 
     [
       ['ACB-160', 'Refund API kontraktı', 'Todo', 'outline', 'BA', 'B. Ağazadə', '30 okt'],
@@ -235,11 +236,11 @@
       var y = top + 124 + i * 92;
       f.text(368, y, r[0], { size: 10.5, color: C.faint });
       f.text(440, y, r[1], { size: 12.5 });
-      WF.ui.badge(f, 760, y - 13, r[2], { h: 20, w: r[2] === 'İcrada' ? 62 : 58, fs: 9.5, variant: r[3] });
-      f.av(870, y - 4, 9, r[4]);
-      f.text(888, y, r[5], { size: 10.5, color: C.ink2 });
-      f.text(988, y, r[6], { size: 10, color: C.faint, anchor: 'end' });
-      if (i < 4) f.line(368, y + 40, 988, y + 40, { color: C.line, sw: 1, dash: [4, 5] });
+      WF.ui.badge(f, 828, y - 13, r[2], { h: 20, w: r[2] === 'İcrada' ? 62 : 58, fs: 9.5, variant: r[3] });
+      f.av(938, y - 4, 9, r[4]);
+      f.text(956, y, r[5], { size: 10.5, color: C.ink2 });
+      f.text(1056, y, r[6], { size: 10, color: C.faint, anchor: 'end' });
+      if (i < 4) f.line(368, y + 40, 1056, y + 40, { color: C.line, sw: 1, dash: [4, 5] });
     });
     f.text(368, top + 640, '18 iş · 8 açıq', { size: 10.5, color: C.faint });
   }
@@ -290,47 +291,47 @@
 
     /* pulse strip — progress, metrics, next milestone: yalnız Overview-də */
     if (view === 'overview') {
-      f.rrect(348, 348, 660, 88, 8, { fill: C.fill, stroke: C.line, rough: 0.8 });
+      f.rrect(348, 348, 728, 88, 8, { fill: C.fill, stroke: C.line, rough: 0.8 });
       f.text(368, 370, 'PROGRESS', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
-      WF.ui.progress(f, 368, 380, 220, 0.46, { h: 8 });
-      f.text(596, 386, '46%', { size: 11.5, color: C.ink2 });
+      WF.ui.progress(f, 368, 380, 260, 0.46, { h: 8 });
+      f.text(636, 386, '46%', { size: 11.5, color: C.ink2 });
       f.text(368, 408, '8 açıq · 0 bloklanmış · 14 bitmiş', { size: 11.5, color: C.ink2 });
-      f.line(620, 362, 620, 430, { color: C.line, sw: 1, dash: [3, 4] });
-      f.text(644, 370, 'NÖVBƏTİ MILESTONE', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
-      f.text(644, 394, '3DS keçidi', { size: 13.5, weight: 700 });
-      f.text(644, 416, '5 noy · 7 gün qalıb', { size: 11.5, color: C.ink2 });
-      f.text(988, 394, 'Bax →', { size: 11.5, color: C.accent, weight: 700, anchor: 'end' });
+      f.line(680, 362, 680, 430, { color: C.line, sw: 1, dash: [3, 4] });
+      f.text(704, 370, 'NÖVBƏTİ MILESTONE', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+      f.text(704, 394, '3DS keçidi', { size: 13.5, weight: 700 });
+      f.text(704, 416, '5 noy · 7 gün qalıb', { size: 11.5, color: C.ink2 });
+      f.text(1056, 394, 'Bax →', { size: 11.5, color: C.accent, weight: 700, anchor: 'end' });
     }
 
     if (view === 'overview') {
     /* about the project — inline editing (Linear model) */
     if (editing) {
-      f.card(348, 460, 660, 150, 'Layihə haqqında');
-      f.text(988, 486, 'Yadda saxlanılır… · 800ms', { size: 11, color: C.ink2, anchor: 'end' });
+      f.card(348, 460, 728, 150, 'Layihə haqqında');
+      f.text(1056, 486, 'Yadda saxlanılır… · 800ms', { size: 11, color: C.ink2, anchor: 'end' });
       [['B', 368], ['I', 398], ['↗', 428], ['≡', 458]].forEach(function (t) {
         f.rrect(t[1], 500, 24, 20, 4, { fill: C.white, stroke: C.line, sw: 1, rough: 0.6 });
         f.text(t[1] + 12, 514, t[0], { size: 11, weight: 700, anchor: 'middle' });
       });
-      f.rrect(368, 526, 610, 52, 5, { fill: C.white, stroke: C.ink, sw: 1.1, rough: 0 });
+      f.rrect(368, 526, 678, 52, 5, { fill: C.white, stroke: C.ink, sw: 1.1, rough: 0 });
       f.text(380, 548, '3DS 2.0 keçidi və refund axınının', { size: 12.5, color: C.ink2 });
       f.text(380, 566, 'modernləşdirilməsi.', { size: 12.5, color: C.ink2 });
       f.text(368, 594, 'Esc — ləğv et · ⌘/Ctrl + Enter — yadda saxla', { size: 11, color: C.faint });
     } else {
-      f.card(348, 460, 660, 140, 'Layihə haqqında');
-      f.plines(368, 512, 610, 3, 20);
+      f.card(348, 460, 728, 140, 'Layihə haqqında');
+      f.plines(368, 512, 678, 3, 20);
     }
 
     var altY = editing ? 634 : 624;
     var altH = editing ? 190 : 196;
 
     /* nested projects — progress alt layihələrdən roll-up */
-    f.card(348, altY, 660, altH, 'Alt layihələr (2)', '+ Alt layihə');
+    f.card(348, altY, 728, altH, 'Alt layihələr (2)', '+ Alt layihə');
     [['3DS inteqrasiyası', 0.62, '3 açıq iş', ['SƏ', 'BA', 'NH'], 368],
-     ['Risk modeli', 0.30, '5 açıq iş', ['RQ', 'AM', 'EC'], 684]].forEach(function (p) {
+     ['Risk modeli', 0.30, '5 açıq iş', ['RQ', 'AM', 'EC'], 722]].forEach(function (p) {
       var bx = p[4], by = altY + 38;
-      f.rrect(bx, by, 300, 142, 5, { fill: C.fill, stroke: C.line, rough: 0.8 });
+      f.rrect(bx, by, 334, 142, 5, { fill: C.fill, stroke: C.line, rough: 0.8 });
       f.text(bx + 16, by + 28, p[0], { size: 13.5, weight: 700 });
-      WF.ui.progress(f, bx + 16, by + 44, 268, p[1], { h: 8 });
+      WF.ui.progress(f, bx + 16, by + 44, 302, p[1], { h: 8 });
       f.text(bx + 16, by + 74, p[2], { size: 11.5, color: C.ink2 });
       f.avstack(bx + 16, by + 106, p[3], 10);
     });
@@ -340,21 +341,22 @@
       projectWorks(f, 126);
     }
 
-    /* right rail — grouped activity + resources */
+    /* right rail — grouped activity + resources; sağ kənar header-in "···" düyməsi ilə eyni */
     var rt = view === 'overview' ? 200 : 126;
+    var rx = 1100, rw = 308;                   /* 1100 + 308 = 1408 */
 
     /* --- fəaliyyət kartı: resurslar kartı ilə eyni anatomiya --- */
-    f.rrect(1032, rt, 308, 356, 6, { fill: C.white });
-    f.text(1056, rt + 32, 'Fəaliyyət', { size: 15, weight: 700 });
-    f.chip(1136, rt + 19, 'v12', { h: 20, w: 36, size: 10 });
-    f.text(1316, rt + 30, 'Hamısı →', { size: 11, color: C.accent, weight: 700, anchor: 'end' });
-    f.chip(1056, rt + 54, 'Hamısı', { active: true, h: 22, w: 60, size: 10 });
-    f.chip(1124, rt + 54, 'İşlər', { h: 22, w: 50, size: 10 });
-    f.chip(1182, rt + 54, 'Resurslar', { h: 22, w: 72, size: 10 });
+    f.rrect(rx, rt, rw, 356, 6, { fill: C.white });
+    f.text(rx + 24, rt + 32, 'Fəaliyyət', { size: 15, weight: 700 });
+    f.chip(rx + 104, rt + 19, 'v12', { h: 20, w: 36, size: 10 });
+    f.text(rx + 284, rt + 30, 'Hamısı →', { size: 11, color: C.accent, weight: 700, anchor: 'end' });
+    f.chip(rx + 24, rt + 54, 'Hamısı', { active: true, h: 22, w: 60, size: 10 });
+    f.chip(rx + 92, rt + 54, 'İşlər', { h: 22, w: 50, size: 10 });
+    f.chip(rx + 150, rt + 54, 'Resurslar', { h: 22, w: 72, size: 10 });
 
-    f.text(1056, rt + 94, 'BU GÜN', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
-    f.text(1056, rt + 178, 'DÜNƏN', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
-    f.text(1056, rt + 262, '2 GÜN ƏVVƏL', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    f.text(rx + 24, rt + 94, 'BU GÜN', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    f.text(rx + 24, rt + 178, 'DÜNƏN', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    f.text(rx + 24, rt + 262, '2 GÜN ƏVVƏL', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
 
     var act = [
       [112, 'SƏ', 'ACB-142 → İcrada', '2 saat əvvəl'],
@@ -365,9 +367,9 @@
       [314, '··', 'Versiya 12 snapshot', '2 gün əvvəl']
     ];
     act.forEach(function (a) {
-      f.av(1062, rt + a[0], 11, a[1]);
-      f.text(1082, rt + a[0] + 4, a[2], { size: 12.5 });
-      f.text(1082, rt + a[0] + 20, a[3], { size: 10.5, color: C.faint });
+      f.av(rx + 30, rt + a[0], 11, a[1]);
+      f.text(rx + 50, rt + a[0] + 4, a[2], { size: 12.5 });
+      f.text(rx + 50, rt + a[0] + 20, a[3], { size: 10.5, color: C.faint });
     });
 
     /* --- resurslar kartı: eyni başlıq anatomiyası, divider yoxdur ---
@@ -375,20 +377,20 @@
        Tip bölgüsü (sənəd/use case/data dict.) sabit olmadığı üçün göstərilmir. */
     if (view !== 'resources') {
       var rc = rt + 372;
-      f.rrect(1032, rc, 308, 152, 6, { fill: C.white });
-      f.text(1056, rc + 32, 'Resurslar', { size: 15, weight: 700 });
-      f.text(1128, rc + 31, '15', { size: 11, weight: 600, color: C.faint });
-      f.text(1316, rc + 30, 'Hamısı →', { size: 11, color: C.accent, weight: 700, anchor: 'end' });
+      f.rrect(rx, rc, rw, 152, 6, { fill: C.white });
+      f.text(rx + 24, rc + 32, 'Resurslar', { size: 15, weight: 700 });
+      f.text(rx + 96, rc + 31, '15', { size: 11, weight: 600, color: C.faint });
+      f.text(rx + 284, rc + 30, 'Hamısı →', { size: 11, color: C.accent, weight: 700, anchor: 'end' });
 
       /* son əlavə edilən resurs — preview + meta */
-      f.rrect(1056, rc + 52, 36, 36, 5, { fill: C.fill2, stroke: C.line, sw: 1, rough: 0.7 });
-      f.plines(1062, rc + 62, 24, 3, 7, { color: C.faint, sw: 1.2 });
-      f.text(1102, rc + 66, 'UC-04 · Refund axını', { size: 11.5 });
-      f.text(1102, rc + 82, 'Use case · S. Əliyeva · 3 gün', { size: 9.5, color: C.faint });
+      f.rrect(rx + 24, rc + 52, 36, 36, 5, { fill: C.fill2, stroke: C.line, sw: 1, rough: 0.7 });
+      f.plines(rx + 30, rc + 62, 24, 3, 7, { color: C.faint, sw: 1.2 });
+      f.text(rx + 70, rc + 66, 'UC-04 · Refund axını', { size: 11.5 });
+      f.text(rx + 70, rc + 82, 'Use case · S. Əliyeva · 3 gün', { size: 9.5, color: C.faint });
 
       /* yaratma action-u — kartın altında, dashed */
-      f.rrect(1056, rc + 100, 260, 32, 6, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
-      f.text(1186, rc + 120, '+ Yeni resurs', { size: 11, color: C.ink2, anchor: 'middle' });
+      f.rrect(rx + 24, rc + 100, 260, 32, 6, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
+      f.text(rx + 154, rc + 120, '+ Yeni resurs', { size: 11, color: C.ink2, anchor: 'middle' });
     }
 
     /* icon picker overlay */
@@ -416,11 +418,11 @@
     if (!editing && !picker && view === 'overview') {
       f.anno(1, 88, 81);
       f.anno(2, 532, 248, 556, 268);
-      f.anno(3, 1020, 540, 986, 640);
-      f.anno(4, 1020, 154, 1204, 222);
+      f.anno(3, 1088, 540, 1054, 640);
+      f.anno(4, 1088, 154, 1272, 222);
       f.annoS(5, 772, 196);
-      f.annoS(6, 1020, 674);
-      f.annoS(7, 980, 480);
+      f.annoS(6, 1088, 674);
+      f.annoS(7, 1048, 480);
       f.annoS(8, 398, 138);
       f.annoS(9, 1012, 84);
       f.annoS(10, 1216, 30);
