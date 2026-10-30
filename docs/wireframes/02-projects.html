@@ -79,13 +79,14 @@
 
     <figure>
       <div class="frame-head"><span class="state-tag">03d</span><h3>Layihə — Works tabı</h3>
-        <span class="purpose">Header yoxdur · tabs · status qrupları</span></div>
+        <span class="purpose">Header yoxdur · tabs · status qrupları · nested alt işlər</span></div>
       <svg class="frame" viewBox="0 0 1440 900" data-frame="project-works"></svg>
       <ul class="state-notes">
         <li><b>Header təkrarlanmır.</b> Cover, ikon, ad, status chipləri və komanda sətri yalnız Overview-dadır; Works tabı breadcrumb + tabs ilə başlayır.</li>
         <li><b>Cədvəl deyil, status feed-i.</b> Sütun başlığı, sətir zolağı, separator xətti və item sayğacı yoxdur — hər iş 44px hündürlüyündə öz sətrindədir; siyahı tabs-altından məzmun sütununun tam eni ilə başlayır.</li>
-        <li><b>Hər status öz qrupudur.</b> Backlog (1), Todo (2), In Progress (3), In Review (1), Done (1), Canceled (1) — 1–3 işlik altı qrup. Statusu söz deyil, soldakı glyph verir: kəsikli ring / boş ring / accent target / ring + üç nöqtə / dairə içində check / dairə içində ×. Qrup artıq statusun adını deyir, ona görə sətirdə status etiketi təkrarlanmır.</li>
-        <li><b>Başlıq yeganə vurğudur.</b> Sətir tək sətirdir: solda seçim üçün checkbox slotu, onun sağında status glyph-i, başlıq və yanında solğun ID; sağ sonunda məsul avatarı və tarix. Done və Canceled sətirləri solğun tonla geri çəkilir.</li>
+        <li><b>Hər status öz qrupudur.</b> Backlog (1), Todo (4), In Progress (3), In Review (1), Done (1), Canceled (1) — 1–4 işlik altı qrup; alt işlər də sayğaca daxildir. Statusu söz deyil, soldakı glyph verir: kəsikli ring / boş ring / accent target / ring + üç nöqtə / dairə içində check / dairə içində ×. Qrup artıq statusun adını deyir, ona görə sətirdə status etiketi təkrarlanmır.</li>
+        <li><b>Başlıq yeganə vurğudur.</b> Sətir tək sətirdir: solda seçim üçün checkbox slotu, onun sağında status glyph-i, başlıq və yanında solğun ID; parent sətirdə sağda alt iş sayğacı, sağ sonunda məsul avatarı və tarix. Done və Canceled sətirləri solğun tonla geri çəkilir.</li>
+        <li><b>Alt işlər ağac kimi.</b> Alt işlər 28px içəri girir; şaquli rels parent status glyph-inin mərkəzindən enir, elbow alt işin status glyph-inə kiçik boşluqla yaxınlaşır. Xətlər ikonlara yapışmır (4px gap) və döngələr yumşaqdır — kəskin bucaq yoxdur. Alt iş öz status glyph-ini saxlayır — Done alt iş Todo parent-ın altında Done kimi oxunur, qruplaşdırma isə parent-a görədir. Parent sətrin sağında “1/2” alt iş sayğacı durur. Item səviyyəsində yığma ikonu yoxdur: ağac həmişə açıq göstərilir, dərinlik istənilən səviyyədədir (nümunədə bir səviyyə); alt iş sətir menyusundakı “Alt iş yarat” ilə yaranır.</li>
         <li><b>Qrup başlığı düymədir.</b> Tam enli, 30px hündürlüklü düymə — solda chevron (açıqda aşağı, yığılıda sağa), yanında kiçik gap ilə say, sağ sonundakı ayrıca “+” həmin statusda yeni iş yaradır. Bütün qruplar açıq göstərilib, chevron ilə yığılır.</li>
         <li><b>Hover və klaviatura eyni vəziyyəti paylaşır.</b> Ağ fon + accent haşiyə; soldakı ayrılmış slotda seçim checkbox-ı görünür, status glyph-i yerində qalır; sağdakı tarix yerini “···” menyu düyməsinə verir, avatar yerində qalır. ↑↓ sətirlər arasında, Enter açır, X tamamlayır.</li>
         <li><b>Status glyph-i status seçimidir.</b> Glyph-in özü düymədir: klik altı statuslu kiçik menyunu açır, cari status işarələnib; seçim dərhal qrupu dəyişir. Nümunədə hover olunan sətrin status menyusu açıq göstərilib.</li>
@@ -320,12 +321,17 @@
       });
     }
 
+    /* sətir: [id, başlıq, status, avatar, ad, tarix, alt işlər, açıq?]
+       alt işlər eyni formadadır — ağac istənilən dərinliyə gedir */
     var groups = [
       { label: 'Backlog', rows: [
         ['ACB-160', 'Refund API kontraktı', 'Backlog', 'BA', 'B. Ağazadə', '30 okt']
       ] },
       { label: 'Todo', rows: [
-        ['ACB-155', 'Webhook imzası', 'Todo', 'EC', 'E. Cəfərova', '1 noy'],
+        ['ACB-155', 'Webhook imzası', 'Todo', 'EC', 'E. Cəfərova', '1 noy', [
+          ['ACB-156', 'HMAC v1 → v2', 'Done', 'EC', 'E. Cəfərova', '31 okt'],
+          ['ACB-157', 'Replay qoruması', 'In Progress', 'NH', 'N. Həsənli', '1 noy']
+        ]],
         ['ACB-158', '3DS timeout sərhədi', 'Todo', 'EC', 'E. Cəfərova', '2 noy']
       ] },
       { label: 'In Progress', rows: [
@@ -344,13 +350,140 @@
       ] }
     ];
 
-    /* sətir daxili sabitlər: solda gizli checkbox slotu, onun sağında status
-       glyph-i, sonra başlıq — hover glyph-i sıradan çıxarmır */
-    var cbX = left + 11, statusX = left + 40, titleX = left + 60;
-    var openMenu = null;                         /* nümunə üçün açıq status menyusu */
+    /* ağac sayğacları — alt işlər də qrupa və sayğaca daxildir */
+    function countRows(rows) {
+      return rows.reduce(function (n, r) {
+        return n + 1 + (r[6] ? countRows(r[6]) : 0);
+      }, 0);
+    }
+    function countDone(rows) {
+      return rows.reduce(function (n, r) {
+        return n + (closed[r[2]] ? 1 : 0) + (r[6] ? countDone(r[6]) : 0);
+      }, 0);
+    }
+    function blockHeight(r) {
+      var kids = r[6] || [];
+      if (!kids.length) return rowH;
+      return rowH + kids.reduce(function (h, k) { return h + blockHeight(k); }, 0);
+    }
+
+    /* sətir daxili sabitlər: solda gizli checkbox slotu, onun sağında
+       status glyph-i, sonra başlıq. Alt işlər hər səviyyədə 28px içəri
+       girir; item səviyyəsində yığma yoxdur — ağac həmişə açıqdır. */
+    var indent = 28, openMenu = null;
+    var hoverId = 'ACB-142';                     /* nümunə üçün açıq status menyusu */
+
+    function drawRow(r, depth, ry) {
+      var kids = r[6] || [];
+      var hasKids = kids.length > 0;
+      var hover = r[0] === hoverId;
+      var done = closed[r[2]];
+      var rowLeft = left + depth * indent;
+      var cbX = rowLeft + 11;
+      var statusX = rowLeft + 44, titleX = rowLeft + 64;
+      var rowMid = ry + rowH / 2;
+
+      /* hover: sətir ağ karta çevrilir, accent haşiyə alır */
+      if (hover) {
+        f.rrect(left - 8, ry + 1, right - left + 16, rowH - 2, 8, {
+          fill: C.white, stroke: C.accent, sw: 1.6, rough: 0.6
+        });
+      }
+
+      if (hover) {
+        /* checkbox yalnız hover/fokusda görünür — slot həmişə ayrılıb */
+        var cb = 16;
+        f.rrect(cbX - cb / 2, rowMid - cb / 2, cb, cb, 4, {
+          fill: C.white, stroke: C.accent, sw: 1.3, rough: 0.5
+        });
+      }
+
+      statusIcon(statusX, rowMid, r[2]);
+      f.text(titleX, rowMid + 4.5, r[1], {
+        size: 12.5, weight: done ? 400 : 700, color: done ? C.ink2 : C.ink
+      });
+      f.text(titleX + WF.tw(r[1], 12.5) + 8, rowMid + 4, '· ' + r[0], {
+        size: 9.5, color: C.faint
+      });
+
+      /* parent sətrində alt iş sayğacı: bitmiş / bütün */
+      if (hasKids) {
+        f.text(right - 72, rowMid + 3.5, countDone(kids) + '/' + countRows(kids), {
+          size: 9.5, color: C.faint, anchor: 'end'
+        });
+      }
+
+      f.av(right - 56, rowMid, 8, r[3]);
+
+      if (hover) {
+        /* hover-də tarix yerini ··· menyu düyməsinə verir; avatar yerində qalır */
+        var bw = 22, bx = right - bw, by = ry + (rowH - bw) / 2;
+        f.rrect(bx, by, bw, bw, 5, { fill: C.fill, stroke: C.line, sw: 1, rough: 0.6 });
+        f.text(bx + bw / 2, by + bw / 2 + 4, '···', {
+          size: 11, anchor: 'middle', color: C.ink2
+        });
+
+        /* status glyph-inə klik → seçim menyusu; sətrin altından açılır */
+        openMenu = { x: statusX - 8, y: ry + rowH + 2, current: r[2] };
+      } else {
+        f.text(right, rowMid + 3.5, r[5], {
+          size: 10, color: C.faint, anchor: 'end'
+        });
+      }
+    }
+
+    /* ağacı çək: parent sətri, sonra rels + elbow və alt sətirlər */
+    function drawTree(rows, depth, y) {
+      rows.forEach(function (r) {
+        var ry = y;
+        drawRow(r, depth, ry);
+
+        var kids = r[6] || [];
+        if (kids.length) {
+          /* rels parent status glyph-inin mərkəzindən enir, elbow isə alt işin
+             status glyph-inin sol kənarına toxunur — xətlər ikonlara oturur */
+          var railX = left + depth * indent + 44;
+          var parentMid = ry + rowH / 2;
+          var cy = ry + rowH, mids = [];
+          kids.forEach(function (k) {
+            mids.push(cy + rowH / 2);
+            cy += blockHeight(k);
+          });
+
+          /* ikonlarla xətt arasında kiçik boşluq: vertikal 4px, horizontal 4px */
+          var gap = 4, rad = 6;
+          var railTop = parentMid + 10 + gap;
+          var railBottom = mids[mids.length - 1];
+
+          /* əsas şaquli rels — son elbow-un əyrisinə qədər */
+          f.line(railX, railTop, railX, railBottom - rad, {
+            color: C.line, sw: 1.1, rough: 0.5
+          });
+
+          /* hər alt işə yumşaq döngəli elbow — kəskin bucaq yoxdur */
+          var childStatusX = left + (depth + 1) * indent + 44;
+          var endX = childStatusX - 10 - gap;
+          kids.forEach(function (k, i) {
+            var my = mids[i];
+            f.add(WF.el('path', {
+              d: 'M' + railX + ' ' + (my - rad) +
+                 'Q' + railX + ' ' + my + ' ' + (railX + rad) + ' ' + my +
+                 'L' + endX + ' ' + my,
+              fill: 'none', stroke: C.line, 'stroke-width': 1.1,
+              'stroke-linecap': 'round'
+            }, f.g));
+          });
+
+          drawTree(kids, depth + 1, ry + rowH);
+        }
+
+        y = ry + blockHeight(r);
+      });
+      return y;
+    }
 
     var y = top;
-    groups.forEach(function (g, gi) {
+    groups.forEach(function (g) {
       /* status qrupu düymədir: tam enli; solda chevron, yanında say,
          sağ sonundakı “+” həmin statusda yeni iş yaradır */
       f.rrect(left, y, right - left, headH, 6, {
@@ -359,7 +492,7 @@
       var iy = y + headH / 2;
       f.chev(left + 16, iy, 'down', 4.2);
       f.text(left + 34, y + 19, g.label, { size: 12.5, weight: 700 });
-      f.text(left + 34 + WF.tw(g.label, 12.5) + 8, y + 19, String(g.rows.length), {
+      f.text(left + 34 + WF.tw(g.label, 12.5) + 8, y + 19, String(countRows(g.rows)), {
         size: 10.5, weight: 600, color: C.faint
       });
 
@@ -369,58 +502,7 @@
       f.line(ax + ab / 2, ay + 5, ax + ab / 2, ay + ab - 5, { color: C.ink2, sw: 1.2 });
 
       var ry = y + headH + 6;
-      g.rows.forEach(function (r, ri) {
-        var hover = gi === 2 && ri === 0;         /* In Progress — hover nümunəsi */
-        var done = closed[r[2]];
-
-        /* hover: sətir ağ karta çevrilir, accent haşiyə alır */
-        if (hover) {
-          f.rrect(left - 8, ry + 1, right - left + 16, rowH - 2, 8, {
-            fill: C.white, stroke: C.accent, sw: 1.6, rough: 0.6
-          });
-        }
-
-        /* tək sətir: solda checkbox slotu, status glyph-i, başlıq + solğun ID;
-           sağ sonunda məsul avatarı və tarix */
-        var rowMid = ry + rowH / 2;
-
-        if (hover) {
-          /* checkbox yalnız hover/fokusda görünür — slot həmişə ayrılıb */
-          var cb = 16;
-          f.rrect(cbX - cb / 2, rowMid - cb / 2, cb, cb, 4, {
-            fill: C.white, stroke: C.accent, sw: 1.3, rough: 0.5
-          });
-        }
-        statusIcon(statusX, rowMid, r[2]);
-        f.text(titleX, rowMid + 4.5, r[1], {
-          size: 12.5, weight: done ? 400 : 700, color: done ? C.ink2 : C.ink
-        });
-        f.text(titleX + WF.tw(r[1], 12.5) + 8, rowMid + 4, '· ' + r[0], {
-          size: 9.5, color: C.faint
-        });
-
-        f.av(right - 56, rowMid, 8, r[3]);
-
-        if (hover) {
-          /* hover-də tarix yerini ··· menyu düyməsinə verir; avatar yerində qalır */
-          var bw = 22, bx = right - bw, by = ry + (rowH - bw) / 2;
-          f.rrect(bx, by, bw, bw, 5, { fill: C.fill, stroke: C.line, sw: 1, rough: 0.6 });
-          f.text(bx + bw / 2, by + bw / 2 + 4, '···', {
-            size: 11, anchor: 'middle', color: C.ink2
-          });
-
-          /* status glyph-inə klik → seçim menyusu; sətrin altından açılır */
-          openMenu = { x: statusX - 8, y: ry + rowH + 2, current: r[2] };
-        } else {
-          f.text(right, rowMid + 3.5, r[5], {
-            size: 10, color: C.faint, anchor: 'end'
-          });
-        }
-
-        ry += rowH;
-      });
-
-      y = ry + 10;
+      y = drawTree(g.rows, 0, ry) + 10;
     });
 
     /* menyu bütün sətirlərdən sonra çəkilir ki, üst qatda oxunsun */
