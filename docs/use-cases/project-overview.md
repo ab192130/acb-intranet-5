@@ -439,7 +439,7 @@ status yenilənməyib.
 
 **Aktyor:** Contributor+ · **Prioritet:** P0 · **Status:** Təsdiq gözləyir
 
-**Vayrfreym:** [Works tab](../wireframes/02-projects.html#project-works) · [board](../wireframes/02-projects.html#board)
+**Vayrfreym:** [Works tab](../wireframes/02-projects.html#project-works) · board və work item detalı redizayn üçün çıxarılıb
 
 **Məqsəd:** Layihə kontekstindən çıxmadan yeni iş yaratmaq.
 
@@ -450,7 +450,7 @@ status yenilənməyib.
 1. Modal / drawer açılır; layihə əvvəlcədən seçilib.
 2. Başlıq, tip, assignee, prioritet daxil edilir.
 3. “Yarat” ilə iş yaranır.
-4. İstifadəçi board-da həmin işi görür və ya Overview-a qayıdır.
+4. İstifadəçi Works tabında həmin işi görür və ya Overview-a qayıdır.
 
 **Ekran tələbləri:**
 
@@ -487,8 +487,10 @@ status yenilənməyib.
 **Ekran tələbləri:**
 
 - 3 tip ayrı-ayrı qruplaşdırılmalıdır: sənəd, use case, data dictionary.
-- Son yenilənmə və sahib.
-- Boş halda “hələ resurs yoxdur”.
+- Resurslar siyahı deyil, kart şəbəkəsidir; hər kartda tip, başlıq, sahib, son yenilənmə və tipə uyğun preview (mətn / nömrəli addım / cədvəl).
+- Tip filtri və axtarış yuxarıda sabit qalır.
+- Progress / milestone zolağı göstərilmir — yer kart şəbəkəsinə verilir.
+- Boş halda şəbəkənin sonunda “Yeni resurs” kartı göstərilir.
 
 **Data:** `Resource`, `Document`, `UseCase`, `DataDictionary`.
 
@@ -817,9 +819,10 @@ Resources və Works tabları da eyni strukturla **03c/03d** kimi əlavə edildi
 | D9 | İcmal redaktəsi | Panel vs inline | **Təsdiqləndi:** yalnız təsvir inline; autosave debounce 800ms; Esc ləğv; ⌘/Ctrl+Enter save | ✅ |
 | D10 | İkon / cover | Var / yox | **Təsdiqləndi:** Notion üslubu; emoji picker; cover dəyişdir/sil | ✅ |
 | D11 | Header panel | Saxlamaq / yığışdırmaq | **Təsdiqləndi:** top bar yoxdur; axtarış rail-də ⌘K trigger (cmdk) | ✅ |
+| D12 | Resources tabı | Siyahı və ya kart şəbəkəsi | **Təsdiqləndi:** asset-library modeli — kart şəbəkəsi, tipə uyğun preview, sonda “Yeni resurs” kartı; progress zolağı yoxdur | ✅ |
 
-**D1–D11 bağlandı.** Status/health modeli, inline təsvir, icon/cover, header-siz shell və
-versiya səthi təsdiqləndi. V1 vayrfreymləri üçün əsas hazırdır.
+**D1–D12 bağlandı.** Status/health modeli, inline təsvir, icon/cover, header-siz shell, resurs
+kart şəbəkəsi və versiya səthi təsdiqləndi. V1 vayrfreymləri üçün əsas hazırdır.
 
 ### 7.1 Versiya müqayisəsi — “ayrıca ekran” nə deməkdir?
 
@@ -844,7 +847,7 @@ versiya səthi təsdiqləndi. V1 vayrfreymləri üçün əsas hazırdır.
 - [x] V1 dəsti (1, 3, 5, 6, 7 + 2, 4) uyğundur.
 - [x] Status + health iki ayrı ox kimi təsdiqləndi.
 - [x] Versiya müqayisəsi səthi seçildi (modal vs ayrıca səhifə).
-- [x] D1–D11 qərarları bağlanıb.
+- [x] D1–D12 qərarları bağlanıb.
 - [x] İnline təsvir + autosave debounce təsdiqləndi.
 - [x] İkon / cover + emoji picker təsdiqləndi.
 - [ ] Vayrfreym çəkməyə başlayaq.

@@ -42,7 +42,7 @@
   .frame-head{display:flex; align-items:baseline; gap:12px; margin-bottom:10px}
   .frame-head h3{font-size:19px; margin:0; font-weight:700}
   .frame-head .num{font-size:11.5px; color:var(--accent); font-weight:700; letter-spacing:.12em}
-  .frame-head .num::after{content:" / 11"; color:var(--faint); letter-spacing:0}
+  .frame-head .num::after{content:" / 09"; color:var(--faint); letter-spacing:0}
   .frame-head .purpose{font-size:13px; color:var(--faint); margin-left:auto; text-align:right; max-width:52%}
   svg.frame{width:100%; height:auto; display:block; background:var(--paper);
     border:1px solid var(--line); border-radius:3px; box-shadow:0 1px 0 rgba(51,48,43,.06)}

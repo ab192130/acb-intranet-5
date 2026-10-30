@@ -18,7 +18,7 @@ docs/wireframes/
   index.html            giriş: örtük, dizayn prinsipləri, bölmələrin siyahısı
   components.html       shadcn anatomiyalı wireframe komponent kiti
   01-my-work-os.html    Bugün · Günü balanslaşdır
-  02-projects.html      Layihə icmalı · Board · Work item detalı
+  02-projects.html      Layihə icmalı · Resources · Works
   03-map.html           Asılılıq xəritəsi
   04-knowledge.html     Resurs — sənəd · use case · data dictionary
   05-people.html        Kataloq · Şəxs profili
@@ -125,16 +125,16 @@ naviqasiya, başlıq və annotasiyalar gizlədilir:
 
 ```powershell
 $chrome = "C:\Program Files\Google\Chrome\Application\chrome.exe"
-$url = "file:///C:/.../docs/wireframes/02-projects.html#board"
+$url = "file:///C:/.../docs/wireframes/02-projects.html#project"
 & $chrome --headless=new --disable-gpu --hide-scrollbars `
   --window-size=1440,900 --user-data-dir="$env:TEMP\wf" `
-  --screenshot="board.png" $url
+  --screenshot="project.png" $url
 ```
 
 | Səhifə | `#` dəyərləri |
 |---|---|
 | `01-my-work-os.html` | `today`, `plan` |
-| `02-projects.html` | `project`, `board`, `workitem` |
+| `02-projects.html` | `project`, `project-icon`, `project-resources`, `project-works` |
 | `03-map.html` | `map` |
 | `04-knowledge.html` | `document`, `doc`, `datadict` |
 | `05-people.html` | `people`, `person` |

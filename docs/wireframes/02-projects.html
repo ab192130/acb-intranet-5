@@ -65,12 +65,14 @@
 
     <figure>
       <div class="frame-head"><span class="state-tag">03c</span><h3>Layihə — Resources tabı</h3>
-        <span class="purpose">Eyni struktur · cover placeholder · resurs siyahısı</span></div>
+        <span class="purpose">Eyni struktur · cover placeholder · resurs kart şəbəkəsi</span></div>
       <svg class="frame" viewBox="0 0 1440 900" data-frame="project-resources"></svg>
       <ul class="state-notes">
         <li><b>Eyni struktur.</b> Sidebar, breadcrumb action-ları, cover placeholder, icon, başlıq, tabs və sağ rels qalır.</li>
-        <li><b>Resurs siyahısı.</b> Tip filtri + axtarış; sənəd, use case və data dictionary bir yerdə.</li>
-        <li><b>Cover placeholder.</b> Bu tablarda cover yalnız kontekst yeridir; redaktə Overview-dadır.</li>
+        <li><b>Siyahı deyil, kart şəbəkəsi.</b> Asset-library modeli: hər resurs öz “preview” sahəsi olan kartdır; tip filtri və axtarış yuxarıda qalır.</li>
+        <li><b>Preview tipi açmadan oxunur.</b> Sənəd — mətn sətirləri, use case — nömrəli addımlar, data dictionary — mini cədvəl. Tip badge-i bunu təkrarlayır.</li>
+        <li><b>Boş yer “yeni resurs” kartı ilə doldurulur.</b> Yaradma əməliyyatı siyahıdan çıxmır; kart həm də boş vəziyyəti göstərir. Hover-də “⋯” action-ları açılır.</li>
+        <li><b>Progress zolağı yoxdur.</b> Bu tab resurs kitabxanasıdır, icra paneli deyil; 46% / milestone Overview və Works-də qalır, burada yer kart şəbəkəsinə verilir.</li>
       </ul>
     </figure>
 
@@ -81,31 +83,10 @@
       <ul class="state-notes">
         <li><b>Eyni struktur.</b> Sidebar, breadcrumb action-ları, cover placeholder, icon, başlıq, tabs və sağ rels qalır.</li>
         <li><b>Work items siyahısı.</b> Status, məsul və tarix bir sətirdə; filtr yuxarıda.</li>
-        <li><b>Board ayrı ekran.</b> Works tabı kompakt siyahı göstərir; tam board ayrıca ekranda qalır.</li>
+        <li><b>Board redizaynı sonra planlanır.</b> Works tabı kompakt siyahı göstərir; board və work item detalı bu dəstdən çıxarılıb.</li>
       </ul>
     </figure>
 
-    <figure>
-      <div class="frame-head"><span class="num">04</span><h3>Work items — board</h3>
-        <span class="purpose">Status üzrə sütunlar, kartda yalnız qərar üçün lazım olan siqnallar</span></div>
-      <svg class="frame" viewBox="0 0 1440 900" data-frame="board"></svg>
-      <ol class="notes">
-        <li><b>Sütun = status.</b> v1-də ayrı workflow konfiqurasiyası yoxdur — Jira pariteti qəsdən hədəf deyil.</li>
-        <li><b>Kartda 4 siqnal.</b> id, tip, kim, asılılıq. Təsvir, şərhlər və tarixçə detal panelindədir.</li>
-        <li><b>Klaviatura ilə yaratma.</b> Forma açmadan yazmaq — authoring sürtünməsi adoptasiyanın açarıdır.</li>
-      </ol>
-    </figure>
-
-    <figure>
-      <div class="frame-head"><span class="num">05</span><h3>Work item detalı</h3>
-        <span class="purpose">Alt işlər, iştirakçılar, asılılıqlar, resurslar və versiya jurnalı</span></div>
-      <svg class="frame" viewBox="0 0 1440 900" data-frame="workitem"></svg>
-      <ol class="notes">
-        <li><b>Bütün iştirakçılar görünür.</b> Alt işlərdə çalışan üzvlər sətirdə yığılır — roll-up avtomatikdir (bənd 16).</li>
-        <li><b>Asılılıq iki istiqamətdə.</b> "Bloklayır" və "bloklanır" ayrı göstərilir; tək "linked issues" kifayət deyil (bənd 10).</li>
-        <li><b>Meta sabit panel.</b> Detal sağda qalır, kontekst dəyişəndə yerini itirmir.</li>
-      </ol>
-    </figure>
   </section>
 
   <div class="partfoot">
@@ -118,7 +99,7 @@
 <script src="vendor/rough.js"></script>
 <script src="core.js"></script>
 <script>
-/* 02 Projects — inline frames: icmal, board, work item detalı */
+/* 02 Projects — inline frames: layihə icmalı, resurslar, works */
 (function () {
   'use strict';
   var WF = window.WF, C = WF.C;
@@ -149,31 +130,62 @@
     f.text(200, 723, '+ Yeni layihə', { size: 12.5, anchor: 'middle', color: C.ink2 });
   }
 
-  /* Resources tab — same project chrome, placeholder cover */
+  /* Resources tab — same project chrome, card grid */
   function projectResources(f) {
-    f.card(348, 460, 660, 360, 'Resurslar', '+ Resurs əlavə et');
-    f.input(368, 504, 260, 'Resurs axtar…', { h: 30 });
-    f.chip(644, 504, 'Hamısı', { active: true, h: 26, w: 70, size: 10.5 });
-    f.chip(722, 504, 'Sənəd', { h: 26, w: 60, size: 10.5 });
-    f.chip(790, 504, 'Use case', { h: 26, w: 76, size: 10.5 });
-    f.chip(874, 504, 'Data dict.', { h: 26, w: 86, size: 10.5 });
-    f.line(368, 548, 988, 548, { color: C.line, sw: 1, dash: [4, 5] });
+    f.card(348, 344, 660, 460, 'Resurslar');
+    f.input(368, 384, 200, 'Resurs axtar…', { h: 30 });
+    f.chip(580, 386, 'Hamısı', { active: true, h: 26, w: 64, size: 10.5 });
+    f.chip(652, 386, 'Sənəd', { h: 26, w: 56, size: 10.5 });
+    f.chip(716, 386, 'Use case', { h: 26, w: 74, size: 10.5 });
+    f.chip(798, 386, 'Data dict.', { h: 26, w: 84, size: 10.5 });
+    f.text(988, 403, '5 resurs', { size: 10.5, color: C.faint, anchor: 'end' });
+    f.line(368, 428, 988, 428, { color: C.line, sw: 1, dash: [4, 5] });
 
-    [
-      ['Sənəd', 'Ödəniş axını — ümumi baxış', 'SƏ', 'S. Əliyeva', '3 gün', 'secondary', 60],
-      ['Use case', 'UC-04 · Refund axını', 'SƏ', 'S. Əliyeva', '3 gün', 'outline', 76],
-      ['Data dict.', 'payment_tx', 'AM', 'A. Məmmədov', '5 gün', 'secondary', 86],
-      ['Sənəd', 'Refund siyasəti', 'SƏ', 'S. Əliyeva', '1 həftə', 'secondary', 60]
-    ].forEach(function (r, i) {
-      var y = 580 + i * 54;
-      WF.ui.badge(f, 368, y - 13, r[0], { h: 20, w: r[6], fs: 9.5, variant: r[5] });
-      f.text(470, y, r[1], { size: 12.5 });
-      f.av(758, y - 4, 9, r[2]);
-      f.text(776, y, r[3], { size: 11.5, color: C.ink2 });
-      f.text(988, y, r[4], { size: 10.5, color: C.faint, anchor: 'end' });
-      if (i < 3) f.line(368, y + 22, 988, y + 22, { color: C.line, sw: 1, dash: [4, 5] });
+    /* asset-library kartları: preview + tip + sahib + yenilənmə */
+    var cards = [
+      ['Sənəd', 'doc', 'Ödəniş axını — ümumi baxış', 'SƏ', 'S. Əliyeva', '3 gün'],
+      ['Use case', 'uc', 'UC-04 · Refund axını', 'SƏ', 'S. Əliyeva', '3 gün'],
+      ['Data dict.', 'dd', 'payment_tx', 'AM', 'A. Məmmədov', '5 gün'],
+      ['Sənəd', 'doc', 'Refund siyasəti', 'SƏ', 'S. Əliyeva', '1 həftə'],
+      ['Data dict.', 'dd', 'refund', 'RQ', 'R. Quliyev', '2 həftə']
+    ];
+    var bw = { 'Sənəd': 44, 'Use case': 60, 'Data dict.': 64 };
+    cards.forEach(function (c, i) {
+      var x = 368 + (i % 3) * 214, y = 444 + Math.floor(i / 3) * 176;
+      f.rrect(x, y, 192, 160, 6, { fill: C.white });
+      f.rrect(x + 1, y + 1, 190, 76, 5, { fill: C.fill2, stroke: 'none', rough: 0.6 });
+      f.line(x + 1, y + 77, x + 191, y + 77, { color: C.line, sw: 1 });
+
+      if (c[1] === 'doc') {
+        f.line(x + 10, y + 42, x + 64, y + 42, { color: C.ink2, sw: 1.5 });
+        f.plines(x + 10, y + 52, 160, 2, 9, { color: C.faint, sw: 1.2 });
+      } else if (c[1] === 'uc') {
+        [0, 1, 2].forEach(function (j) {
+          f.text(x + 11, y + 48 + j * 10, String(j + 1) + '.', { size: 8.5, color: C.faint });
+          f.pline(x + 24, y + 46 + j * 10, 150, { color: C.faint, sw: 1.2 });
+        });
+      } else {
+        [42, 52, 62].forEach(function (ly) {
+          f.line(x + 10, y + ly, x + 172, y + ly, { color: C.faint, sw: 1.1 });
+        });
+        [72, 124].forEach(function (lx) {
+          f.line(x + lx, y + 36, x + lx, y + 68, { color: C.faint, sw: 1.1 });
+        });
+      }
+      f.text(x + 178, y + 23, '⋯', { size: 12, color: C.faint, anchor: 'end' });
+      WF.ui.badge(f, x + 10, y + 10, c[0], { h: 18, w: bw[c[0]], fs: 8.5, variant: c[1] === 'uc' ? 'outline' : 'secondary' });
+      f.text(x + 12, y + 104, c[2], { size: 12 });
+      f.av(x + 18, y + 134, 7, c[3]);
+      f.text(x + 30, y + 137, c[4], { size: 9.5, color: C.ink2 });
+      f.text(x + 178, y + 137, c[5], { size: 9, color: C.faint, anchor: 'end' });
     });
-    f.text(368, 792, '4 resurs', { size: 10.5, color: C.faint });
+
+    /* boş vəziyyət: yaratma kartı şəbəkənin sonunda qalır */
+    var cx = 368 + 2 * 214, cy = 620;
+    f.rrect(cx, cy, 192, 160, 6, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
+    f.text(cx + 96, cy + 66, '+', { size: 20, anchor: 'middle', color: C.faint });
+    f.text(cx + 96, cy + 92, 'Yeni resurs', { size: 11.5, anchor: 'middle', color: C.ink2 });
+    f.text(cx + 96, cy + 110, 'Sənəd · use case · data dict.', { size: 8.5, anchor: 'middle', color: C.faint });
   }
 
   /* Works tab — same project chrome, placeholder cover */
@@ -248,17 +260,19 @@
     /* tabs — shadcn Tabs (WF.ui) */
     WF.ui.tabs(f, 348, 288, ['Overview', 'Resources', 'Works'], tab, { itemPad: 16 });
 
-    /* pulse strip — progress, metrics, next milestone: bir dəfə */
-    f.rrect(348, 348, 660, 88, 8, { fill: C.fill, stroke: C.line, rough: 0.8 });
-    f.text(368, 370, 'PROGRESS', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
-    WF.ui.progress(f, 368, 380, 220, 0.46, { h: 8 });
-    f.text(596, 386, '46%', { size: 11.5, color: C.ink2 });
-    f.text(368, 408, '8 açıq · 0 bloklanmış · 14 bitmiş', { size: 11.5, color: C.ink2 });
-    f.line(620, 362, 620, 430, { color: C.line, sw: 1, dash: [3, 4] });
-    f.text(644, 370, 'NÖVBƏTİ MILESTONE', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
-    f.text(644, 394, '3DS keçidi', { size: 13.5, weight: 700 });
-    f.text(644, 416, '5 noy · 7 gün qalıb', { size: 11.5, color: C.ink2 });
-    f.text(988, 394, 'Bax →', { size: 11.5, color: C.accent, weight: 700, anchor: 'end' });
+    /* pulse strip — progress, metrics, next milestone: Overview və Works-də */
+    if (view !== 'resources') {
+      f.rrect(348, 348, 660, 88, 8, { fill: C.fill, stroke: C.line, rough: 0.8 });
+      f.text(368, 370, 'PROGRESS', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+      WF.ui.progress(f, 368, 380, 220, 0.46, { h: 8 });
+      f.text(596, 386, '46%', { size: 11.5, color: C.ink2 });
+      f.text(368, 408, '8 açıq · 0 bloklanmış · 14 bitmiş', { size: 11.5, color: C.ink2 });
+      f.line(620, 362, 620, 430, { color: C.line, sw: 1, dash: [3, 4] });
+      f.text(644, 370, 'NÖVBƏTİ MILESTONE', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+      f.text(644, 394, '3DS keçidi', { size: 13.5, weight: 700 });
+      f.text(644, 416, '5 noy · 7 gün qalıb', { size: 11.5, color: C.ink2 });
+      f.text(988, 394, 'Bax →', { size: 11.5, color: C.accent, weight: 700, anchor: 'end' });
+    }
 
     if (view === 'overview') {
     /* about the project — inline editing (Linear model) */
@@ -374,159 +388,6 @@
   frames['project-resources'] = function (f) { projectView(f, false, null, 1, 'resources'); };
   frames['project-works'] = function (f) { projectView(f, false, null, 2, 'works'); };
 
-  /* ============================ 4. BOARD ============================ */
-  frames.board = function (f) {
-    WF.shell(f, { crumb: 'Layihələr', active: 1, header: false });
-    projectSidebar(f);
-
-    f.text(348, 30, 'Ödəniş gateway', { size: 12, color: C.faint });
-    f.text(348, 72, 'Work items', { size: 26, weight: 700 });
-    f.chip(486, 54, '18', { h: 22, w: 30, size: 11 });
-    f.text(548, 70, 'Board', { size: 13.5, weight: 700 });
-    f.line(548, 77, 590, 77, { color: C.ink, sw: 1.6 });
-    f.text(608, 70, 'Siyahı', { size: 13.5, color: C.faint });
-    f.text(668, 70, 'Xəritə', { size: 13.5, color: C.faint });
-    f.btn(1146, 40, 194, 'Work item yarat', { kind: 'primary', h: 40 });
-
-    /* filters */
-    f.chip(348, 98, 'Mənim', { active: true, h: 26, w: 76, size: 12 });
-    f.chip(432, 98, 'Bug', { h: 26, w: 58, size: 12 });
-    f.chip(498, 98, 'Bu həftə', { h: 26, w: 88, size: 12 });
-    f.chip(594, 98, '+ Filtr', { h: 26, w: 72, size: 12 });
-    f.text(1320, 116, 'Sıxlıq ▾', { size: 11.5, color: C.ink2, anchor: 'end' });
-
-    var cols = [
-      { x: 348, name: 'Todo', n: 3 },
-      { x: 600, name: 'İcrada', n: 2 },
-      { x: 852, name: 'Review', n: 2 },
-      { x: 1104, name: 'Bitdi', n: 1 }
-    ];
-    cols.forEach(function (c) {
-      f.text(c.x, 156, c.name, { size: 13.5, weight: 700 });
-      f.text(c.x + 74, 156, String(c.n), { size: 11, color: C.faint });
-      f.text(c.x + 226, 156, '+', { size: 15, color: C.faint, anchor: 'end' });
-      f.line(c.x, 166, c.x + 226, 166, { color: C.line, sw: 1.1 });
-    });
-
-    var cards = [
-      [0, 'ACB-160', 'Refund API kontraktı', 'Tapşırıq', '2', '3p', 'BA'],
-      [0, 'ACB-158', 'Retry siyasəti', 'Tapşırıq', '1', '2p', 'Tİ'],
-      [0, 'ACB-155', 'Webhook imzası', 'Bug', '3', '1p', 'EC'],
-      [1, 'ACB-142', '3DS redirect döngüsü', 'Bug', '2', '3p', 'BA'],
-      [1, 'ACB-147', 'Idempotency key', 'Tapşırıq', '', '2p', 'SƏ'],
-      [2, 'ACB-139', 'Refund use case v7', 'Tapşırıq', '', '1p', 'RQ'],
-      [2, 'ACB-151', 'Risk skorlaması', 'Bug', '1', '5p', 'NH'],
-      [3, 'ACB-133', 'payment_tx sxemi', 'Tapşırıq', '', '2p', 'AM']
-    ];
-    var seen = [0, 0, 0, 0];
-    cards.forEach(function (c) {
-      var col = cols[c[0]], cx = col.x, cy = 180 + seen[c[0]] * 116;
-      seen[c[0]]++;
-      f.rrect(cx, cy, 226, 104, 5, { fill: C.white });
-      f.text(cx + 14, cy + 22, c[1], { size: 10.5, color: C.faint });
-      f.av(cx + 206, cy + 18, 10, c[6]);
-      f.text(cx + 14, cy + 50, c[2], { size: 13 });
-      var cw = c[3] === 'Bug' ? 48 : 70;
-      f.chip(cx + 14, cy + 72, c[3], { h: 20, w: cw, size: 10.5 });
-      if (c[4]) {
-        var lx = cx + 22 + cw;
-        f.circle(lx, cy + 80, 7, { stroke: C.faint, sw: 1.1, rough: 0.6 });
-        f.circle(lx + 5, cy + 84, 7, { stroke: C.faint, sw: 1.1, rough: 0.6 });
-        f.text(lx + 14, cy + 87, c[4], { size: 10.5, color: C.ink2 });
-      }
-      f.text(cx + 212, cy + 87, c[5], { size: 10.5, color: C.faint, anchor: 'end' });
-    });
-    cols.forEach(function (c, i) {
-      var cy = 180 + seen[i] * 116 + 4;
-      f.rrect(c.x, cy, 226, 36, 5, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
-      f.text(c.x + 113, cy + 23, '+ Əlavə et', { size: 11.5, color: C.faint, anchor: 'middle' });
-    });
-
-    f.annoS(1, 336, 152);
-    f.annoS(2, 336, 196);
-    f.annoS(3, 336, 540);
-  };
-
-  /* ========================= WORK ITEM DETALI ========================= */
-  frames.workitem = function (f) {
-    WF.shell(f, { crumb: 'Layihələr', active: 1, header: false });
-    projectSidebar(f);
-
-    f.text(348, 30, 'Ödəniş gateway / ACB-142', { size: 12, color: C.faint });
-    f.text(348, 68, '3DS redirect döngüsü', { size: 24, weight: 700 });
-    f.chip(348, 82, 'Bug', { h: 24, w: 50, size: 11.5 });
-    f.chip(408, 82, 'İcrada', { h: 24, w: 66, size: 11.5 });
-    f.chip(484, 82, 'P1', { h: 24, w: 40, size: 11.5, color: C.accent });
-    f.chip(534, 82, '3 gün açıq', { h: 24, w: 84, size: 11.5 });
-    f.btn(1150, 48, 100, 'Status', { h: 34, size: 12 });
-    f.btn(1258, 48, 60, '···', { h: 34, size: 12 });
-
-    /* description */
-    f.card(348, 122, 692, 148, 'Təsvir', 'Redaktə');
-    f.plines(368, 160, 640, 3, 24);
-
-    /* sub-items with contributing members (req 16) */
-    f.card(348, 284, 692, 250, 'Alt işlər (3)', '+ Əlavə et');
-    var subs = [
-      ['Redirect URL validasiyası', 'İcrada', ['SƏ', 'BA'], '3/5'],
-      ['Callback timeout', 'Todo', ['NH'], '1/3'],
-      ['Xəta mesajları', 'Bitdi', ['EC', 'BA', 'RQ'], '4/4']
-    ];
-    subs.forEach(function (s, k) {
-      var sy = 322 + k * 66;
-      f.line(368, sy + 48, 1020, sy + 48, { color: C.line, dash: [4, 6], sw: 1 });
-      f.check(368, sy + 12, k === 2);
-      f.text(392, sy + 26, s[0], { size: 13 });
-      f.chip(700, sy + 8, s[1], { h: 22, w: 64, size: 10.5 });
-      f.avstack(830, sy + 19, s[2], 9);
-      f.text(1016, sy + 26, s[3], { size: 11, color: C.faint, anchor: 'end' });
-    });
-
-    /* dependencies */
-    f.card(348, 550, 692, 116, 'Asılılıqlar', 'Xəritədə aç');
-    f.text(368, 604, 'Bloklayır:', { size: 12, color: C.ink2 });
-    f.chip(440, 588, 'ACB-151', { h: 24, w: 74, size: 11 });
-    f.chip(520, 588, 'ACB-160', { h: 24, w: 74, size: 11 });
-    f.text(368, 644, 'Bloklanır:', { size: 12, color: C.ink2 });
-    f.chip(440, 628, 'ACB-108', { h: 24, w: 74, size: 11, color: C.accent });
-
-    /* linked resources */
-    f.card(348, 682, 692, 106, 'Resurslar (2)', '+ Bağla');
-    [['UC-04 · Refund axını', 'v7'], ['DD · payment_tx', 'v3']].forEach(function (r, k) {
-      var ry = 732 + k * 30;
-      f.rrect(368, ry - 13, 12, 14, 2, { fill: 'none', stroke: C.ink2, rough: 0.6 });
-      f.text(390, ry, r[0], { size: 12.5 });
-      f.text(1020, ry, r[1], { size: 10.5, color: C.faint, anchor: 'end' });
-    });
-
-    /* meta panel */
-    f.rrect(1064, 122, 276, 420, 6, { fill: C.white });
-    f.text(1088, 152, 'Detallar', { size: 15, weight: 700 });
-    var meta = [['Assignee', 'B. Ağazadə'], ['Reporter', 'S. Əliyeva'], ['Prioritet', 'P1'],
-                ['Severity', 'Yüksək'], ['Mühit', 'Prod'], ['Estimate', '3 point'],
-                ['Son tarix', '30 okt'], ['Versiya', 'v4']];
-    meta.forEach(function (m, k) {
-      var my = 184 + k * 42;
-      f.text(1088, my, m[0], { size: 11, color: C.faint });
-      f.text(1320, my, m[1], { size: 12, anchor: 'end' });
-      f.line(1088, my + 12, 1320, my + 12, { color: C.line, sw: 0.9, dash: [3, 5] });
-    });
-
-    /* change log */
-    f.rrect(1064, 558, 276, 230, 6, { fill: C.white });
-    f.text(1088, 588, 'Dəyişikliklər', { size: 15, weight: 700 });
-    f.text(1320, 587, 'Hamısı', { size: 11, color: C.accent, anchor: 'end' });
-    [['v4', 'status → İcrada', '2 saat'], ['v3', 'təsvir yeniləndi', 'dünən'], ['v2', 'estimate 5p → 3p', '3 gün']].forEach(function (a, k) {
-      var ay = 622 + k * 52;
-      f.chip(1088, ay - 14, a[0], { h: 20, w: 34, size: 10 });
-      f.text(1132, ay, a[1], { size: 11.5 });
-      f.text(1132, ay + 16, a[2], { size: 10, color: C.faint });
-    });
-
-    f.annoS(1, 336, 320);
-    f.annoS(2, 336, 580);
-    f.annoS(3, 1200, 152);
-  };
 })();
 </script>
 <script>
