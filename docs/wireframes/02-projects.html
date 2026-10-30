@@ -73,6 +73,7 @@
         <li><b>Preview tipi açmadan oxunur.</b> Sənəd — mətn sətirləri, use case — nömrəli addımlar, data dictionary — mini cədvəl. Tip badge-i bunu təkrarlayır.</li>
         <li><b>Boş yer “yeni resurs” kartı ilə doldurulur.</b> Yaradma əməliyyatı siyahıdan çıxmır; kart həm də boş vəziyyəti göstərir. Hover-də “⋯” action-ları açılır.</li>
         <li><b>Progress zolağı yoxdur.</b> Bu tab resurs kitabxanasıdır, icra paneli deyil; 46% / milestone Overview və Works-də qalır, burada yer kart şəbəkəsinə verilir.</li>
+        <li><b>Tab sətrinin sağ sonunda view action-ları.</b> Filter, display options (sıxlıq/görünüş) və sağ paneli yığan (collapse) ikon düymələri — Overview-da yoxdur, çünki orada header və progress bloku tam eni tutur.</li>
       </ul>
     </figure>
 
@@ -84,6 +85,7 @@
         <li><b>Header təkrarlanmır.</b> Cover, ikon, ad, status chipləri və komanda sətri yalnız Overview-dadır; Works tabı breadcrumb + tabs ilə başlayır.</li>
         <li><b>Work items siyahısı.</b> Status, məsul və tarix bir sətirdə; filtr yuxarıda.</li>
         <li><b>Board redizaynı sonra planlanır.</b> Works tabı kompakt siyahı göstərir; board və work item detalı bu dəstdən çıxarılıb.</li>
+        <li><b>View action-ları tabs sətrinin sağ sonunda.</b> Filter, display options və sağ paneli yığan ikon düymələri hər iki məzmun tabında eyni yerdədir; sağ panel yığılanda məzmun tam enə keçir.</li>
       </ul>
     </figure>
 
@@ -188,6 +190,32 @@
     f.text(cx + 96, cy + 158, 'Sənəd · use case · data dict.', { size: 8.5, anchor: 'middle', color: C.faint });
   }
 
+  /* Tabs sətrinin sağ sonu — Overview-dan başqa tablarda view action-ları:
+     filter · display options · sağ paneli yığ (collapse). */
+  function tabRowActions(f, y) {
+    var s = 28, gap = 6, right = 1340;         /* sağ kənar = fəaliyyət kartının sağı */
+    var cx = right - s;                       /* sağ paneli yığ — ən sağda */
+
+    f.rrect(cx, y, s, s, 6, { fill: 'none', stroke: C.line, sw: 1.1, rough: 0.7 });
+    /* panel konturu + sağ divider + sağa ox — paneli kənara yığmaq */
+    f.rrect(cx + 6, y + 8, 12, 12, 2, { fill: 'none', stroke: C.ink2, sw: 1.1, rough: 0.5 });
+    f.line(cx + 14, y + 8, cx + 14, y + 20, { color: C.ink2, sw: 1.1 });
+    f.chev(cx + 22, y + 14, 'right', 3.2);
+
+    cx -= s + gap;                            /* display options — sliders */
+    f.rrect(cx, y, s, s, 6, { fill: 'none', stroke: C.line, sw: 1.1, rough: 0.7 });
+    [[9, 12], [14, 18], [19, 10]].forEach(function (r) {
+      f.line(cx + 7, y + r[0], cx + 21, y + r[0], { color: C.ink2, sw: 1.1 });
+      f.dot(cx + r[1], y + r[0], 2.4, C.ink);
+    });
+
+    cx -= s + gap;                            /* filter — Lucide "list-filter" */
+    f.rrect(cx, y, s, s, 6, { fill: 'none', stroke: C.line, sw: 1.1, rough: 0.7 });
+    f.line(cx + 6, y + 9, cx + 22, y + 9, { color: C.ink2, sw: 1.2 });
+    f.line(cx + 9, y + 14, cx + 19, y + 14, { color: C.ink2, sw: 1.2 });
+    f.line(cx + 11.5, y + 19, cx + 16.5, y + 19, { color: C.ink2, sw: 1.2 });
+  }
+
   /* Works tab — project header yoxdur, tabs + work items siyahısı */
   function projectWorks(f, top) {
     f.card(348, top, 660, 670, 'Work items', 'Hamısı →');
@@ -238,6 +266,9 @@
 
     /* tabs — hər tabda eyni yerdə: cover-in üst hissəsi, 16px daxili padding */
     WF.ui.tabs(f, 340, 66, ['Overview', 'Resources', 'Works'], tab, { itemPad: 16 });
+
+    /* view action-ları yalnız Overview-dan başqa tablarda — tabs sətrinin sağ sonunda */
+    if (view !== 'overview') tabRowActions(f, 70);
 
     if (view === 'overview') {
       f.rrect(348, 130, 40, 40, 8, { fill: C.white, stroke: C.line, rough: 0.7 });
