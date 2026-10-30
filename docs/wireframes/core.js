@@ -299,17 +299,26 @@
 
   function shell(f, opts) {
     opts = opts || {};
+    var header = opts.header !== false;
     f.line(RAIL, 0, RAIL, H, { color: C.line, sw: 1.2 });
-    f.line(RAIL, TOP, W, TOP, { color: C.line, sw: 1.2 });
+    if (header) f.line(RAIL, TOP, W, TOP, { color: C.line, sw: 1.2 });
 
     /* logo */
     f.rrect(22, 16, 32, 32, 8, { fill: C.ink, stroke: C.ink });
     f.text(38, 39, '◈', { size: 15, anchor: 'middle', color: C.white });
 
+    /* headerless mode: cmdk trigger under the logo */
+    if (!header) {
+      f.rrect(18, 56, 40, 40, 8, { fill: C.fill, stroke: C.line, rough: 0.7 });
+      f.circle(38, 74, 12, { stroke: C.ink2, sw: 1.3, rough: 0.7 });
+      f.line(44, 80, 49, 85, { color: C.ink2, sw: 1.3 });
+      f.text(38, 91, '⌘K', { size: 8, anchor: 'middle', color: C.faint });
+    }
+
     /* nav */
     var active = opts.active || 0;
     for (var i = 0; i < NAV.length; i++) {
-      var cy = 104 + i * 62;
+      var cy = (header ? 104 : 124) + i * 62;
       if (i === active) f.rrect(14, cy - 20, 48, 52, 8, { fill: C.fill2, stroke: 'none', rough: 0.6 });
       navIcon(f, NAV[i].icon, 38, cy);
       f.text(38, cy + 28, NAV[i].label, {
@@ -324,12 +333,14 @@
     f.av(38, 830, 13, 'BA');
 
     /* top bar */
-    f.text(100, 37, opts.crumb || '', { size: 13, color: C.ink2 });
-    if (opts.search !== false) f.input(760, 13, 380, 'Axtar: iş, sənəd, insan…', { h: 34 });
-    f.btn(1156, 13, 108, '+ Yarat', { kind: 'primary', h: 34, size: 12.5 });
-    f.circle(1300, 30, 22, { sw: 1.2, rough: 0.7 });
-    f.circle(1300, 30, 5, { fill: C.accent, stroke: C.accent, sw: 0 });
-    f.av(1346, 30, 13, 'BA');
+    if (header) {
+      f.text(100, 37, opts.crumb || '', { size: 13, color: C.ink2 });
+      if (opts.search !== false) f.input(760, 13, 380, 'Axtar: iş, sənəd, insan…', { h: 34 });
+      f.btn(1156, 13, 108, '+ Yarat', { kind: 'primary', h: 34, size: 12.5 });
+      f.circle(1300, 30, 22, { sw: 1.2, rough: 0.7 });
+      f.circle(1300, 30, 5, { fill: C.accent, stroke: C.accent, sw: 0 });
+      f.av(1346, 30, 13, 'BA');
+    }
   }
 
   /* ---- shadcn-style component layer, drawn with the same rough.js DSL ----

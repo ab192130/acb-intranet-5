@@ -1,6 +1,6 @@
 # Layihə Overview — ssenari kataloqu
 
-> **Status:** In wireframe · 2/7 (default + inline edit)
+> **Status:** In wireframe · 2/7 + Resources/Works tabs
 >
 > **Konteks:** ACB Intranet → Projects → Layihə səhifəsi → **Overview** tabı
 >
@@ -36,8 +36,9 @@ Layihəyə girən istifadəçi ilk 30 saniyədə bunları anlamalıdır:
 | `Project` | Var | — |
 | `Project.status` | Var (`Aktiv`) | Lifecycle statusu |
 | `Project.health` | Yoxdur | Törəyən health siqnalı |
+| `Project.icon` | Yoxdur | Emoji picker |
+| `Project.cover` | Yoxdur | Cover dəyişdir / sil |
 | `Subproject` | Var (nested) | — |
-| `Goal` | Sərbəst mətn kimi görünür | **Sərbəst mətn qalır** |
 | `Milestone` | Yoxdur | **Layihə daxilində milestone** |
 | `Member / Role` | Var (Owner, Lead, Contributor) | İdarəetmə axını yoxdur |
 | `Work item` | Var (Works tabı) | Overview-də yalnız xülasə |
@@ -84,7 +85,7 @@ health isə icranın **törəyən sağlamlıq siqnalıdır**.
 | Aktyor | Əsas hüquq və məqsəd |
 |---|---|
 | **Owner** | Layihənin məsuliyyəti, üzvlər, arxivləşdirmə |
-| **Lead** | Gündəlik icra, icmal, məqsədlər, işlərin prioriteti |
+| **Lead** | Gündəlik icra, icmal, işlərin prioriteti |
 | **Contributor** | Work item, resurs, şərh; icmalı oxuyur |
 | **Viewer / Stakeholder** | Yalnız oxuyur, brif götürür, paylaşır |
 
@@ -101,11 +102,11 @@ health isə icranın **törəyən sağlamlıq siqnalıdır**.
 |---|---|---|---|---|---|
 | [U1](#u1) | Layihəyə ilk baxış | Orientasiya | P0 | Bəli | Təsdiq gözləyir |
 | [U2](#u2) | Sağlamlıq və irəliləyiş | Orientasiya | P0 | Bəli | Təsdiq gözləyir |
-| [U3](#u3) | Məqsədləri anlamaq | Orientasiya | P0 | Bəli | Təsdiq gözləyir |
+| [U3](#u3) | Məqsədləri anlamaq — ləğv edildi | Orientasiya | P0 | Xeyr | Ləğv edildi |
 | [U4](#u4) | Alt layihələri görmək | Orientasiya | P0 | Bəli | Təsdiq gözləyir |
 | [U5](#u5) | Komandanı tanımaq | Orientasiya | P0 | Bəli | Təsdiq gözləyir |
-| [U6](#u6) | İcmalı inline redaktə etmək | Məzmun | P0 | Bəli | In wireframe |
-| [U7](#u7) | Məqsədləri redaktə etmək — U6-ya birləşdi | Məzmun | P1 | Xeyr | Birləşdirildi |
+| [U6](#u6) | Layihə təsvirini inline redaktə etmək | Məzmun | P0 | Bəli | In wireframe |
+| [U7](#u7) | Məqsədləri redaktə etmək — ləğv edildi | Məzmun | P1 | Xeyr | Ləğv edildi |
 | [U8](#u8) | Bloklanmanı qeyd etmək | Məzmun | P1 | Bəli | Təsdiq gözləyir |
 | [U9](#u9) | Üzv əlavə etmək / rol dəyişmək | Komanda | P1 | Bəli | Təsdiq gözləyir |
 | [U10](#u10) | Layihəni arxivləşdirmək | Komanda | P2 | Xeyr | Təsdiq gözləyir |
@@ -118,6 +119,7 @@ health isə icranın **törəyən sağlamlıq siqnalıdır**.
 | [U17](#u17) | Read-only Viewer | Vəziyyət | P1 | Bəli | Təsdiq gözləyir |
 | [U18](#u18) | Riskdə / bloklanmış layihə | Vəziyyət | P1 | Bəli | Təsdiq gözləyir |
 | [U19](#u19) | Çox alt layihə / böyük komanda | Vəziyyət | P2 | Xeyr | Təsdiq gözləyir |
+| [U20](#u20) | Layihə ikonu və cover | Görünüş | P1 | Bəli | In wireframe |
 
 ---
 
@@ -149,10 +151,11 @@ nə olduğunu anlamaq.
 **Ekran tələbləri:**
 
 - Breadcrumb: `Layihələr / <layihə>`; nested layihədə dərinlik görünməlidir.
+- Top bar yoxdur; axtarış sol rail-də ⌘K trigger kimi (cmdk).
 - Başlıq + status + health + son yenilənmə.
 - Owner və Lead avatarları, adları və rolları.
 - Tabs: `Overview / Resources / Works`; Overview aktiv.
-- Sağda və ya yuxarıda primary action: `Work item yarat`; Owner/Lead üçün ikinci dərəcəli `Redaktə et`.
+- Breadcrumb row-un sağında kiçik `Work item yarat` + `···` menyu (Redaktə et, Paylaş, Arxivləşdir).
 
 **Data:** `Project`, `Person`, `Activity`, `Version`.
 
@@ -199,32 +202,14 @@ status əl ilə dəyişib; data köhnədir.
 
 <a id="u3"></a>
 
-#### U3 — Məqsədləri anlamaq
+#### U3 — Məqsədləri anlamaq — ləğv edildi
 
-**Aktyor:** Hamı · **Prioritet:** P0 · **Status:** Təsdiq gözləyir
+**Aktyor:** Hamı · **Prioritet:** P0 · **Status:** Ləğv edildi
 
-**Vayrfreym:** [project](../wireframes/02-projects.html#project)
+**Vayrfreym:** —
 
-**Məqsəd:** Layihənin nəyə nail olmaq istədiyini oxumaq.
-
-**Tetik:** İcmal blokunun oxunması.
-
-**Əsas axın:**
-
-1. İstifadəçi “Məqsədlər” blokunu görür.
-2. Məqsədlər sərbəst mətn kimi göstərilir.
-3. Redaktə hərəkəti U6 daxilindədir.
-4. Məqsədlərin ayrıca statusu, sahibi və bağlı işi izlənmir.
-
-**Ekran tələbləri:**
-
-- Məqsədlər bir mətn blokudur; paraqraf/bullet kimi oxunur.
-- Status, sahib, bağlı iş göstərilmir.
-- Boş halda izahlı placeholder.
-
-**Data:** `Project.goals` (sərbəst mətn).
-
-**Kənar hallar:** məqsəd yoxdur; uzun mətn; köhnə mətn; dəyişiklik versiyada görünür.
+**Qeyd:** Məqsədlər bölməsi praktikada istifadə olunmur. Layihənin təsviri və
+milestone-lar kifayətdir; təsvir U6 daxilində inline redaktə olunur. Ayrıca ekran yoxdur.
 
 ---
 
@@ -272,17 +257,19 @@ dairəvi asılılıq (praktikada olmamalıdır).
 **Məqsəd:** Owner, Lead və üzvləri ayırd etmək; kimə hansı məsələ ilə müraciət etməyi
 bilmək.
 
-**Tetik:** “Üzvlər” blokuna baxış; profilə keçid.
+**Tetik:** Header-dəki komanda stack-inə klik; profilə keçid.
 
 **Əsas axın:**
 
 1. Owner və Lead ayrıca vurğulanır.
-2. Üzvlər kart/sətir kimi görünür: avatar, ad, rol.
-3. Profilə keçid var.
+2. Komanda **avatar stack** kimi görünür: 5–6 avatar + “12 üzv”.
+3. Avatar hover → ad/rol; klik → üzv siyahısı.
 4. Owner/Lead “İdarə et” ilə üzv əlavə edə bilir.
 
 **Ekran tələbləri:**
 
+- Komanda header properties sətrində, ayrıca kart deyil.
+- 5–6 avatar + qalan üçün “+N” / say.
 - Owner ≠ Lead izahı görünməlidir.
 - Rol etiketləri: Owner, Lead, Contributor, Viewer.
 - Hesabı olmayan şəxs üçün neytral işarə.
@@ -298,20 +285,20 @@ bilmək.
 
 <a id="u6"></a>
 
-#### U6 — İcmalı inline redaktə etmək
+#### U6 — Layihə təsvirini inline redaktə etmək
 
 **Aktyor:** Owner / Lead · **Prioritet:** P0 · **Status:** In wireframe
 
-**Vayrfreym:** [project-edit](../wireframes/02-projects.html#project-edit)
+**Vayrfreym:** [project](../wireframes/02-projects.html#project)
 
-**Məqsəd:** Layihənin təsvirini və məqsədlərini yerində, modal açmadan yeniləmək.
+**Məqsəd:** Layihənin təsvirini yerində, modal açmadan yeniləmək.
 
-**Tetik:** Təsvir və ya məqsədlər mətninə klik / fokus.
+**Tetik:** Təsvir mətninə klik / fokus.
 
 **Əsas axın:**
 
 1. İstifadəçi mətnə klikləyir; həmin blok inline editora çevrilir.
-2. Təsvir markdown textarea; məqsədlər ayrıca sərbəst mətn textarea-sı olur.
+2. Təsvir markdown textarea olur; ayrıca məqsədlər sahəsi yoxdur.
 3. Yazarkən 800ms debounce ilə autosave; status “Yadda saxlanılır…” göstərir.
 4. Blur dərhal saxlayır; Esc son saxlanmış vəziyyətə qaytarır; ⌘/Ctrl+Enter dərhal saxlayır.
 5. Save versiya snapshot-u və activity yazısı yaradır.
@@ -323,9 +310,9 @@ bilmək.
 - Focus ring, caret və placeholder.
 - Autosave statusu: “Yadda saxlanılır…” → “Yadda saxlanıldı”; xəta inline.
 - Yalnız Owner/Lead; Viewer read-only.
-- “Redaktə” düyməsi yoxdur; mətnin özü editordur.
+- “Redaktə” düyməsi yoxdur; mətnin özü editordur. `···` menyusunda “Redaktə et” fallback ola bilər.
 
-**Data:** `Project.about`, `Project.goals`, `Version`, `Activity`.
+**Data:** `Project.about`, `Version`, `Activity`.
 
 **Kənar hallar:** debounce zamanı səhifədən çıxma; save xətası; paralel redaktə;
 boş sahə; uzun mətn; icazə itkisi.
@@ -334,14 +321,14 @@ boş sahə; uzun mətn; icazə itkisi.
 
 <a id="u7"></a>
 
-#### U7 — Məqsədləri redaktə etmək — U6-ya birləşdi
+#### U7 — Məqsədləri redaktə etmək — ləğv edildi
 
-**Aktyor:** Lead / Owner · **Prioritet:** P1 · **Status:** U6-ya birləşdirildi
+**Aktyor:** Lead / Owner · **Prioritet:** P1 · **Status:** Ləğv edildi
 
 **Vayrfreym:** —
 
-**Qeyd:** Məqsədlər sərbəst mətn olduğu üçün ayrıca status, sahib və bağlı iş axını
-yoxdur. Redaktə U6 daxilində baş verir; ayrıca ekran/freym tələb etmir.
+**Qeyd:** Məqsədlər bölməsi çıxarıldı; ayrıca məqsəd statusu, sahibi və bağlı iş axını
+yoxdur. Layihə təsviri U6 daxilində inline redaktə olunur.
 
 ---
 
@@ -452,7 +439,7 @@ status yenilənməyib.
 
 **Aktyor:** Contributor+ · **Prioritet:** P0 · **Status:** Təsdiq gözləyir
 
-**Vayrfreym:** [board](../wireframes/02-projects.html#board)
+**Vayrfreym:** [Works tab](../wireframes/02-projects.html#project-works) · [board](../wireframes/02-projects.html#board)
 
 **Məqsəd:** Layihə kontekstindən çıxmadan yeni iş yaratmaq.
 
@@ -484,7 +471,7 @@ status yenilənməyib.
 
 **Aktyor:** Hamı · **Prioritet:** P1 · **Status:** Təsdiq gözləyir
 
-**Vayrfreym:** [Resources](../wireframes/04-knowledge.html#document)
+**Vayrfreym:** [Resources tab](../wireframes/02-projects.html#project-resources)
 
 **Məqsəd:** Layihəyə aid sənəd, use case və data dictionary resurslarını tapmaq.
 
@@ -557,7 +544,7 @@ status yenilənməyib.
 
 1. Versiya siyahısı açılır: nömrə, tarix, müəllif.
 2. İki versiya seçilir.
-3. Fərq göstərilir: icmal, məqsədlər, komanda, status.
+3. Fərq göstərilir: icmal, komanda, status.
 4. İstifadəçi bağlayır və ya köhnə versiyaya baxır.
 
 **Ekran tələbləri:**
@@ -731,20 +718,53 @@ threshold səhv işləyir.
 
 ---
 
+<a id="u20"></a>
+
+#### U20 — Layihə ikonu və cover
+
+**Aktyor:** Owner / Lead · **Prioritet:** P1 · **Status:** In wireframe
+
+**Vayrfreym:** [project-icon](../wireframes/02-projects.html#project-icon)
+
+**Məqsəd:** Layihəyə Notion üslubunda icon və cover vermək.
+
+**Tetik:** Icon klik; cover “Dəyişdir”.
+
+**Əsas axın:**
+
+1. Icon klik → emoji picker; axtarış / kateqoriya / grid.
+2. Emoji seçilir → icon dərhal dəyişir; “Sil” iconu çıxarır.
+3. Cover “Dəyişdir” → gradient / upload / link; “Sil” coveri çıxarır.
+4. Dəyişiklik versiya snapshot-u və activity yazısı yaradır.
+
+**Ekran tələbləri:**
+
+- Icon 40px; cover 100px; cover opsionaldır.
+- Cover full-bleed; page paddinginə tabe deyil. Breadcrumb ayrıca row-dadır.
+- Icon coverdən 24px inset, title ilə eyni xətdədir.
+- Emoji picker: axtarış, kateqoriya tabs, 8×4 grid, klaviatura.
+- Cover dəyişəndə layout shift minimal olsun.
+- Yalnız Owner/Lead; Viewer read-only.
+
+**Data:** `Project.icon`, `Project.cover`.
+
+**Kənar hallar:** dəstəklənməyən emoji; upload xətası; cover silinməsi; icazə itkisi.
+
+---
+
 ## 5. Hazırkı vayrfreymlə müqayisə
 
 Mövcud [Layihə icmalı](../wireframes/02-projects.html#project) freymində olanlar:
 
-- Layihə adı, status çipi, Owner/Lead, üzv sayı, son yenilənmə.
+- Layihə adı, status, health, Owner/Lead, komanda stack, icon/cover, son yenilənmə.
 - Overview / Resources / Works tabları.
-- İcmal, məqsədlər, alt layihə kartları, üzvlər.
+- Pulse, təsvir, alt layihə kartları, fəaliyyət və resurslar.
 - Sağ relsdə fəaliyyət və versiya.
 
 Çatışmayanlar:
 
 - Status yalnız lifecycle vəziyyətidir; health siqnalı yoxdur.
 - Ümumi progress, növbəti milestone və health səbəbi yoxdur.
-- Məqsədlər sərbəst mətn kimi redaktə olunmur.
 - Bloklanma / risk siqnalı Overview-də görünmür.
 - Resurslar üçün xülasə bloku yoxdur.
 - “Mənim rolum / mənim işlərim” konteksti yoxdur.
@@ -761,20 +781,22 @@ Mövcud [Layihə icmalı](../wireframes/02-projects.html#project) freymində ola
 
 | # | Vayrfreym / vəziyyət | Ssenarilər | Nə göstərir |
 |---|---|---|---|
-| 1 | **Overview — default** | U1–U5, U11–U13 | Dolu layihə; status + health, progress, növbəti milestone, məqsədlər, alt layihələr, komanda, resurs xülasəsi, fəaliyyət |
+| 1 | **Overview — default** | U1, U2, U4, U5, U6, U11–U13 | Dolu layihə; icon/cover, status + health, progress, növbəti milestone, inline təsvir, alt layihələr, komanda stack, resurs xülasəsi, fəaliyyət |
 | 2 | **Overview — riskdə** | U2, U8, U18 | Törəyən health səbəbi, bloklanmış işlər, risk banneri |
 | 3 | **Overview — boş** | U16 | 3 addımlı onboarding checklist |
-| 4 | **Layihə haqqında — inline redaktə** | U6 | Inline textarea + toolbar + autosave debounce; Esc/⌘Enter |
-| 5 | **Komanda və rollar paneli** | U9 | Üzv axtarışı, rol dəyişmə, çıxarma |
-| 6 | **Read-only Viewer** | U17 | Gizlədilmiş/deaktiv hərəkətlər, səbəb izahı |
-| 7 | **Quick create work item** | U11 | Default üzərində modal; kontekst əvvəlcədən dolu |
+| 4 | **Komanda və rollar paneli** | U9 | Üzv axtarışı, rol dəyişmə, çıxarma |
+| 5 | **Read-only Viewer** | U17 | Gizlədilmiş/deaktiv hərəkətlər, səbəb izahı |
+| 6 | **Quick create work item** | U11 | Default üzərində modal; kontekst əvvəlcədən dolu |
+| 7 | **İkon / cover** | U20 | Emoji picker + cover dəyişdir/sil |
 
-> Təklif: 1, 3, 4, 6, 7 mütləq; 2 və 5 ikinci dövrədə. Bu, 6–7 freymlə Overview-ı
+> Təklif: 1, 3, 5, 6, 7 mütləq; 2 və 4 ikinci dövrədə. Bu, 7 freymlə Overview-ı
 > tam əhatə edir.
 
 **Tətbiq:** 1 — [Overview default](../wireframes/02-projects.html#project),
-4 — [inline redaktə](../wireframes/02-projects.html#project-edit) çəkildi (29 oktyabr 2026).
-Qalan freymlər növbəti.
+7 — [ikon picker](../wireframes/02-projects.html#project-icon) çəkildi (29 oktyabr 2026).
+Resources və Works tabları da eyni strukturla **03c/03d** kimi əlavə edildi
+([Resources](../wireframes/02-projects.html#project-resources) ·
+[Works](../wireframes/02-projects.html#project-works)); cover orada placeholder-dir.
 
 ---
 
@@ -786,16 +808,18 @@ Qalan freymlər növbəti.
 |---|---|---|---|---|
 | D1 | Status modeli | Tək status və ya status + health | **Təsdiqləndi:** lifecycle statusu (`Qaralama / Aktiv / Dayandırılıb / Bitdi / Arxivlənib`) + ayrı health (`Sağlam / Diqqət / Riskdə / Bloklanıb`) | ✅ |
 | D2 | Progress | Əl ilə % və ya işlərdən avtomatik | **Təsdiqləndi:** work item + alt layihələrdən avtomatik | ✅ |
-| D3 | Məqsədlər | Sərbəst mətn və ya ayrıca obyekt | **Təsdiqləndi:** sərbəst mətn | ✅ |
+| D3 | Məqsədlər | Sərbəst mətn və ya ayrıca obyekt | **Təsdiqləndi:** məqsədlər bölməsi çıxarılır; təsvir + milestone kifayətdir | ✅ |
 | D4 | Risk | Ayrıca risk və ya bloklanmış işdən törəmə | **Təsdiqləndi:** törəyən (bloklanmış iş / gecikmiş milestone) | ✅ |
 | D5 | Deadline / milestone | V1-də və ya sonra | **Təsdiqləndi:** layihə deadline-u yox; milestone var | ✅ |
 | D6 | Primary action | `Work item yarat` və ya `İcmalı redaktə et` | **Təsdiqləndi:** `Work item yarat`; redaktə ikinci dərəcəli | ✅ |
 | D7 | Viewer read-only | V1-də və ya sonra | **Təsdiqləndi:** V1-də ayrıca vəziyyət | ✅ |
 | D8 | Versiya müqayisəsi | Ayrıca route və ya full-screen modal | **Təsdiqləndi:** v1 full-screen modal/drawer; ayrıca route sonra | ✅ |
-| D9 | İcmal redaktəsi | Panel vs inline | **Təsdiqləndi:** inline; autosave debounce 800ms; Esc ləğv; ⌘/Ctrl+Enter save | ✅ |
+| D9 | İcmal redaktəsi | Panel vs inline | **Təsdiqləndi:** yalnız təsvir inline; autosave debounce 800ms; Esc ləğv; ⌘/Ctrl+Enter save | ✅ |
+| D10 | İkon / cover | Var / yox | **Təsdiqləndi:** Notion üslubu; emoji picker; cover dəyişdir/sil | ✅ |
+| D11 | Header panel | Saxlamaq / yığışdırmaq | **Təsdiqləndi:** top bar yoxdur; axtarış rail-də ⌘K trigger (cmdk) | ✅ |
 
-**D1–D9 bağlandı.** Status/health modeli, inline redaktə və versiya səthi təsdiqləndi.
-V1 vayrfreymləri üçün əsas hazırdır.
+**D1–D11 bağlandı.** Status/health modeli, inline təsvir, icon/cover, header-siz shell və
+versiya səthi təsdiqləndi. V1 vayrfreymləri üçün əsas hazırdır.
 
 ### 7.1 Versiya müqayisəsi — “ayrıca ekran” nə deməkdir?
 
@@ -816,10 +840,11 @@ V1 vayrfreymləri üçün əsas hazırdır.
 
 **Təsdiq üçün yoxlama:**
 
-- [x] Ssenari siyahısı tamdır (U1–U19).
-- [x] V1 dəsti (1, 3, 4, 6, 7 + 2, 5) uyğundur.
+- [x] Ssenari siyahısı tamdır (U1–U20).
+- [x] V1 dəsti (1, 3, 5, 6, 7 + 2, 4) uyğundur.
 - [x] Status + health iki ayrı ox kimi təsdiqləndi.
 - [x] Versiya müqayisəsi səthi seçildi (modal vs ayrıca səhifə).
-- [x] D1–D9 qərarları bağlanıb.
-- [x] İnline redaktə + autosave debounce təsdiqləndi.
+- [x] D1–D11 qərarları bağlanıb.
+- [x] İnline təsvir + autosave debounce təsdiqləndi.
+- [x] İkon / cover + emoji picker təsdiqləndi.
 - [ ] Vayrfreym çəkməyə başlayaq.

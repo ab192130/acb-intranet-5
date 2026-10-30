@@ -56,6 +56,9 @@ asılı deyil. Ortaq olan yalnız üç şeydir — `core.js` (çəkmə DSL-i), `
 `core.js` qlobal `WF` obyekti verir: `WF.Frame`, `WF.shell`, `WF.C` (rənglər), `WF.W/H`,
 `WF.frames` (ekran reyestri).
 
+`WF.shell` opsiyaları: `header: false` → top bar çəkilmir, sol rail-də `⌘K` axtarış
+triggeri görünür; `search: false` yalnız top bar axtarışını gizlədir.
+
 ## Komponent qatı (WF.ui)
 
 `core.js` içindəki `WF.ui` shadcn anatomiyasını wireframe dilinə köçürür: button, badge,
