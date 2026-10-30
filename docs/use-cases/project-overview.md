@@ -796,9 +796,10 @@ Mövcud [Layihə icmalı](../wireframes/02-projects.html#project) freymində ola
 
 **Tətbiq:** 1 — [Overview default](../wireframes/02-projects.html#project),
 7 — [ikon picker](../wireframes/02-projects.html#project-icon) çəkildi (29 oktyabr 2026).
-Resources və Works tabları da eyni strukturla **03c/03d** kimi əlavə edildi
+Resources və Works tabları da **03c/03d** kimi əlavə edildi
 ([Resources](../wireframes/02-projects.html#project-resources) ·
-[Works](../wireframes/02-projects.html#project-works)); cover orada placeholder-dir.
+[Works](../wireframes/02-projects.html#project-works)); orada layihə headeri
+(cover, ikon, ad, status, komanda) təkrarlanmır — yalnız breadcrumb və tabs qalır.
 
 ---
 
