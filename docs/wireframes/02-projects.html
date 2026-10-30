@@ -312,10 +312,11 @@
     /* right rail — grouped activity + resources */
     var rt = view === 'overview' ? 200 : 126;
 
-    /* --- fəaliyyət kartı --- */
-    f.rrect(1032, rt, 308, 372, 6, { fill: C.white });
-    f.text(1056, rt + 34, 'Fəaliyyət', { size: 15, weight: 700 });
-    f.chip(1204, rt + 16, 'Versiya 12 ›', { h: 24, w: 116, size: 10.5 });
+    /* --- fəaliyyət kartı: resurslar kartı ilə eyni anatomiya --- */
+    f.rrect(1032, rt, 308, 356, 6, { fill: C.white });
+    f.text(1056, rt + 32, 'Fəaliyyət', { size: 15, weight: 700 });
+    f.chip(1136, rt + 19, 'v12', { h: 20, w: 36, size: 10 });
+    f.text(1316, rt + 30, 'Hamısı →', { size: 11, color: C.accent, weight: 700, anchor: 'end' });
     f.chip(1056, rt + 54, 'Hamısı', { active: true, h: 22, w: 60, size: 10 });
     f.chip(1124, rt + 54, 'İşlər', { h: 22, w: 50, size: 10 });
     f.chip(1182, rt + 54, 'Resurslar', { h: 22, w: 72, size: 10 });
@@ -337,14 +338,13 @@
       f.text(1082, rt + a[0] + 4, a[2], { size: 12.5 });
       f.text(1082, rt + a[0] + 20, a[3], { size: 10.5, color: C.faint });
     });
-    f.text(1056, rt + 350, 'Hamısı →', { size: 12, color: C.accent, weight: 700 });
 
-    /* --- resurslar kartı: ayrıca kart, media-first xülasə --- */
-    var rc = rt + 388;
+    /* --- resurslar kartı: eyni başlıq anatomiyası, divider yoxdur --- */
+    var rc = rt + 372;
     f.rrect(1032, rc, 308, 200, 6, { fill: C.white });
     f.text(1056, rc + 32, 'Resurslar', { size: 15, weight: 700 });
-    f.text(1316, rc + 31, 'Hamısı →', { size: 11, color: C.accent, weight: 700, anchor: 'end' });
-    f.line(1056, rc + 44, 1316, rc + 44, { color: C.line, sw: 1 });
+    f.chip(1136, rc + 19, 'v12', { h: 20, w: 36, size: 10 });
+    f.text(1316, rc + 30, 'Hamısı →', { size: 11, color: C.accent, weight: 700, anchor: 'end' });
 
     /* tip statistikası — üç kiçik tile, filtri əvəz edir */
     [['8', 'Sənəd'], ['4', 'Use case'], ['3', 'Data dict.']].forEach(function (s, i) {
