@@ -45,7 +45,7 @@
         <li><b>Status və health ayrıdır.</b> Status lifecycle-dir (Aktiv); health törəyən siqnaldır (Sağlam). Növbəti milestone ayrıca göstərilir; Bitdi + Bloklanıb kimi ziddiyyət yaranmır.</li>
         <li><b>Resurslar sağ relsdə.</b> Üç tip (sənəd, use case, data dictionary) xülasə kimi; tam siyahı Resources tabındadır.</li>
         <li><b>Layihə haqqında inline redaktə olunur.</b> Mətnə klik → textarea; autosave debounce 800ms.</li>
-        <li><b>Layihə ikonu.</b> Klik → emoji picker; seçim ikonu dəyişir, “Sil” ikonu çıxarır. Seçilmiş ikon sol ağacda layihə sətrində və breadcrumb-da adın solunda görünür. State: <code>03c</code>.</li>
+        <li><b>Layihə ikonu.</b> Klik → emoji picker; seçim ikonu dəyişir, “Sil” ikonu çıxarır. Seçilmiş ikon sol ağacda layihə sətrində və breadcrumb-da adın solunda çərçivəsiz görünür; ölçüsü yanındaki mətnə uyğundur. State: <code>03c</code>.</li>
         <li><b>Cover.</b> Notion üslubu; “Dəyişdir” → gradient / upload / link, “Sil” coveri çıxarır.</li>
         <li><b>Layihə actionları breadcrumb row-undadır.</b> Kiçik `Work item yarat` + `···` menyu (Redaktə et, Paylaş, Arxivləşdir). Layihə adının sağındakı ulduz favorit keçididir — klik boş `☆` və dolu `★` vəziyyətini dəyişir.</li>
         <li><b>Axtarış sol rail-dədir.</b> Top bar yoxdur; ⌘K / klik → cmdk command palette.</li>
@@ -107,8 +107,17 @@
   var WF = window.WF, C = WF.C;
   var frames = WF.frames;
 
-  /* layihə ikonu — header-dəki emoji ikonla eyni kiçik qutu */
-  function projIcon(f, x, y, icon) {
+  /* layihə ikonu — header-dəki emoji ikonla eyni kiçik qutu.
+     o.bare: çərçivəsiz, yalnız emoji; ölçü yanındaki mətnlə eyni olur. */
+  function projIcon(f, x, y, icon, o) {
+    o = o || {};
+    if (o.bare) {
+      var s = o.size || 12;
+      /* emoji mətnin bazasına oturur — inline ikon üçün təbii hizalama;
+         ölçü sətrin mətn ölçüsü ilə eyni götürülür */
+      f.text(x + s / 2, y, icon, { size: s, anchor: 'middle' });
+      return;
+    }
     f.rrect(x, y - 12, 16, 16, 4, { fill: C.white, stroke: C.line, sw: 1, rough: 0.7 });
     f.text(x + 8, y, icon, { size: 11, anchor: 'middle' });
   }
@@ -116,8 +125,10 @@
   /* layihə sətri — ikon + ad */
   function projRow(f, x, y, icon, label, o) {
     o = o || {};
-    projIcon(f, x, y, icon);
-    f.text(x + 24, y, label, { size: o.size || 12.5, weight: o.weight, color: o.color || C.ink2 });
+    var size = o.size || 12.5;
+    /* ağac sətrində də ikon çərçivəsizdir — ölçü sətrin mətn ölçüsü ilə eynidir */
+    projIcon(f, x, y, icon, { bare: true, size: size });
+    f.text(x + 18, y, label, { size: size, weight: o.weight, color: o.color || C.ink2 });
   }
 
   /* shared project context sidebar (nested tree) */
@@ -269,8 +280,8 @@
     var crumbParent = 'Layihələr / ', crumbName = 'Ödəniş gateway';
     f.text(348, 30, crumbParent, { size: 12, color: C.faint });
     var crumbX = 348 + WF.tw(crumbParent, 12) + 2;
-    projIcon(f, crumbX, 30, '💳');
-    var crumbNameX = crumbX + 22;
+    projIcon(f, crumbX, 30, '💳', { bare: true, size: 13 });
+    var crumbNameX = crumbX + 18;
     f.text(crumbNameX, 30, crumbName, { size: 12, color: C.faint });
     /* layihə adının sağında favorit ulduzu — boş ☆ / dolu ★ vəziyyəti var */
     f.text(crumbNameX + WF.tw(crumbName, 12) + 4, 30, '☆', { size: 14, color: C.ink2 });
