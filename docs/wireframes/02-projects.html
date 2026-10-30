@@ -69,7 +69,7 @@
       <svg class="frame" viewBox="0 0 1440 900" data-frame="project-resources"></svg>
       <ul class="state-notes">
         <li><b>Header təkrarlanmır.</b> Cover, ikon, ad, status chipləri və komanda sətri yalnız Overview-dadır; bu tabda breadcrumb, tabs, məzmun və sağ rels qalır — məzmun dərhal tabs-altından başlayır.</li>
-        <li><b>Siyahı deyil, kart şəbəkəsi.</b> Asset-library modeli: hər resurs öz “preview” sahəsi olan kartdır. Axtarış və tip filtri kartın içindən çıxarılıb — onlar tabs sətrinin sağ sonundakı filter action-ında yaşayır; kart başlığından sonra birbaşa şəbəkə başlayır.</li>
+        <li><b>Siyahı deyil, kart şəbəkəsi.</b> Asset-library modeli: hər fayl öz “preview” sahəsi olan kartdır. Məzmun konteyner kartı, başlıq və daxili padding yoxdur — bölmələr məzmun sütununun tam eni ilə başlayır. Kitabxana <b>Folders</b> (2) və <b>Files</b> (5) bölmələrinə ayrılır; say başlığın yanındadır. Axtarış və tip filtri tabs sətrinin sağ sonundakı filter action-ındadır.</li>
         <li><b>Preview tipi açmadan oxunur.</b> Sənəd — mətn sətirləri, use case — nömrəli addımlar, data dictionary — mini cədvəl. Tip badge-i bunu təkrarlayır.</li>
         <li><b>Boş yer “yeni resurs” kartı ilə doldurulur.</b> Yaradma əməliyyatı siyahıdan çıxmır; kart həm də boş vəziyyəti göstərir. Hover-də “⋯” action-ları açılır.</li>
         <li><b>Progress zolağı yoxdur.</b> Bu tab resurs kitabxanasıdır, icra paneli deyil; 46% / milestone Overview və Works-də qalır, burada yer kart şəbəkəsinə verilir.</li>
@@ -83,9 +83,9 @@
       <svg class="frame" viewBox="0 0 1440 900" data-frame="project-works"></svg>
       <ul class="state-notes">
         <li><b>Header təkrarlanmır.</b> Cover, ikon, ad, status chipləri və komanda sətri yalnız Overview-dadır; Works tabı breadcrumb + tabs ilə başlayır.</li>
-        <li><b>Work items siyahısı.</b> Status, məsul və tarix bir sətirdə. Filtr və axtarış məzmun kartından çıxarılıb — tabs sətrinin sağ sonundakı filter action-ındadır.</li>
+        <li><b>Work items siyahısı.</b> Status, məsul və tarix bir sətirdə. Məzmun konteyner kartı, başlıq, daxili padding və item sayğacı yoxdur — siyahı məzmun sütununun tam eni ilə, birbaşa tabs-altından başlayır; filtr və axtarış tabs sətrinin sağ sonundakı filter action-ındadır.</li>
         <li><b>Board redizaynı sonra planlanır.</b> Works tabı kompakt siyahı göstərir; board və work item detalı bu dəstdən çıxarılıb.</li>
-        <li><b>View action-ları tabs sətrinin sağ sonunda.</b> Filter, display options və sağ paneli yığan ikon düymələri hər iki məzmun tabında eyni yerdədir; sağ rels və ikonlar “···” menyu düyməsinin sağı ilə hizalanır, məzmun kartı da həmin sütuna qədər genişlənir; sağ panel yığılanda məzmun tam enə keçir.</li>
+        <li><b>View action-ları tabs sətrinin sağ sonunda.</b> Filter, display options və sağ paneli yığan ikon düymələri hər iki məzmun tabında eyni yerdədir; sağ rels və ikonlar “···” menyu düyməsinin sağı ilə hizalanır, məzmun sahəsi də həmin sütuna qədər genişlənir; sağ panel yığılanda məzmun tam enə keçir.</li>
       </ul>
     </figure>
 
@@ -156,9 +156,29 @@
     f.text(200, 723, '+ Yeni layihə', { size: 12.5, anchor: 'middle', color: C.ink2 });
   }
 
-  /* Resources tab — project header yoxdur, tabs + kart şəbəkəsi */
+  /* Resources tab — project header yoxdur, tabs + folders/files bölmələri */
   function projectResources(f, top) {
-    f.card(348, top, 728, 670, 'Resurslar', '5 resurs');
+    /* konteyner kart, başlıq və daxili padding yoxdur — bölmələr məzmun
+       sütununun tam eni ilə, birbaşa tabs-altından başlayır */
+    var left = 348, right = 1076;
+
+    /* Folders — qovluq adı + içindəki fayl sayı */
+    f.text(left, top + 18, 'Folders', { size: 13, weight: 700 });
+    f.text(left + WF.tw('Folders', 13) + 8, top + 18, '2', { size: 11, weight: 600, color: C.faint });
+
+    [['Refund axını', '3 fayl'], ['3DS keçidi', '2 fayl']].forEach(function (d, i) {
+      var fx = left + i * 372, fy = top + 30, fw = 356;
+      f.rrect(fx, fy, fw, 48, 6, { fill: C.white, stroke: C.line, rough: 0.8 });
+      /* qovluq ikonu */
+      f.rrect(fx + 14, fy + 19, 20, 14, 3, { fill: C.fill2, stroke: C.line, sw: 1, rough: 0.6 });
+      f.rrect(fx + 14, fy + 15, 9, 6, 2, { fill: C.fill2, stroke: C.line, sw: 1, rough: 0.6 });
+      f.text(fx + 46, fy + 29, d[0], { size: 12 });
+      f.text(fx + fw - 14, fy + 29, d[1], { size: 10, color: C.faint, anchor: 'end' });
+    });
+
+    /* Files — resurs kart şəbəkəsi */
+    f.text(left, top + 124, 'Files', { size: 13, weight: 700 });
+    f.text(left + WF.tw('Files', 13) + 8, top + 124, '5', { size: 11, weight: 600, color: C.faint });
 
     /* asset-library kartları: preview + tip + sahib + yenilənmə */
     var cards = [
@@ -170,7 +190,7 @@
     ];
     var bw = { 'Sənəd': 44, 'Use case': 60, 'Data dict.': 64 };
     cards.forEach(function (c, i) {
-      var x = 368 + (i % 3) * 236, y = top + 64 + Math.floor(i / 3) * 286;
+      var x = left + (i % 3) * 256, y = top + 138 + Math.floor(i / 3) * 286;
       f.rrect(x, y, 216, 262, 6, { fill: C.white });
       f.rrect(x + 1, y + 1, 214, 160, 5, { fill: C.fill2, stroke: 'none', rough: 0.6 });
       f.line(x + 1, y + 161, x + 215, y + 161, { color: C.line, sw: 1 });
@@ -200,7 +220,7 @@
     });
 
     /* boş vəziyyət: yaratma kartı şəbəkənin sonunda qalır */
-    var cx = 368 + 2 * 236, cy = top + 350;
+    var cx = right - 216, cy = top + 424;
     f.rrect(cx, cy, 216, 262, 6, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
     f.text(cx + 108, cy + 110, '+', { size: 20, anchor: 'middle', color: C.faint });
     f.text(cx + 108, cy + 140, 'Yeni resurs', { size: 11.5, anchor: 'middle', color: C.ink2 });
@@ -236,9 +256,8 @@
 
   /* Works tab — project header yoxdur, tabs + work items siyahısı */
   function projectWorks(f, top) {
-    f.card(348, top, 728, 600, 'Work items', 'Hamısı →');
-    f.line(368, top + 56, 1056, top + 56, { color: C.line, sw: 1, dash: [4, 5] });
-
+    /* konteyner kart, başlıq, ayırıcı və daxili padding yoxdur —
+       siyahı məzmun sütununun tam eni ilə, birbaşa tabs-altından başlayır */
     [
       ['ACB-160', 'Refund API kontraktı', 'Todo', 'outline', 'BA', 'B. Ağazadə', '30 okt'],
       ['ACB-142', '3DS redirect döngüsü', 'İcrada', 'default', 'SƏ', 'S. Əliyeva', '2 noy'],
@@ -246,16 +265,15 @@
       ['ACB-151', 'Risk skorlaması', 'Review', 'secondary', 'NH', 'N. Həsənli', '4 noy'],
       ['ACB-133', 'payment_tx sxemi', 'Bitdi', 'secondary', 'AM', 'A. Məmmədov', '28 okt']
     ].forEach(function (r, i) {
-      var y = top + 92 + i * 92;
-      f.text(368, y, r[0], { size: 10.5, color: C.faint });
-      f.text(440, y, r[1], { size: 12.5 });
-      WF.ui.badge(f, 828, y - 13, r[2], { h: 20, w: r[2] === 'İcrada' ? 62 : 58, fs: 9.5, variant: r[3] });
-      f.av(938, y - 4, 9, r[4]);
-      f.text(956, y, r[5], { size: 10.5, color: C.ink2 });
-      f.text(1056, y, r[6], { size: 10, color: C.faint, anchor: 'end' });
-      if (i < 4) f.line(368, y + 40, 1056, y + 40, { color: C.line, sw: 1, dash: [4, 5] });
+      var y = top + 32 + i * 92;
+      f.text(348, y, r[0], { size: 10.5, color: C.faint });
+      f.text(420, y, r[1], { size: 12.5 });
+      WF.ui.badge(f, 808, y - 13, r[2], { h: 20, w: r[2] === 'İcrada' ? 62 : 58, fs: 9.5, variant: r[3] });
+      f.av(918, y - 4, 9, r[4]);
+      f.text(936, y, r[5], { size: 10.5, color: C.ink2 });
+      f.text(1076, y, r[6], { size: 10, color: C.faint, anchor: 'end' });
+      if (i < 4) f.line(348, y + 40, 1076, y + 40, { color: C.line, sw: 1, dash: [4, 5] });
     });
-    f.text(368, top + 560, '18 iş · 8 açıq', { size: 10.5, color: C.faint });
   }
 
   /* ========================= 3. LAYİHƏ İCMALI ========================= */
