@@ -340,31 +340,24 @@
     });
 
     /* --- resurslar kartı: eyni başlıq anatomiyası, divider yoxdur ---
-       Resurslar tabı aktiv olanda kart gizlədilir — məlumat təkrar olunur. */
+       Resurslar tabı aktiv olanda kart gizlədilir — məlumat təkrar olunur.
+       Tip bölgüsü (sənəd/use case/data dict.) sabit olmadığı üçün göstərilmir. */
     if (view !== 'resources') {
       var rc = rt + 372;
-      f.rrect(1032, rc, 308, 200, 6, { fill: C.white });
+      f.rrect(1032, rc, 308, 152, 6, { fill: C.white });
       f.text(1056, rc + 32, 'Resurslar', { size: 15, weight: 700 });
       f.text(1128, rc + 31, '15', { size: 11, weight: 600, color: C.faint });
       f.text(1316, rc + 30, 'Hamısı →', { size: 11, color: C.accent, weight: 700, anchor: 'end' });
 
-      /* tip statistikası — üç kiçik tile, filtri əvəz edir */
-      [['8', 'Sənəd'], ['4', 'Use case'], ['3', 'Data dict.']].forEach(function (s, i) {
-        var tx = 1056 + i * 89;
-        f.rrect(tx, rc + 54, 81, 36, 5, { fill: C.fill, stroke: C.line, sw: 1, rough: 0.7 });
-        f.text(tx + 10, rc + 69, s[0], { size: 13, weight: 700 });
-        f.text(tx + 10, rc + 83, s[1], { size: 8.5, color: C.ink2 });
-      });
-
       /* son əlavə edilən resurs — preview + meta */
-      f.rrect(1056, rc + 100, 36, 36, 5, { fill: C.fill2, stroke: C.line, sw: 1, rough: 0.7 });
-      f.plines(1062, rc + 110, 24, 3, 7, { color: C.faint, sw: 1.2 });
-      f.text(1102, rc + 114, 'UC-04 · Refund axını', { size: 11.5 });
-      f.text(1102, rc + 130, 'Use case · S. Əliyeva · 3 gün', { size: 9.5, color: C.faint });
+      f.rrect(1056, rc + 52, 36, 36, 5, { fill: C.fill2, stroke: C.line, sw: 1, rough: 0.7 });
+      f.plines(1062, rc + 62, 24, 3, 7, { color: C.faint, sw: 1.2 });
+      f.text(1102, rc + 66, 'UC-04 · Refund axını', { size: 11.5 });
+      f.text(1102, rc + 82, 'Use case · S. Əliyeva · 3 gün', { size: 9.5, color: C.faint });
 
       /* yaratma action-u — kartın altında, dashed */
-      f.rrect(1056, rc + 148, 260, 32, 6, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
-      f.text(1186, rc + 168, '+ Yeni resurs', { size: 11, color: C.ink2, anchor: 'middle' });
+      f.rrect(1056, rc + 100, 260, 32, 6, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
+      f.text(1186, rc + 120, '+ Yeni resurs', { size: 11, color: C.ink2, anchor: 'middle' });
     }
 
     /* icon picker overlay */
