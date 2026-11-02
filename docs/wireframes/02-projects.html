@@ -87,8 +87,8 @@
         <li><b>Hər status öz qrupudur.</b> Backlog (1), Todo (4), In Progress (3), In Review (1), Done (1), Canceled (1) — 1–4 işlik altı qrup; alt işlər də sayğaca daxildir. Statusu söz deyil, soldakı glyph verir: kəsikli ring / boş ring / accent target / ring + üç nöqtə / dairə içində check / dairə içində ×. Qrup artıq statusun adını deyir, ona görə sətirdə status etiketi təkrarlanmır.</li>
         <li><b>Başlıq yeganə vurğudur.</b> Sətir tək sətirdir: solda seçim üçün checkbox slotu, onun sağında status glyph-i, başlıq və yanında solğun ID; parent sətirdə sağda alt iş sayğacı, sağ sonunda məsul avatarı və tarix. Done və Canceled sətirləri solğun tonla geri çəkilir.</li>
         <li><b>Alt işlər ağac kimi.</b> Alt işlər 28px içəri girir; şaquli rels parent status glyph-inin mərkəzindən enir, elbow alt işin status glyph-inə kiçik boşluqla yaxınlaşır. Xətlər ikonlara yapışmır (4px gap) və döngələr yumşaqdır — kəskin bucaq yoxdur. Alt iş öz status glyph-ini saxlayır — Done alt iş Todo parent-ın altında Done kimi oxunur, qruplaşdırma isə parent-a görədir. Parent sətrin sağında “1/2” alt iş sayğacı durur. Item səviyyəsində yığma ikonu yoxdur: ağac həmişə açıq göstərilir, dərinlik istənilən səviyyədədir (nümunədə bir səviyyə); alt iş sətir menyusundakı “Alt iş yarat” ilə yaranır.</li>
-        <li><b>Qrup başlığı düymədir.</b> Tam enli, 30px hündürlüklü düymə — solda chevron (açıqda aşağı, yığılıda sağa), yanında kiçik gap ilə say, sağ sonundakı ayrıca “+” həmin statusda yeni iş yaradır. Bütün qruplar açıq göstərilib, chevron ilə yığılır.</li>
-        <li><b>Hover və klaviatura eyni vəziyyəti paylaşır.</b> Ağ fon + accent haşiyə; soldakı ayrılmış slotda seçim checkbox-ı görünür, status glyph-i yerində qalır; sağdakı tarix yerini “···” menyu düyməsinə verir, avatar yerində qalır. ↑↓ sətirlər arasında, Enter açır, X tamamlayır.</li>
+        <li><b>Qrup başlığı düymədir.</b> Tam enli, 30px hündürlüklü düymə — solda chevron (açıqda aşağı, yığılıda sağa), yanında kiçik gap ilə say, sağ sonundakı ayrıca “+” ghost düyməsi həmin statusda yeni iş yaradır. Bütün qruplar açıq göstərilib, chevron ilə yığılır.</li>
+        <li><b>Hover və klaviatura eyni vəziyyəti paylaşır.</b> Ağ fon + accent haşiyə; soldakı ayrılmış slotda seçim checkbox-ı görünür, status glyph-i yerində qalır; sağdakı tarix yerini “···” ghost menyu düyməsinə verir, avatar yerində qalır. ↑↓ sətirlər arasında, Enter açır, X tamamlayır.</li>
         <li><b>Status glyph-i status seçimidir.</b> Glyph-in özü düymədir: klik altı statuslu kiçik menyunu açır, cari status işarələnib; seçim dərhal qrupu dəyişir. Nümunədə hover olunan sətrin status menyusu açıq göstərilib.</li>
         <li><b>Board redizaynı sonra planlanır.</b> Works tabı kompakt status feed-i göstərir; board və work item detalı bu dəstdən çıxarılıb.</li>
         <li><b>View action-ları tabs sətrinin sağ sonunda.</b> Filter, display options və sağ paneli yığan ikon düymələri hər iki məzmun tabında eyni yerdədir; sağ rels və ikonlar “···” menyu düyməsinin sağı ilə hizalanır, məzmun sahəsi də həmin sütuna qədər genişlənir; sağ panel yığılanda məzmun tam enə keçir.</li>
@@ -416,9 +416,8 @@
       f.av(right - 56, rowMid, 8, r[3]);
 
       if (hover) {
-        /* hover-də tarix yerini ··· menyu düyməsinə verir; avatar yerində qalır */
+        /* hover-də tarix yerini ··· ghost menyu düyməsinə verir; avatar yerində qalır */
         var bw = 22, bx = right - bw, by = ry + (rowH - bw) / 2;
-        f.rrect(bx, by, bw, bw, 5, { fill: C.fill, stroke: C.line, sw: 1, rough: 0.6 });
         f.text(bx + bw / 2, by + bw / 2 + 4, '···', {
           size: 11, anchor: 'middle', color: C.ink2
         });
@@ -496,8 +495,8 @@
         size: 10.5, weight: 600, color: C.faint
       });
 
+      /* “+” ghost düyməsidir — çərçivəsiz, yalnız ikon */
       var ab = 20, ax = right - 10 - ab, ay = y + (headH - ab) / 2;
-      f.rrect(ax, ay, ab, ab, 5, { fill: C.white, stroke: C.line, sw: 1, rough: 0.7 });
       f.line(ax + 5, ay + ab / 2, ax + ab - 5, ay + ab / 2, { color: C.ink2, sw: 1.2 });
       f.line(ax + ab / 2, ay + 5, ax + ab / 2, ay + ab - 5, { color: C.ink2, sw: 1.2 });
 
