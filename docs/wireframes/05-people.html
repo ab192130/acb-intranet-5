@@ -11,10 +11,11 @@
 <div class="wrap">
   <nav class="partnav">
     <a href="index.html">← Eskizlər</a>
-    <span class="pnum">05 / 05</span>
+    <span class="pnum">05 / 08</span>
     <span class="ptitle">People</span>
     <span class="pager">
       <a href="04-knowledge.html">← Knowledge</a>
+      <a href="06-flows.html">Axınlar →</a>
     </span>
   </nav>
 
@@ -122,13 +123,13 @@
 
     /* card = one person; 4×2 visible, the rest behind "load more" */
     var people = [
-      ['BA', 'Burhan Ağazadə', 'Product Engineer', 'RƏQƏMSALLAŞDIRMA', 'Sistem sahibi, prioritetlər', ['SƏ', 'RQ', 'LN'], '6 layihə', 'bu gün', true],
-      ['SƏ', 'Sevil Əliyeva', 'Project Lead', 'ÖDƏNİŞ', 'Layihə statusu, bloklar', ['BA', 'NH', 'EC'], '3 layihə', '2 saat', true],
+      ['KƏ', 'Kamran Əliyev', 'Product Engineer', 'RƏQƏMSALLAŞDIRMA', 'Sistem sahibi, prioritetlər', ['SƏ', 'RQ', 'LN'], '6 layihə', 'bu gün', true],
+      ['SƏ', 'Sevil Əliyeva', 'Project Lead', 'ÖDƏNİŞ', 'Layihə statusu, bloklar', ['KƏ', 'NH', 'EC'], '3 layihə', '2 saat', true],
       ['AM', 'Anar Məmmədov', 'Rəqəmsallaşdırma rəhbəri', 'RƏQƏMSALLAŞDIRMA', 'Təsdiq, büdcə, eskalasiya', [], '— layihə', 'bu gün', true],
       ['NH', 'Nigar Həsənli', 'QA Engineer', 'ÖDƏNİŞ', 'Test, bug triaj', ['SƏ', 'EC'], '2 layihə', 'dünən', true],
-      ['RQ', 'Rəşad Quliyev', 'Business Analyst', 'DATA', 'Tələblər, use case', ['BA', 'LN'], '2 layihə', 'dünən', true],
+      ['RQ', 'Rəşad Quliyev', 'Business Analyst', 'DATA', 'Tələblər, use case', ['KƏ', 'LN'], '2 layihə', 'dünən', true],
       ['EC', 'Elvin Cəfərov', 'Backend Developer', 'ÖDƏNİŞ', '3DS, gateway inteqrasiyası', ['SƏ', 'NH', 'Tİ'], '3 layihə', '3 gün', true],
-      ['LN', 'Leyla Nəsirova', 'Product Designer', 'MƏHSUL', 'UX, prototip, dizayn sistemi', ['BA'], '1 layihə', '5 gün', true],
+      ['LN', 'Leyla Nəsirova', 'Product Designer', 'MƏHSUL', 'UX, prototip, dizayn sistemi', ['KƏ'], '1 layihə', '5 gün', true],
       ['AQ', 'Aysel Quliyeva', 'Mühasib', 'MALİYYƏ', 'Büdcə, hesab-faktura', [], '— layihə', 'kataloqda', false]
     ];
     people.forEach(function (p, i) {
@@ -154,11 +155,11 @@
 
   /* ============================ 10. PROFİL ============================ */
   frames.person = function (f) {
-    WF.shell(f, { crumb: 'İnsanlar / B. Ağazadə', active: 3 });
+    WF.shell(f, { crumb: 'İnsanlar / K. Əliyev', active: 3 });
 
     f.text(100, 94, '← İnsanlar', { size: 12, color: C.ink2 });
-    f.av(150, 168, 38, 'BA');
-    f.text(208, 158, 'Burhan Ağazadə', { size: 26, weight: 700 });
+    f.av(150, 168, 38, 'KƏ');
+    f.text(208, 158, 'Kamran Əliyev', { size: 26, weight: 700 });
     f.text(208, 184, 'Product Engineer · Rəqəmsallaşdırma', { size: 13.5, color: C.ink2 });
     f.chip(208, 196, 'Sistemdə aktiv', { h: 26, w: 122, size: 11.5 });
     f.chip(340, 196, '6 layihə', { h: 26, w: 82, size: 11.5 });
@@ -185,8 +186,8 @@
 
     /* right column */
     f.card(640, 240, 700, 210, 'Layihələr (3)', 'Hamısı');
-    [['Ödəniş gateway', 'Lead', ['SƏ', 'BA', 'NH']],
-     ['3DS inteqrasiyası', 'Contributor', ['BA', 'EC']],
+    [['Ödəniş gateway', 'Lead', ['SƏ', 'KƏ', 'NH']],
+     ['3DS inteqrasiyası', 'Contributor', ['KƏ', 'EC']],
      ['Data platform', 'Contributor', ['RQ', 'Tİ']]].forEach(function (p, k) {
       var py = 306 + k * 54;
       f.text(660, py, p[0], { size: 13 });

@@ -39,7 +39,8 @@ Layihəyə girən istifadəçi ilk 30 saniyədə bunları anlamalıdır:
 | `Project.icon` | Yoxdur | Emoji picker |
 | `Project.cover` | Yoxdur | Cover dəyişdir / sil |
 | `Subproject` | Var (nested) | — |
-| `Milestone` | Yoxdur | **Layihə daxilində milestone** |
+| `Milestone` | Yoxdur | **Layihə daxilində milestone**; paketlərlə opsional əlaqə |
+| `Package` | Yoxdur | **Buraxılış/yoxlama vahidi**; bir neçə work item + qapılar + sübut |
 | `Member / Role` | Var (Owner, Lead, Contributor) | İdarəetmə axını yoxdur |
 | `Work item` | Var (Works tabı) | Overview-də yalnız xülasə |
 | `Resource` | Var (Resources tabı) | Overview-də xülasə lazımdır? |
@@ -77,6 +78,8 @@ health isə icranın **törəyən sağlamlıq siqnalıdır**.
 - Layihənin başlanğıc/son tarixi yoxdur; **layihə deadline-u yoxdur**.
 - `Milestone` layihə daxilində ayrı obyektdir: başlıq, tarix, status, bağlı işlər.
 - Milestone progress-i dəyişmir; health-ə təsir edir (gecikmə / yaxınlaşma).
+- `Package` milestone deyil: yoxlanıla bilən iş toplusudur və qapılardan keçir. Bir milestone bir neçə paketlə tamamlana bilər; paket milestonesuz (məs. hotfix) ola bilər. Əlaqə opsionaldır.
+- Milestone tarixi biznes öhdəliyidir; paketin qapı SLA-ı ayrıdır. Health səbəbi zəncirlə göstərilir: “PKG-42 QA-da gecikib → 3DS milestone riskdə”.
 
 ---
 
@@ -821,9 +824,11 @@ Resources və Works tabları da **03c/03d** kimi əlavə edildi
 | D10 | İkon / cover | Var / yox | **Təsdiqləndi:** Notion üslubu; emoji picker; cover dəyişdir/sil | ✅ |
 | D11 | Header panel | Saxlamaq / yığışdırmaq | **Təsdiqləndi:** top bar yoxdur; axtarış rail-də ⌘K trigger (cmdk) | ✅ |
 | D12 | Resources tabı | Siyahı və ya kart şəbəkəsi | **Təsdiqləndi:** asset-library modeli — kart şəbəkəsi, tipə uyğun preview, sonda “Yeni resurs” kartı; progress zolağı yoxdur | ✅ |
+| D13 | Milestone və paket | Eyni obyekt və ya ayrı | **Təsdiqləndi:** ayrı obyektlər. Milestone vaxt/nəticə, paket artefakt/qərar. Əlaqə opsional və çoxa-çoxdur; paket milestonesuz, milestone paketsiz ola bilər | ✅ |
 
-**D1–D12 bağlandı.** Status/health modeli, inline təsvir, icon/cover, header-siz shell, resurs
-kart şəbəkəsi və versiya səthi təsdiqləndi. V1 vayrfreymləri üçün əsas hazırdır.
+**D1–D13 bağlandı.** Status/health modeli, inline təsvir, icon/cover, header-siz shell, resurs
+kart şəbəkəsi, versiya səthi və milestone↔paket əlaqəsi təsdiqləndi. V1 vayrfreymləri üçün
+əsas hazırdır.
 
 ### 7.1 Versiya müqayisəsi — “ayrıca ekran” nə deməkdir?
 
@@ -848,7 +853,7 @@ kart şəbəkəsi və versiya səthi təsdiqləndi. V1 vayrfreymləri üçün ə
 - [x] V1 dəsti (1, 3, 5, 6, 7 + 2, 4) uyğundur.
 - [x] Status + health iki ayrı ox kimi təsdiqləndi.
 - [x] Versiya müqayisəsi səthi seçildi (modal vs ayrıca səhifə).
-- [x] D1–D12 qərarları bağlanıb.
+- [x] D1–D13 qərarları bağlanıb.
 - [x] İnline təsvir + autosave debounce təsdiqləndi.
 - [x] İkon / cover + emoji picker təsdiqləndi.
 - [ ] Vayrfreym çəkməyə başlayaq.

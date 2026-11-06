@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ACB Intranet — Buraxılış · lo-fi</title>
+<link rel="stylesheet" href="vendor/kalam.css">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="partnav">
+    <a href="index.html">← Eskizlər</a>
+    <span class="pnum">07 / 08</span>
+    <span class="ptitle">Buraxılış</span>
+    <span class="pager">
+      <a href="06-flows.html">← Axınlar</a>
+    </span>
+  </nav>
+
+  <!-- ===================== 07 DELIVERY ===================== -->
+  <section class="section">
+    <div class="section-head">
+      <span class="idx">07</span><h2>Buraxılış</h2>
+      <span class="sub">tələb · bölgü · paket · milestone · qapı · mərhələ</span>
+    </div>
+
+    <figure>
+      <div class="frame-head"><span class="num">12</span><h3>Tələb və bölgü</h3>
+        <span class="purpose">PMO inputu tələb kimi qeydə alınır; triage və bölgü work item-ları yaradır</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="release-intake"></svg>
+      <ol class="notes">
+        <li><b>PMO inputu task deyil, tələbdir.</b> E-mail və ya mesaj birbaşa işə çevrilmir: əvvəl tələb qeydə alınır, sonra triage olunur. Bu, “kim istədi, nə vaxt, nə üçün” izini saxlayır.</li>
+        <li><b>Triage qapıdır.</b> Lead qəbul edir, məlumat istəyir və ya rədd edir. Qəbul olunmamış tələb work item yaratmır — boş iş yükü yaranmır.</li>
+        <li><b>Qəbul meyarları müqavilədir.</b> Nəyin “hazır” sayılacağı tələb səviyyəsində yazılır; sonradan “bu deyildi” mübahisəsi qalmır.</li>
+        <li><b>Bölgü iş vahidləri yaradır.</b> Lead tələbi feature, bug və ya alt task-lara bölür; hər birinin sahibi, qiyməti və statusu olur.</li>
+        <li><b>Paket tələbdən avtomatik yaranmır.</b> Yalnız qəbul edilmiş işlər paketə düşür; paket kimin, nəyi, hansı mərhələyə göndərdiyini bilir.</li>
+        <li><b>Kontekst itmir.</b> Tələb, work item və paket bir-birinə bağlıdır; PMO sonradan “bizim tələb hara düşdü?” sualına bir kliklə cavab tapır.</li>
+        <li><b>Design şərti asılılıqdır.</b> Default söndürülüb; yalnız lazım olanda work item-ə xarici asılılıq kimi əlavə olunur. Ayrı departament, design work item və ya daimi mərhələ yaradılmır.</li>
+      </ol>
+    </figure>
+
+    <figure>
+      <div class="frame-head"><span class="num">13</span><h3>Paket — yoxlama qapıları</h3>
+        <span class="purpose">Paket mərhələlər arasında hərəkət edir; hər keçid qərar, sübut və SLA tələb edir</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="release-package"></svg>
+      <ol class="notes">
+        <li><b>Paket əsas vahiddir.</b> QA tək-tək work item-ə yox, paketin konkret versiyasına baxır. Bir paketdə 4 iş ola bilər; qərar hamısına aiddir.</li>
+        <li><b>Mərhələ status deyil.</b> Work item “Done” ola bilər, paket isə hələ yoxlamada qala bilər. Bu iki vəziyyət ayrı saxlanılır.</li>
+        <li><b>Hər qapının sahibi var.</b> Texniki baxış, ilkin yoxlama və QA qapıları ayrı-ayrı qərar nöqtələridir; “OK” sözü qərar sayılmır.</li>
+        <li><b>Sübut tələb olunur.</b> Checklist, test nəticəsi, link və ya fayl — qərarın əsası görünməlidir. Sübutsuz təsdiq auditdə boş görünür.</li>
+        <li><b>Keçid manual ola bilər.</b> Sistem heç bir aləti işə salmır; yalnız “bu paket bu mərhələyə keçdi” qeydini saxlayır. Mənbə linki opsionaldır.</li>
+        <li><b>Qərar jurnalı dəyişməzdir.</b> Kim, nə vaxt, hansı paket versiyasına və hansı sübutla qərar verdi — hamısı qalır. Düzəliş varsa, yeni qeyd yaranır.</li>
+        <li><b>Düzəliş dövrəsi görünür.</b> QA “düzəliş istə” verəndə paket əvvəlki mərhələyə qayıdır; bu, itmir və rework kimi sayılır.</li>
+        <li><b>Milestone ilə əlaqə opsionaldır.</b> Paket bir və ya bir neçə milestone-a xidmət edə bilər; hotfix milestonesuz ola bilər. Milestone tarixi biznes öhdəliyidir, paketin qapı SLA-ı isə ayrıdır.</li>
+      </ol>
+    </figure>
+
+    <figure>
+      <div class="frame-head"><span class="num">14</span><h3>Buraxılış lövhəsi</h3>
+        <span class="purpose">Bütün paketlər mərhələlər üzrə; WIP, gecikmə və bloklar bir baxışda</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="release-board"></svg>
+      <ol class="notes">
+        <li><b>Lövhə paketləri göstərir.</b> Work item-lar paketin içindədir; lövhədə tək-tək task-lar yox, yoxlanıla bilən paketlər hərəkət edir. Kartdaki qısa etiket paketin bağlı olduğu milestone-u göstərir (məs. `3DS`).</li>
+        <li><b>WIP və yaş görünür.</b> Hər sütunda neçə paket olduğu və neçə gündür gözlədiyi göstərilir; “hamısı işləyir” illüziyası yox olur.</li>
+        <li><b>Blok səbəbi ilə göstərilir.</b> Gecikən paket accent ilə işarələnir və səbəb yazılır — sadəcə qırmızı rəng deyil.</li>
+        <li><b>Manual keçid görünür.</b> Sistem deploy etmir; keçid qeydə alınır. “Manual” badge-i bunu açıq deyir.</li>
+        <li><b>Lövhə status redaktoru deyil.</b> Kartı sürüşdürmək qərar vermir; klik paketi açır və qapı orada tamamlanır.</li>
+        <li><b>Keçidlər jurnalda.</b> Hər mərhələ dəyişikliyi kim, nə vaxt və hansı səbəblə qeydə alınır. Bu, “sistem özü deploy etdi” illüziyasını yaratmır.</li>
+        <li><b>Milestone filtri.</b> Lövhə paketləri milestone üzrə süzür; milestone ayrı sütun deyil — paketin plan öhdəliyidir, paket isə onun yoxlama vahididir.</li>
+      </ol>
+    </figure>
+
+  </section>
+
+  <div class="partfoot">
+    <a href="06-flows.html">← Axınlar</a>
+    <span class="hint">lo-fi · qərar sənədi, dizayn deyil</span>
+    <a class="next" href="index.html">Eskizlər →</a>
+  </div>
+</div>
+
+<script src="vendor/rough.js"></script>
+<script src="core.js"></script>
+<script>
+/* 07 Delivery — inline frames: tələb, paket, lövhə */
+(function () {
+  'use strict';
+  var WF = window.WF, C = WF.C;
+  var frames = WF.frames;
+
+  function stageRail(f, y, stages) {
+    var x0 = 180, gap = 200;
+    f.line(x0, y, x0 + gap * (stages.length - 1), y, { color: C.line, sw: 1.4 });
+
+    stages.forEach(function (s, i) {
+      var cx = x0 + i * gap;
+      if (s.state === 'done') {
+        f.line(x0, y, cx, y, { color: C.ink2, sw: 1.4 });
+        f.circle(cx, y, 22, { fill: C.ink, stroke: C.ink, rough: 0.6 });
+        f.line(cx - 5, y, cx - 1, y + 4, { color: C.white, sw: 1.5 });
+        f.line(cx - 1, y + 4, cx + 6, y - 4, { color: C.white, sw: 1.5 });
+      } else if (s.state === 'now') {
+        f.circle(cx, y, 26, { fill: C.white, stroke: C.accent, sw: 1.6, rough: 0.6 });
+        f.dot(cx, y, 4, C.accent);
+      } else {
+        f.circle(cx, y, 20, { fill: C.white, stroke: C.faint, sw: 1.4, dash: [3, 3], rough: 0.6 });
+      }
+      f.text(cx, y + 34, s.name, {
+        size: 11.5, anchor: 'middle',
+        weight: s.state === 'now' ? 700 : 400,
+        color: s.state === 'next' ? C.faint : C.ink
+      });
+      f.text(cx, y + 50, s.date || '—', {
+        size: 9.5, anchor: 'middle',
+        color: s.state === 'now' ? C.accent : C.faint
+      });
+    });
+  }
+
+  function checklist(f, x, y, items) {
+    items.forEach(function (it, k) {
+      var cy = y + k * 22;
+      f.check(x, cy - 12, it[1]);
+      f.text(x + 26, cy, it[0], {
+        size: 11, color: it[1] ? C.ink2 : C.ink
+      });
+      if (!it[1]) f.text(x + 520, cy, it[2] || 'çatışmır', {
+        size: 9, color: C.accent, anchor: 'end'
+      });
+    });
+  }
+
+  /* ===================== 12. TƏLƏB VƏ BÖLGÜ ===================== */
+  frames['release-intake'] = function (f) {
+    WF.shell(f, { crumb: 'Buraxılış / Tələblər', active: 1 });
+
+    f.text(100, 112, 'Tələb və bölgü', { size: 28, weight: 700 });
+    f.text(100, 140, 'PMO inputu → triage → iş vahidləri · 4 tələb gözləyir',
+      { size: 13, color: C.ink2 });
+
+    f.chip(960, 100, 'Mənim', { h: 26, size: 10.5, active: true });
+    f.chip(1028, 100, 'Komanda', { h: 26, size: 10.5 });
+    f.chip(1114, 100, 'Hamısı', { h: 26, size: 10.5 });
+    f.btn(1190, 96, 180, '+ Yeni tələb', { kind: 'primary', h: 32, size: 11.5 });
+
+    /* sol: gələn tələblər */
+    f.text(100, 180, 'GƏLƏN TƏLƏBLƏR', { size: 10, weight: 700, color: C.faint, ls: 1.2 });
+    f.text(256, 180, '4', { size: 10.5, weight: 700, color: C.faint });
+
+    var reqs = [
+      ['FEATURE', 'Partial refund dəstəyi', 'PMO · 2 gün', 'Yüksək', true],
+      ['BUG', '3DS timeout xətası', 'PMO · 1 gün', 'Kritik', false],
+      ['FEATURE', 'Refund hesabatı', 'PMO · 4 gün', 'Orta', false],
+      ['BUG', 'Webhook replay qoruması', 'PMO · 5 gün', 'Aşağı', false]
+    ];
+    reqs.forEach(function (r, k) {
+      var ry = 196 + k * 84;
+      f.rrect(100, ry, 320, 74, 6, {
+        fill: C.white,
+        stroke: r[4] ? C.accent : C.line,
+        sw: r[4] ? 1.5 : 1.1, rough: 0.8
+      });
+      f.chip(112, ry + 12, r[0], {
+        h: 20, size: 8,
+        fill: r[0] === 'BUG' ? C.accentBg : C.fill,
+        color: r[0] === 'BUG' ? C.accent : C.ink2
+      });
+      f.dot(400, ry + 20, 3, r[3] === 'Kritik' ? C.accent : C.faint);
+      f.text(112, ry + 42, r[1], { size: 12.5, weight: r[4] ? 700 : 400 });
+      f.text(112, ry + 60, r[2], { size: 10, color: C.faint });
+    });
+    f.text(100, 546, 'Arxiv (12)', { size: 11, color: C.faint });
+
+    /* orta: seçilmiş tələb */
+    f.rrect(448, 168, 600, 560, 6, { fill: C.white });
+    f.chip(468, 184, 'FEATURE', { h: 22, size: 9, fill: C.fill, color: C.ink2 });
+    f.chip(548, 184, 'Yüksək', { h: 22, size: 9, fill: C.accentBg, color: C.accent });
+    f.chip(970, 184, 'Triage', { h: 22, size: 9, fill: C.fill, color: C.ink2 });
+
+    f.text(468, 224, 'Partial refund dəstəyi', { size: 18, weight: 700 });
+    f.text(468, 246, 'PMO · A. Məmmədov · 2 gün əvvəl · Ödəniş gateway',
+      { size: 10.5, color: C.ink2 });
+
+    f.text(468, 280, 'TƏLƏB', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    f.plines(468, 300, 560, 3, 18, { last: 0.72 });
+
+    f.text(468, 366, 'QƏBUL MEYARLARI', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    checklist(f, 468, 388, [
+      ['Partial refund API-də dəstəklənir', true],
+      ['UI-də məbləğ seçimi var', true],
+      ['Test ssenariləri yazılıb', false]
+    ]);
+
+    f.line(468, 456, 1028, 456, { color: C.line, dash: [4, 6], sw: 1 });
+
+    f.text(468, 480, 'BÖLGÜ (4 iş)', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    f.text(1028, 480, '+ İş əlavə et', { size: 10, color: C.accent, weight: 700, anchor: 'end' });
+
+    var works = [
+      ['ACB-201', 'API kontraktı', 'SƏ', '3p', 'Todo'],
+      ['ACB-202', 'UI dəyişikliyi', 'NH', '2p', 'Todo'],
+      ['ACB-203', 'Test ssenariləri', 'EC', '3p', 'Todo'],
+      ['ACB-204', 'Sənəd yenilənməsi', 'RQ', '1p', 'Todo']
+    ];
+    works.forEach(function (w, k) {
+      var wy = 498 + k * 36;
+      f.text(468, wy + 20, w[0], { size: 9.5, color: C.faint });
+      f.text(532, wy + 20, w[1], { size: 11.5 });
+      f.av(900, wy + 15, 8, w[2]);
+      f.text(914, wy + 20, w[4], { size: 9.5, color: C.ink2 });
+      f.chip(972, wy + 4, w[3], { h: 20, size: 8.5 });
+      if (k < 3) f.line(468, wy + 32, 1028, wy + 32, { color: C.line, dash: [4, 6], sw: 1 });
+    });
+    f.text(468, 660, 'Bölgü yalnız tələb qəbul edildikdən sonra paketə düşür.',
+      { size: 9.5, color: C.faint });
+
+    /* sağ: triage qərarı */
+    f.rrect(1072, 168, 336, 380, 6, { fill: C.white });
+    f.text(1092, 196, 'Triage qərarı', { size: 13, weight: 700 });
+    f.text(1092, 216, 'Tələbi qəbul et, böl və paketə bağla', { size: 9.5, color: C.faint });
+
+    WF.ui.select(f, 1092, 244, 296, { label: 'Sahib', value: 'Team Lead', h: 32 });
+    WF.ui.select(f, 1092, 310, 296, { label: 'Prioritet', value: 'Yüksək', h: 32 });
+    WF.ui.input(f, 1092, 376, 296, { label: 'Hədəf paket', value: 'PKG-42', h: 32 });
+
+    f.btn(1092, 438, 90, 'Qəbul et', { kind: 'primary', h: 30, size: 10.5 });
+    f.btn(1190, 438, 120, 'Məlumat lazımdır', { h: 30, size: 10 });
+    f.btn(1318, 438, 56, 'Rədd et', { kind: 'ghost', h: 30, size: 10 });
+
+    WF.ui.switch(f, 1092, 474, 'Design tələb olunur', false);
+    f.text(1092, 512, 'Default söndürülüb — yalnız lazım olanda.',
+      { size: 9, color: C.faint });
+    f.text(1092, 528, 'Sahibi şəxs / vendor; departament deyil.', { size: 9, color: C.faint });
+
+    /* paket önizlemesi */
+    f.rrect(1072, 564, 336, 164, 6, { fill: C.fill, stroke: C.line, rough: 0.8 });
+    f.text(1092, 592, 'Paket önizlemesi', { size: 12, weight: 700 });
+    f.text(1092, 620, 'PKG-42 · 4 iş', { size: 15, weight: 700 });
+    f.text(1092, 642, 'Hələ paket yaradılmayıb', { size: 10, color: C.ink2 });
+    f.text(1092, 664, 'Qəbul edilən işlər bu paketə düşəcək.',
+      { size: 9, color: C.faint });
+    f.text(1092, 700, 'Paket yarat →', { size: 10.5, color: C.accent, weight: 700 });
+
+    /* annotasiyalar */
+    f.anno(1, 88, 210, 98, 210);
+    f.anno(2, 1056, 200, 1068, 200);
+    f.anno(3, 440, 388, 466, 388);
+    f.anno(4, 440, 498, 466, 498);
+    f.anno(5, 1056, 600, 1068, 600);
+    f.anno(6, 88, 560, 98, 560);
+    f.annoS(7, 1060, 486);
+  };
+
+  /* ===================== 13. PAKET — QAPILAR ===================== */
+  frames['release-package'] = function (f) {
+    WF.shell(f, { crumb: 'Buraxılış / PKG-42', active: 1 });
+
+    f.text(100, 108, 'PKG-42 · Partial refund', { size: 24, weight: 700 });
+    f.chip(100 + WF.tw('PKG-42 · Partial refund', 24) + 12, 92, 'Yoxlamada',
+      { h: 26, size: 10.5, fill: C.accentBg, color: C.accent });
+    f.chip(100 + WF.tw('PKG-42 · Partial refund', 24) + 122, 92, 'manual',
+      { h: 26, size: 10.5, fill: C.fill, color: C.ink2 });
+    f.text(100, 136, '4 iş · 2 qapı keçib · 1 qapı gözləyir · mənbə: manual',
+      { size: 11.5, color: C.ink2 });
+
+    f.btn(1190, 92, 170, 'Növbəti mərhələ', { h: 34, size: 11.5 });
+    f.rrect(1380, 92, 28, 30, 6, { fill: 'none', stroke: C.line, sw: 1.1, rough: 0.7 });
+    f.text(1394, 112, '···', { size: 14, color: C.ink2, anchor: 'middle' });
+
+    stageRail(f, 190, [
+      { name: 'Hazırlıq', date: '2 noy', state: 'done' },
+      { name: 'Texniki baxış', date: '2 noy', state: 'done' },
+      { name: 'İlkin yoxlama', date: '3 noy', state: 'done' },
+      { name: 'QA', date: '4 noy', state: 'now' },
+      { name: 'Növbəti mərhələ', date: '—', state: 'next' }
+    ]);
+
+    /* cari qapı */
+    f.rrect(100, 270, 760, 268, 6, { fill: C.white });
+    f.text(120, 294, 'CARİ QAPI · QA YOXLAMASI', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    f.text(840, 294, 'SLA 6 saat', { size: 10.5, color: C.accent, weight: 700, anchor: 'end' });
+    f.text(120, 320, 'Yoxlama · N. Həsənli', { size: 15, weight: 700 });
+
+    f.text(120, 350, 'QƏBUL MEYARLARI', { size: 9, weight: 700, color: C.faint, ls: 1.2 });
+    checklist(f, 120, 370, [
+      ['Partial refund API testləri keçib', true, ''],
+      ['UI-də məbləğ seçimi yoxlanıb', true, ''],
+      ['Regressiya ssenariləri keçib', true, ''],
+      ['Sənəd yenilənib', false, 'çatışmır']
+    ]);
+
+    f.text(120, 470, 'Sübut: test nəticəsi · 12/14 keçdi', { size: 10.5, color: C.ink2 });
+    f.text(840, 470, 'Aç ↗', { size: 10, color: C.accent, weight: 700, anchor: 'end' });
+
+    f.btn(120, 490, 100, 'Qəbul et', { kind: 'primary', h: 30, size: 10.5 });
+    f.btn(228, 490, 130, 'Düzəliş istə', { h: 30, size: 10.5 });
+    f.btn(366, 490, 70, 'Rədd et', { kind: 'ghost', h: 30, size: 10.5 });
+
+    f.text(120, 532, 'Qəbul yalnız bu paketin cari versiyasına aiddir.',
+      { size: 9, color: C.faint });
+
+    /* paketin tərkibi */
+    f.rrect(100, 548, 760, 176, 6, { fill: C.white });
+    f.text(120, 574, 'Paketin tərkibi (4)', { size: 12.5, weight: 700 });
+    f.text(840, 574, 'Hamısı →', { size: 10, color: C.ink2, anchor: 'end' });
+
+    var items = [
+      ['ACB-201', 'API kontraktı', 'SƏ', 'Done'],
+      ['ACB-202', 'UI dəyişikliyi', 'NH', 'Done'],
+      ['ACB-203', 'Test ssenariləri', 'EC', 'In Review'],
+      ['ACB-204', 'Sənəd yenilənməsi', 'RQ', 'Todo']
+    ];
+    items.forEach(function (it, k) {
+      var iy = 592 + k * 32;
+      f.text(120, iy + 18, it[0], { size: 9.5, color: C.faint });
+      f.text(184, iy + 18, it[1], { size: 11 });
+      f.av(700, iy + 13, 8, it[2]);
+      f.chip(770, iy + 3, it[3], {
+        h: 20, size: 8.5,
+        fill: it[3] === 'Done' ? C.fill : C.accentBg,
+        color: it[3] === 'Done' ? C.ink2 : C.accent
+      });
+      if (k < 3) f.line(120, iy + 28, 840, iy + 28, { color: C.line, dash: [4, 6], sw: 1 });
+    });
+
+    /* qərar jurnalı */
+    f.rrect(100, 744, 760, 112, 6, { fill: C.white });
+    f.text(120, 768, 'Qərar jurnalı', { size: 12, weight: 700 });
+    f.text(840, 768, 'Hamısı →', { size: 9.5, color: C.ink2, anchor: 'end' });
+    [['Texniki baxış təsdiqləndi', '2 noy · S. Əliyeva'],
+     ['İlkin yoxlama başladı', '3 noy · N. Həsənli'],
+     ['QA yoxlaması başladı', '4 noy · N. Həsənli']].forEach(function (r, k) {
+      var ly = 792 + k * 22;
+      f.dot(124, ly - 4, 2.2, k === 2 ? C.accent : C.faint);
+      f.text(136, ly, r[0], { size: 10.5, color: C.ink2 });
+      f.text(840, ly, r[1], { size: 9, color: C.faint, anchor: 'end' });
+    });
+
+    /* sağ rels */
+    f.rrect(892, 270, 516, 140, 6, { fill: C.white });
+    f.text(916, 296, 'Paket', { size: 12.5, weight: 700 });
+    f.text(1384, 296, 'PKG-42', { size: 10.5, color: C.faint, anchor: 'end' });
+    f.text(916, 322, 'Mənbə: manual', { size: 10.5, color: C.ink2 });
+    f.text(916, 344, 'Link: əlavə edilib', { size: 10.5, color: C.ink2 });
+    f.text(916, 366, 'Yaradıldı: 2 noy · 4 iş', { size: 10.5, color: C.ink2 });
+    f.text(916, 388, 'Milestone: 3DS keçidi →', { size: 10.5, color: C.accent, weight: 700 });
+    f.text(1384, 344, 'Aç ↗', { size: 9.5, color: C.accent, weight: 700, anchor: 'end' });
+
+    f.rrect(892, 426, 516, 210, 6, { fill: C.white });
+    f.text(916, 452, 'Mərhələlər', { size: 12.5, weight: 700 });
+    [['Hazırlıq', 'tamamlandı', '2 noy', 'done'],
+     ['Texniki baxış', 'təsdiqləndi', '2 noy', 'done'],
+     ['İlkin yoxlama', 'keçdi', '3 noy', 'done'],
+     ['QA', 'davam edir', '4 noy', 'now'],
+     ['Növbəti mərhələ', 'gözləyir', '—', 'next']].forEach(function (r, k) {
+      var sy = 480 + k * 28;
+      f.circle(918, sy - 4, 12, {
+        fill: r[3] === 'now' ? C.white : r[3] === 'done' ? C.fill : C.white,
+        stroke: r[3] === 'now' ? C.accent : C.line, sw: 1.1, rough: 0.6
+      });
+      if (r[3] === 'done') {
+        f.line(914, sy - 4, 917, sy - 1, { color: C.ink2, sw: 1.2 });
+        f.line(917, sy - 1, 922, sy - 7, { color: C.ink2, sw: 1.2 });
+      } else if (r[3] === 'now') {
+        f.dot(918, sy - 4, 2.2, C.accent);
+      }
+      f.text(938, sy, r[0], { size: 10.5, weight: r[3] === 'now' ? 700 : 400, color: r[3] === 'next' ? C.faint : C.ink });
+      f.text(1384, sy, r[2], { size: 9, color: C.faint, anchor: 'end' });
+      f.text(1200, sy, r[1], {
+        size: 9, color: r[3] === 'now' ? C.accent : C.faint, anchor: 'end'
+      });
+    });
+
+    f.rrect(892, 652, 516, 166, 6, { fill: C.white });
+    f.text(916, 678, 'Sübutlar', { size: 12.5, weight: 700 });
+    f.text(1384, 678, '+ Əlavə et', { size: 9.5, color: C.accent, weight: 700, anchor: 'end' });
+    [['QA checklist', '3/4'],
+     ['Test nəticəsi', '12/14'],
+     ['Review linki', 'aç ↗']].forEach(function (r, k) {
+      var ey = 706 + k * 30;
+      f.text(916, ey, r[0], { size: 10.5, color: C.ink2 });
+      f.text(1384, ey, r[1], {
+        size: 10, anchor: 'end',
+        color: r[1] === 'aç ↗' ? C.accent : C.ink
+      });
+      if (k < 2) f.line(916, ey + 16, 1384, ey + 16, { color: C.line, dash: [4, 6], sw: 1 });
+    });
+
+    /* annotasiyalar */
+    f.anno(1, 876, 300, 890, 300);
+    f.anno(2, 740, 150, 768, 178);
+    f.anno(3, 88, 300, 98, 300);
+    f.anno(4, 876, 700, 890, 700);
+    f.anno(5, 876, 350, 890, 350);
+    f.anno(6, 88, 790, 98, 790);
+    f.annoS(7, 444, 505);
+    f.anno(8, 876, 388, 890, 388);
+  };
+
+  /* ===================== 14. BURAXILIŞ LÖVHƏSİ ===================== */
+  frames['release-board'] = function (f) {
+    WF.shell(f, { crumb: 'Buraxılış / Lövhə', active: 1 });
+
+    f.text(100, 108, 'Buraxılış lövhəsi', { size: 24, weight: 700 });
+    f.text(100, 134, '6 paket · 3 milestone · 2 qapıda gözləyir · 1 bloklanıb', { size: 11.5, color: C.ink2 });
+
+    f.chip(960, 96, 'Milestone: Hamısı', { h: 26, size: 10.5 });
+    f.chip(1130, 96, 'Lövhə', { h: 26, size: 10.5, active: true });
+    f.chip(1192, 96, 'Siyahı', { h: 26, size: 10.5 });
+    f.btn(1270, 92, 138, '+ Paket yarat', { kind: 'primary', h: 32, size: 11 });
+
+    var stages = [
+      ['Hazırlıq', 2, [
+        ['PKG-43', 'Refund hesabatı', '3 iş', 'SƏ', '1 gün', false, 'Refund'],
+        ['PKG-44', 'Webhook replay', '2 iş', 'NH', '2 gün', false, 'Webhook']
+      ]],
+      ['Texniki baxış', 2, [
+        ['PKG-41', '3DS timeout', '2 iş', 'EC', '3 gün', false, '3DS'],
+        ['PKG-45', 'Sənəd yenilənməsi', '1 iş', 'RQ', '1 gün', false, 'Sənəd']
+      ]],
+      ['İlkin yoxlama', 1, [
+        ['PKG-40', 'Partial refund', '4 iş', 'SƏ', '2 gün', false, 'Refund']
+      ]],
+      ['QA', 2, [
+        ['PKG-42', 'Partial refund', '4 iş', 'NH', '6 saat', true, '3DS'],
+        ['PKG-39', '3DS fallback', '3 iş', 'EC', '2 gün', false, '3DS']
+      ]],
+      ['Növbəti mərhələ', 1, [
+        ['PKG-38', 'Refund UI', '2 iş', 'AM', 'dünən', false, 'Refund']
+      ]]
+    ];
+
+    stages.forEach(function (s, k) {
+      var sx = 100 + k * 200;
+      f.rrect(sx, 168, 180, 30, 5, { fill: C.fill });
+      f.text(sx + 12, 188, s[0], { size: 11.5, weight: 700 });
+      f.text(sx + 168, 188, String(s[1]), { size: 10, color: C.faint, anchor: 'end' });
+
+      s[2].forEach(function (c, j) {
+        var cy = 206 + j * 104;
+        f.rrect(sx, cy, 180, 92, 6, {
+          fill: C.white,
+          stroke: c[5] ? C.accent : C.line,
+          sw: c[5] ? 1.5 : 1.1, rough: 0.8
+        });
+        f.text(sx + 10, cy + 18, c[0], { size: 8.5, weight: 700, color: c[5] ? C.accent : C.faint, ls: 1 });
+        f.text(sx + 10, cy + 38, c[1], { size: 11, weight: 700 });
+        f.text(sx + 10, cy + 55, c[2] + ' · ' + c[6], { size: 9, color: C.ink2 });
+        f.av(sx + 20, cy + 74, 7, c[3]);
+        f.text(sx + 34, cy + 78, c[4], {
+          size: 8.5, color: c[4] === '6 saat' ? C.accent : C.faint
+        });
+        if (c[5]) f.text(sx + 170, cy + 18, 'gecikib', { size: 8, color: C.accent, anchor: 'end' });
+      });
+
+      if (s[2].length < 2) {
+        f.rrect(sx, 310, 180, 48, 5, { fill: 'none', stroke: C.line, dash: [5, 4], rough: 0.8 });
+        f.text(sx + 90, 340, '+ Paket', { size: 9.5, anchor: 'middle', color: C.faint });
+      }
+    });
+
+    /* son keçidlər — sistemin qeydə aldığı manual hərəkətlər */
+    f.rrect(100, 470, 980, 180, 6, { fill: C.white });
+    f.text(120, 496, 'SON KEÇİDLƏR (3)', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    f.text(1060, 496, 'Jurnal →', { size: 9.5, color: C.accent, weight: 700, anchor: 'end' });
+
+    [['PKG-40', 'İlkin yoxlama → QA', '2 noy 14:20 · manual'],
+     ['PKG-38', 'QA → Növbəti mərhələ', 'dünən 17:05 · manual'],
+     ['PKG-42', 'QA → düzəliş istəndi', '6 saat əvvəl · N. Həsənli']].forEach(function (r, k) {
+      var ly = 520 + k * 36;
+      f.text(120, ly, r[0], { size: 10, weight: 700 });
+      f.text(190, ly, r[1], { size: 10.5, color: C.ink2 });
+      f.text(1060, ly, r[2], { size: 9, color: C.faint, anchor: 'end' });
+      if (k < 2) f.line(120, ly + 16, 1060, ly + 16, { color: C.line, dash: [4, 6], sw: 1 });
+    });
+    f.text(120, 630, 'Keçid = qərar + sübut + qeyd. Sistem aləti işə salmır.',
+      { size: 9, color: C.faint });
+
+    /* sağ rels */
+    f.rrect(1100, 168, 308, 220, 6, { fill: C.white });
+    f.text(1124, 194, 'Qapı yükü', { size: 12.5, weight: 700 });
+    [['Texniki baxış', '2', 0.45],
+     ['QA', '2', 0.55],
+     ['Gecikən', '1', 1]].forEach(function (r, k) {
+      var my = 224 + k * 48;
+      f.text(1124, my, r[0], { size: 10, color: C.ink2 });
+      f.text(1384, my, r[1], { size: 10, weight: 700, anchor: 'end' });
+      WF.ui.progress(f, 1124, my + 10, 160, r[2], { h: 7 });
+    });
+    f.text(1124, 370, 'WIP limiti: hər qapıda 2 paket', { size: 9, color: C.faint });
+
+    f.rrect(1100, 404, 308, 220, 6, { fill: C.white });
+    f.text(1124, 430, 'Diqqət tələb edir', { size: 12.5, weight: 700 });
+    [['PKG-42 · QA', '6 saat SLA · gecikib', 'Bax →'],
+     ['PKG-39 · QA', '2 gündür gözləyir', 'Xatırlat →'],
+     ['PKG-41 · Review', 'reviewer yoxdur', 'Təyin et →']].forEach(function (r, k) {
+      var dy = 458 + k * 52;
+      f.text(1124, dy, r[0], { size: 10.5, weight: 700 });
+      f.text(1124, dy + 18, r[1], { size: 9, color: C.accent });
+      f.text(1384, dy, r[2], { size: 9, color: C.accent, weight: 700, anchor: 'end' });
+      if (k < 2) f.line(1124, dy + 32, 1384, dy + 32, { color: C.line, dash: [4, 6], sw: 1 });
+    });
+
+    f.rrect(1100, 640, 308, 150, 6, { fill: C.fill, stroke: C.line, rough: 0.8 });
+    f.text(1124, 666, 'Manual keçid', { size: 12, weight: 700 });
+    f.text(1124, 688, 'Sistem deploy etmir; keçidi qeydə alır.', { size: 9.5, color: C.ink2 });
+    f.text(1124, 708, 'Mənbə linki opsionaldır.', { size: 9.5, color: C.ink2 });
+    f.text(1124, 740, 'Jurnal →', { size: 10, color: C.accent, weight: 700 });
+
+    /* annotasiyalar */
+    f.anno(1, 88, 250, 98, 250);
+    f.anno(2, 88, 190, 98, 190);
+    f.anno(3, 1088, 220, 1098, 220);
+    f.anno(4, 1088, 680, 1098, 680);
+    f.annoS(5, 890, 270);
+    f.anno(6, 88, 520, 98, 520);
+    f.annoS(7, 1088, 96);
+  };
+})();
+</script>
+<script>
+  /* ---- render every frame ---- */
+  document.querySelectorAll('svg[data-frame]').forEach(function (svg) {
+    var fn = window.WF.frames[svg.getAttribute('data-frame')];
+    if (!fn) { console.warn('missing frame', svg.getAttribute('data-frame')); return; }
+    try { fn(new window.WF.Frame(svg)); }
+    catch (e) { console.error(svg.getAttribute('data-frame'), e); }
+  });
+
+  /* ---- solo mode: #release-intake, ... ---- */
+  (function () {
+    var id = location.hash.replace('#', '');
+    if (!id) return;
+    var svg = document.querySelector('svg[data-frame="' + id + '"]');
+    if (!svg) return;
+    var fig = svg.closest('figure');
+    document.body.classList.add('solo');
+    if (fig) fig.classList.add('solo');
+  })();
+</script>
+</body>
+</html>

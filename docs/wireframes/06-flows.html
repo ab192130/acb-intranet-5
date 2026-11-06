@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ACB Intranet — Axınlar · lo-fi</title>
+<link rel="stylesheet" href="vendor/kalam.css">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="partnav">
+    <a href="index.html">← Eskizlər</a>
+    <span class="pnum">06 / 08</span>
+    <span class="ptitle">Axınlar</span>
+    <span class="pager">
+      <a href="05-people.html">← People</a>
+      <a href="07-delivery.html">Buraxılış →</a>
+    </span>
+  </nav>
+
+  <!-- ===================== 06 FLOWS ===================== -->
+  <section class="section">
+    <div class="section-head">
+      <span class="idx">06</span><h2>Axınlar</h2>
+      <span class="sub">canvas · node · gate · səlahiyyət lensi</span>
+    </div>
+
+    <figure>
+      <div class="frame-head"><span class="num">10</span><h3>Axın canvası — Təsdiq axını</h3>
+        <span class="purpose">Node-based lövhə: mərhələlər, gate, düzəliş dövrəsi; konfiqurasiya yalnız seçilmiş node-da</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="flow-template"></svg>
+      <ol class="notes">
+        <li><b>Canvas, forma deyil.</b> Normal istifadəçi axını bir baxışda görür: başlanğıc, mərhələlər, qərar qapısı və təhvil. Konfiqurasiya yalnız node seçiləndə açılır — ekran formanın yükünü daşımır.</li>
+        <li><b>Node = mərhələ, xətt = ötürmə.</b> Bərk xətt əsas yoldur; kəsik xətt geri qayıdışı (düzəliş) və rəddi göstərir. Dövrə gizlədilmir — canvasın ən vacib üstünlüyü budur.</li>
+        <li><b>Gate ayrı node tipidir.</b> “Təsdiq” status deyil: üzərində rol, rejim, SLA və “bloklayır” badge-i var. Status work item-də qalır, gate isə qərarı təmsil edir.</li>
+        <li><b>Kontekstual inspector.</b> Seçilmiş node üçün yalnız 4–5 əsas sahə görünür; fallback, xarici təsdiq və qalan ayarlar “Daha çox”dadır. Bu, formanın yaratdığı diqqət yükünü azaldır.</li>
+        <li><b>Rəy bloklamır.</b> Review ayrıca node-dur və “consult” kimi işarələnib; təsdiq qapısına çevrilmir. Leksika canvasın altındakı legenddə açıqlanır.</li>
+        <li><b>Autosave + yayımla.</b> Canvas avtomatik yadda saxlanılır; “Yayımla” yeni versiya yaradır. Davam edən işlər köhnə versiyada qalır — işin ortasında qayda dəyişmir.</li>
+        <li><b>Komanda görünür.</b> Sağ üstdə canlı baxanlar, aşağıda yadda saxlama statusu. Node üzərində şərhlər sonrakı dövrdə əlavə olunur; canvas artıq komanda üçün ortaq səthdir.</li>
+        <li><b>Bir baxışda yol.</b> “Yeni iş → Hazırlıq → Review → Təsdiq → Təhvil” ardıcıllığı soldan sağa oxunur; düzəliş dövrəsi aşağıdan geri qayıdır. Bu, siyahı və formada itən axını görünən edir.</li>
+      </ol>
+    </figure>
+
+    <figure>
+      <div class="frame-head"><span class="num">11</span><h3>Səlahiyyət lensi</h3>
+        <span class="purpose">Eyni canvas, fərqli qat: kim təsdiqləyir, kim rəy verir, vakant rolda nə olur</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="flow-authority"></svg>
+      <ol class="notes">
+        <li><b>Lens, ayrı səhifə deyil.</b> Eyni canvas üzərində “Axın ↔ Səlahiyyət” keçidi var; node-lar yerində qalır, yalnız sağ panel “kim qərar verir” sualına keçir.</li>
+        <li><b>Rol əsaslı səlahiyyət.</b> Hüquqşünas sənədi hüquqi risk baxımından yoxlayıb təsdiq verir; Risk Lead riski, Owner məsuliyyəti təsdiqləyir. Şəxs yox, rol bağlanır; rol vakantdırsa fallback zənciri işə düşür — qərar itmir.</li>
+        <li><b>Rəy ≠ təsdiq.</b> ● təsdiqləyir, ○ rəy verir. Normal istifadəçi matrisi oxumadan fərqi görür; tam matris isə admin üçün linkdə qalır.</li>
+        <li><b>Müəllif öz işini təsdiqləyə bilməz.</b> Owner sətri bunu açıq deyir; sistem əvəzedicini təklif edir. Bu, şablon səviyyəsində qaydadır, hər dəfə əl ilə yoxlanmır.</li>
+        <li><b>Tam matris ikinci dərəcəlidir.</b> “Tam matrisi aç” ayrıca səthə keçir; gündəlik istifadəçi bu ekranda qalır və öz axınını anlayır.</li>
+        <li><b>Delegasiya və fallback.</b> 14 günlük delegasiya, vakant rolda yuxarı rəisə keçid və xarici alıcı linki eyni panelin içində, kontekstdə göstərilir.</li>
+      </ol>
+    </figure>
+
+  </section>
+
+  <div class="partfoot">
+    <a href="05-people.html">← People</a>
+    <span class="hint">lo-fi · qərar sənədi, dizayn deyil</span>
+    <a class="next" href="07-delivery.html">Buraxılış →</a>
+  </div>
+</div>
+
+<script src="vendor/rough.js"></script>
+<script src="core.js"></script>
+<script>
+/* 06 Flows — inline frames: canvas + səlahiyyət lensi */
+(function () {
+  'use strict';
+  var WF = window.WF, C = WF.C;
+  var frames = WF.frames;
+
+  /* ---- canvas köməkçiləri ---- */
+
+  function grid(f) {
+    for (var gx = 92; gx < 1436; gx += 32) {
+      for (var gy = 140; gy < 890; gy += 32) {
+        f.dot(gx, gy, 0.9, C.line);
+      }
+    }
+  }
+
+  function edge(f, x1, y1, x2, y2, o) {
+    o = o || {};
+    var bend = o.bend == null ? 34 : o.bend;
+    var color = o.color || C.ink2;
+    var d = 'M' + x1 + ' ' + y1 +
+      ' C' + (x1 + bend) + ' ' + y1 + ', ' + (x2 - bend) + ' ' + y2 + ', ' + x2 + ' ' + y2;
+    f.add(WF.el('path', {
+      d: d, fill: 'none', stroke: color, 'stroke-width': o.sw || 1.4,
+      'stroke-dasharray': o.dash ? o.dash.join(' ') : null,
+      'stroke-linecap': 'round'
+    }, f.g));
+    var a = Math.atan2(y2 - y1, x2 - x1), s = 7;
+    f.line(x2, y2, x2 - s * Math.cos(a - 0.45), y2 - s * Math.sin(a - 0.45), { color: color, sw: 1.2 });
+    f.line(x2, y2, x2 - s * Math.cos(a + 0.45), y2 - s * Math.sin(a + 0.45), { color: color, sw: 1.2 });
+  }
+
+  function loopEdge(f, x1, y1, x2, y2) {
+    var d = 'M' + x1 + ' ' + y1 + ' C' + x1 + ' ' + (y1 + 88) + ', ' +
+      x2 + ' ' + (y2 + 88) + ', ' + x2 + ' ' + y2;
+    f.add(WF.el('path', {
+      d: d, fill: 'none', stroke: C.ink2, 'stroke-width': 1.3,
+      'stroke-dasharray': '5 5', 'stroke-linecap': 'round'
+    }, f.g));
+    /* yuxarı baxan arrowhead */
+    f.line(x2, y2, x2 - 5, y2 + 8, { color: C.ink2, sw: 1.2 });
+    f.line(x2, y2, x2 + 5, y2 + 8, { color: C.ink2, sw: 1.2 });
+  }
+
+  function nodeCard(f, x, y, w, h, o) {
+    o = o || {};
+    f.rrect(x, y, w, h, 7, {
+      fill: C.white, stroke: o.active ? C.accent : C.line,
+      sw: o.active ? 1.6 : 1.1, rough: 0.8
+    });
+    f.text(x + 14, y + 19, o.type, {
+      size: 8.5, weight: 700, ls: 1.1,
+      color: o.active ? C.accent : C.faint
+    });
+    f.text(x + w - 14, y + 19, '···', { size: 11, color: C.faint, anchor: 'end' });
+    f.rrect(x + 14, y + 30, 24, 24, 5, {
+      fill: o.active ? C.accentBg : C.fill, stroke: 'none', rough: 0.5
+    });
+    f.text(x + 26, y + 47, o.icon, {
+      size: 11, anchor: 'middle', color: o.active ? C.accent : C.ink2
+    });
+    f.text(x + 48, y + 47, o.title, { size: 12.5, weight: 700 });
+    if (o.meta) f.text(x + 14, y + 74, o.meta, { size: 9.5, color: C.ink2 });
+    if (o.meta2) f.text(x + 14, y + 92, o.meta2, { size: 9.5, color: C.ink2 });
+
+    var cx = x + 14;
+    (o.chips || []).forEach(function (c) {
+      cx += f.chip(cx, y + h - 26, c.label, {
+        h: 18, size: 8,
+        fill: c.accent ? C.accentBg : C.fill,
+        color: c.accent ? C.accent : C.ink2
+      }) + 6;
+    });
+
+    f.circle(x, y + h / 2, 10, {
+      fill: C.white, stroke: o.active ? C.accent : C.ink2, sw: 1.2, rough: 0.5
+    });
+    f.circle(x + w, y + h / 2, 10, {
+      fill: C.white, stroke: o.active ? C.accent : C.ink2, sw: 1.2, rough: 0.5
+    });
+  }
+
+  function base(f, title, lens) {
+    WF.shell(f, { header: false, active: 1 });
+    f.line(76, 60, 1440, 60, { color: C.line, sw: 1.2 });
+    grid(f);
+
+    f.text(100, 36, 'Layihələr / Axınlar / ' + title, { size: 12, color: C.faint });
+    f.text(100, 96, title, { size: 22, weight: 700 });
+    f.chip(100 + WF.tw(title, 22) + 12, 80, 'v3 · qaralama', {
+      h: 26, size: 10.5, fill: C.accentBg, color: C.accent
+    });
+    f.text(100, 120, '12 iş bu axındadır · hazırla → rəy al → təsdiqlə → təhvil ver · avtomatik yadda saxlanılır',
+      { size: 10.5, color: C.ink2 });
+
+    /* lens keçidi */
+    f.chip(940, 84, 'Axın', { h: 26, w: 52, size: 10.5, active: lens === 0 });
+    f.chip(1000, 84, 'Səlahiyyət', { h: 26, w: 84, size: 10.5, active: lens === 1 });
+
+    /* komanda */
+    f.dot(1096, 96, 2.6, C.accent);
+    f.text(1106, 100, 'canlı', { size: 9, color: C.accent, weight: 700 });
+    f.avstack(1134, 92, ['AM', 'SƏ', 'NH'], 9);
+    f.btn(1210, 78, 80, 'Paylaş', { h: 30, size: 10.5 });
+    f.btn(1298, 78, 86, 'Yayımla', { kind: 'primary', h: 30, size: 10.5 });
+
+    /* sol alət paneli */
+    f.rrect(92, 160, 44, 150, 8, { fill: C.white, stroke: C.line, rough: 0.8 });
+    f.text(114, 180, '+', { size: 17, anchor: 'middle', weight: 700 });
+    f.text(114, 222, '▤', { size: 13, anchor: 'middle', color: C.ink2 });
+    f.text(114, 264, '⌖', { size: 13, anchor: 'middle', color: C.ink2 });
+    f.text(114, 302, '↶', { size: 13, anchor: 'middle', color: C.ink2 });
+    [200, 242, 282].forEach(function (ly) {
+      f.line(102, ly, 126, ly, { color: C.line, sw: 1 });
+    });
+
+    /* alt alət zolağı */
+    f.rrect(620, 820, 180, 38, 19, { fill: C.white, stroke: C.line, dash: [5, 4], rough: 0.8 });
+    f.text(710, 844, '+ Node əlavə et', { size: 11, anchor: 'middle', color: C.ink2 });
+    f.text(100, 844, 'Rəy bloklamır · Təsdiq bloklayır · Təhvil sahibliyi dəyişir',
+      { size: 9.5, color: C.faint });
+
+    f.rrect(1330, 818, 78, 28, 14, { fill: C.white, stroke: C.line, rough: 0.8 });
+    f.text(1345, 837, '−', { size: 12, anchor: 'middle', color: C.ink2 });
+    f.text(1369, 837, '100%', { size: 9, anchor: 'middle', color: C.ink2 });
+    f.text(1395, 837, '+', { size: 12, anchor: 'middle', color: C.ink2 });
+
+    /* minimap */
+    f.rrect(1160, 660, 256, 110, 6, { fill: C.white, stroke: C.line, rough: 0.8 });
+    f.text(1176, 680, 'XƏRİTƏ', { size: 8, weight: 700, color: C.faint, ls: 1 });
+    [[1180, 700, false], [1224, 696, false], [1268, 700, true], [1318, 700, false]].forEach(function (m) {
+      f.rrect(m[0], m[1], 34, 16, 3, {
+        fill: m[2] ? C.accentBg : C.fill,
+        stroke: m[2] ? C.accent : C.line, sw: 1, rough: 0.5
+      });
+    });
+  }
+
+  function flowNodes(f) {
+    /* əsas yol */
+    edge(f, 260, 430, 310, 430);
+    edge(f, 490, 430, 540, 430);
+    edge(f, 720, 430, 760, 430);
+    edge(f, 960, 430, 990, 430);
+
+    /* rədd — yuxarı terminal */
+    edge(f, 860, 345, 860, 298, { bend: 16 });
+
+    /* düzəliş dövrəsi — aşağıdan geri */
+    loopEdge(f, 860, 515, 630, 490);
+    f.text(680, 590, 'Düzəliş istə · geri qayıdır', { size: 9.5, color: C.ink2 });
+
+    /* trigger */
+    f.rrect(110, 400, 150, 60, 30, { fill: C.fill, stroke: C.line, rough: 0.8 });
+    f.text(185, 425, 'Yeni iş yaranır', { size: 11.5, weight: 700, anchor: 'middle' });
+    f.text(185, 444, 'Trigger', { size: 8.5, anchor: 'middle', color: C.faint });
+    f.circle(260, 430, 10, { fill: C.white, stroke: C.ink2, sw: 1.2, rough: 0.5 });
+
+    /* rədd terminalı */
+    f.rrect(790, 246, 140, 46, 23, { fill: C.white, stroke: C.line, dash: [5, 4], rough: 0.8 });
+    f.text(860, 274, 'Rədd → arxiv', { size: 10.5, anchor: 'middle', color: C.ink2 });
+
+    nodeCard(f, 310, 370, 180, 120, {
+      type: 'MƏRHƏLƏ', icon: '▶', title: 'Hazırlıq',
+      meta: 'Todo → In Progress', chips: [{ label: 'gate yoxdur' }]
+    });
+    nodeCard(f, 540, 370, 180, 120, {
+      type: 'RƏY', icon: '◌', title: 'Review',
+      meta: 'Rəy · bloklamır', chips: [{ label: 'SLA 2 gün' }]
+    });
+    nodeCard(f, 760, 345, 200, 170, {
+      type: 'GATE', icon: '✓', title: 'Təsdiq', active: true,
+      meta: 'Hüquqşünas', meta2: 'all-of · 2 təsdiqçi',
+      chips: [{ label: 'SLA 24s', accent: true }, { label: '1 vakant', accent: true }]
+    });
+
+    /* Təsdiq node-unun içində iştirakçılar */
+    f.av(786, 463, 8, 'AM');
+    f.circle(804, 463, 16, { fill: C.white, stroke: C.ink2, sw: 1, dash: [3, 3], rough: 0.5 });
+    f.text(804, 467, '?', { size: 8.5, anchor: 'middle', color: C.ink2, weight: 700 });
+    f.text(820, 467, '1 vakant', { size: 8.5, color: C.accent });
+
+    nodeCard(f, 990, 370, 150, 120, {
+      type: 'TƏHVİL', icon: '→', title: 'Təhvil',
+      meta: 'Xarici alıcı', chips: [{ label: 'Qismən qəbul', accent: true }]
+    });
+  }
+
+  function inspectorFlow(f) {
+    f.rrect(1160, 120, 256, 520, 8, { fill: C.white, stroke: C.line, rough: 0.8 });
+    f.text(1184, 148, 'Təsdiq gate', { size: 13, weight: 700 });
+    f.text(1392, 148, '×', { size: 15, color: C.faint, anchor: 'end' });
+    f.chip(1184, 162, 'Gate · bloklayır', { h: 20, size: 9, fill: C.accentBg, color: C.accent });
+    f.line(1184, 190, 1392, 190, { color: C.line, sw: 1 });
+
+    f.text(1184, 212, 'TƏSDİQÇI ROLU', { size: 8.5, weight: 700, color: C.faint, ls: 1 });
+    WF.ui.select(f, 1184, 220, 208, { value: 'Hüquqşünas', h: 32 });
+
+    f.text(1184, 278, 'REJİM', { size: 8.5, weight: 700, color: C.faint, ls: 1 });
+    f.chip(1184, 286, 'Hamısı', { h: 24, w: 56, size: 9.5, active: true });
+    f.chip(1248, 286, 'Hər hansı', { h: 24, w: 70, size: 9.5 });
+    f.chip(1326, 286, 'Ardıcıl', { h: 24, w: 60, size: 9.5 });
+
+    f.text(1184, 340, 'SLA', { size: 8.5, weight: 700, color: C.faint, ls: 1 });
+    WF.ui.input(f, 1184, 348, 110, { value: '24 saat', h: 32 });
+    WF.ui.checkbox(f, 1310, 356, 'iş günü', true);
+
+    f.text(1184, 402, 'TƏLƏB OLUNAN ARTEFAKT', { size: 8.5, weight: 700, color: C.faint, ls: 1 });
+    WF.ui.select(f, 1184, 410, 208, { value: 'Sənəd · versiya bağlı', h: 32 });
+
+    WF.ui.switch(f, 1184, 470, 'Özünü təsdiq etmə', true);
+
+    f.text(1184, 512, 'Daha çox ayar  ▾', { size: 10, color: C.ink2 });
+    f.line(1184, 530, 1392, 530, { color: C.line, sw: 1 });
+
+    f.text(1184, 554, '12 iş bu node-dan keçir', { size: 10, color: C.ink2 });
+    f.text(1184, 574, '1 vakant rol · fallback işə düşür', { size: 9, color: C.accent });
+    f.circle(1188, 610, 6, { fill: C.accent, stroke: 'none', rough: 0.4 });
+    f.text(1198, 613, 'Avtomatik yadda saxlanılır', { size: 9, color: C.faint });
+  }
+
+  function inspectorAuthority(f) {
+    f.rrect(1160, 120, 256, 520, 8, { fill: C.white, stroke: C.line, rough: 0.8 });
+    f.text(1184, 148, 'Təsdiqçilər', { size: 13, weight: 700 });
+    f.text(1392, 148, '×', { size: 15, color: C.faint, anchor: 'end' });
+    f.text(1184, 166, 'Bu gate-də kim qərar verir', { size: 9.5, color: C.faint });
+    f.line(1184, 184, 1392, 184, { color: C.line, sw: 1 });
+
+    [['●', 'Hüquqşünas', 'vakant · fallback: Baş hüquqşünas', 'təsdiqləyir', true],
+     ['○', 'Risk Lead', 'A. Məmmədov', 'rəy verir', false],
+     ['●', 'Owner', 'S. Əliyeva · müəllif', 'bloklanır', false]].forEach(function (r, k) {
+      var ry = 202 + k * 78;
+      f.text(1184, ry + 6, r[0], {
+        size: 12, weight: 700, color: r[4] ? C.accent : C.ink2
+      });
+      f.text(1202, ry, r[1], { size: 11.5, weight: 700 });
+      f.text(1202, ry + 18, r[2], {
+        size: 9, color: r[3] === 'bloklanır' ? C.accent : C.ink2
+      });
+      f.chip(1288, ry - 12, r[3], {
+        h: 19, size: 8,
+        fill: r[3] === 'təsdiqləyir' || r[3] === 'bloklanır' ? C.accentBg : C.fill,
+        color: r[3] === 'təsdiqləyir' || r[3] === 'bloklanır' ? C.accent : C.ink2
+      });
+      if (k < 2) f.line(1184, ry + 52, 1392, ry + 52, { color: C.line, dash: [4, 6], sw: 1 });
+    });
+
+    f.line(1184, 454, 1392, 454, { color: C.line, sw: 1 });
+    WF.ui.switch(f, 1184, 470, 'Özünü təsdiq etmə', true);
+    WF.ui.switch(f, 1184, 504, 'Delegasiya · 14 gün', true);
+    f.text(1184, 548, 'Tam matrisi aç →', { size: 10, color: C.accent, weight: 700 });
+    f.text(1184, 576, 'Fallback zənciri', { size: 9, color: C.faint });
+    f.text(1184, 594, 'Hüquq → Baş hüquqşünas → PMO', { size: 9.5, color: C.ink2 });
+    f.circle(1188, 620, 6, { fill: C.accent, stroke: 'none', rough: 0.4 });
+    f.text(1198, 623, 'Dəyişikliklər auditə düşür', { size: 9, color: C.faint });
+  }
+
+  /* ===================== 10. AXIN CANVASI ===================== */
+  frames['flow-template'] = function (f) {
+    base(f, 'Təsdiq axını', 0);
+    flowNodes(f);
+    inspectorFlow(f);
+
+    f.anno(1, 98, 250, 110, 250);
+    f.anno(2, 98, 500, 110, 500);
+    f.anno(3, 724, 318, 752, 348);
+    f.annoS(4, 1150, 300);
+    f.anno(5, 515, 386, 538, 386);
+    f.annoS(6, 1150, 610);
+    f.annoS(7, 1090, 140);
+    f.anno(8, 640, 614, 676, 596);
+  };
+
+  /* ===================== 11. SƏLAHİYYƏT LENSI ===================== */
+  frames['flow-authority'] = function (f) {
+    base(f, 'Təsdiq axını · səlahiyyət', 1);
+    flowNodes(f);
+    inspectorAuthority(f);
+
+    f.anno(1, 920, 140, 950, 112);
+    f.annoS(2, 1150, 210);
+    f.annoS(3, 1150, 288);
+    f.annoS(4, 1150, 366);
+    f.annoS(5, 1150, 548);
+    f.annoS(6, 1150, 600);
+  };
+})();
+</script>
+<script>
+  /* ---- render every frame ---- */
+  document.querySelectorAll('svg[data-frame]').forEach(function (svg) {
+    var fn = window.WF.frames[svg.getAttribute('data-frame')];
+    if (!fn) { console.warn('missing frame', svg.getAttribute('data-frame')); return; }
+    try { fn(new window.WF.Frame(svg)); }
+    catch (e) { console.error(svg.getAttribute('data-frame'), e); }
+  });
+
+  /* ---- solo mode: #flow-template, ... ---- */
+  (function () {
+    var id = location.hash.replace('#', '');
+    if (!id) return;
+    var svg = document.querySelector('svg[data-frame="' + id + '"]');
+    if (!svg) return;
+    var fig = svg.closest('figure');
+    document.body.classList.add('solo');
+    if (fig) fig.classList.add('solo');
+  })();
+</script>
+</body>
+</html>

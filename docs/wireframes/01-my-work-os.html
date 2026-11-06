@@ -11,10 +11,10 @@
 <div class="wrap">
   <nav class="partnav">
     <a href="index.html">← Eskizlər</a>
-    <span class="pnum">01 / 05</span>
+    <span class="pnum">01 / 08</span>
     <span class="ptitle">My Work OS</span>
     <span class="pager">
-
+      <a href="00-onboarding.html">← Onboarding</a>
       <a href="02-projects.html">Projects →</a>
     </span>
   </nav>
@@ -23,7 +23,7 @@
   <section class="section">
     <div class="section-head">
       <span class="idx">01</span><h2>My Work OS</h2>
-      <span class="sub">gündəlik giriş nöqtəsi · agenda · yük balansı</span>
+      <span class="sub">gündəlik giriş nöqtəsi · agenda · təsdiq növbəsi · yük balansı</span>
     </div>
 
     <figure>
@@ -48,6 +48,23 @@
         <li><b>Geri qaytarıla bilər.</b> Geri alınmayan avtomatlaşdırma bu məhsulda yoxdur.</li>
       </ol>
     </figure>
+
+    <figure>
+      <div class="frame-head"><span class="num">02b</span><h3>Təsdiq və təhvil növbəsi</h3>
+        <span class="purpose">Mənim növbəm ↔ gözləyirəm · qərar inline açılır, xəbərdarlıq yığılır</span></div>
+      <svg class="frame" viewBox="0 0 1440 900" data-frame="approvals"></svg>
+      <ol class="notes">
+        <li><b>Təsdiq status deyil.</b> Ayrıca qərar obyektidir: kimin növbəsi, hansı artefakt, hansı SLA. Status work item-in harada olduğunu deyir; gate kimin qərar verdiyini.</li>
+        <li><b>Təsdiq versiyaya bağlanır.</b> Qərar “Refund axını · v3”ə verilir. Fayl dəyişsə, köhnə təsdiq etibarsız olur və yenidən təsdiq tələb olunur.</li>
+        <li><b>Üç nəticə var.</b> Təsdiq, düzəliş istə, rədd. “Düzəliş istə” ölü son deyil — iş əvvəlki mərhələyə qayıdır və rework sayılır. Şərti təsdiq ayrıca haldır: şərt yazılır və qəbul meyarına çevrilir.</li>
+        <li><b>Rəy bloklamır.</b> Consult (rəy) və decide (təsdiq) ayrıdır; rəy istənilən iş “mənim növbəm”də qərar kimi görünmür.</li>
+        <li><b>Delegasiya görünür.</b> Məzuniyyətdə olan təsdiqçinin işi müvəqqəti keçir, kimə keçdiyi və nə vaxt bitdiyi yazılır; səssiz ötürmə yoxdur və geri alına bilir.</li>
+        <li><b>Vakant rol = yetim gate.</b> Rol boşdursa qərar heç kimin növbəsində deyil; sistem bunu accent ilə göstərir və əvəzedici təyin etməyi tələb edir.</li>
+        <li><b>Hesabsız alıcı.</b> Xarici müştəri üçün hesab yaradılmır: vaxtı məhdud linklə qəbul edir. Person ≠ User prinsipi qorunur.</li>
+        <li><b>Sürət tək ölçü deyil.</b> Orta təsdiq müddəti yanında rework dərəcəsi göstərilir — yalnız sürət hədəfi formal təsdiqi təşviq edər.</li>
+        <li><b>Avtomatlaşdırma qərar vermir.</b> Sistem yalnız xatırladır və eskalasiya edir; hər hərəkətin səbəbi, jurnalı və “geri al”ı var.</li>
+      </ol>
+    </figure>
   </section>
 
   <div class="partfoot">
@@ -70,7 +87,7 @@
   frames.today = function (f) {
     WF.shell(f, { crumb: 'Bugün', active: 0 });
 
-    f.text(100, 112, 'Sabahın xeyir, Burhan', { size: 30, weight: 700 });
+    f.text(100, 112, 'Sabahın xeyir, Kamran', { size: 30, weight: 700 });
     f.text(100, 140, '28 oktyabr, çərşənbə · 3 görüş · 5 açıq iş', { size: 14, color: C.ink2 });
 
     /* role lens — same data, different view */
@@ -229,6 +246,159 @@
     f.anno(1, 1090, 296, 1030, 296);
     f.anno(2, 1090, 388, 1030, 388);
     f.anno(3, 1090, 688, 1030, 688);
+  };
+
+  /* ================= 3. TƏSDİQ VƏ TƏHVİL NÖVBƏSİ ================= */
+  frames.approvals = function (f) {
+    WF.shell(f, { crumb: 'Bugün', active: 0 });
+
+    f.text(100, 112, 'Təsdiq və təhvil', { size: 30, weight: 700 });
+    f.text(100, 140, 'Mənim növbəm 4 · Gözləyirəm 7 · 2 təsdiq bu günün yükünə daxildir',
+      { size: 14, color: C.ink2 });
+
+    /* görünüş linzası — eyni data, fərqli pəncərə */
+    f.text(1012, 106, 'Görünüş', { size: 11.5, color: C.faint, anchor: 'end' });
+    var lens = [['Mənim', 72, true], ['Komanda', 104, false], ['Departament', 124, false]];
+    var lx = 1024;
+    lens.forEach(function (l) {
+      f.chip(lx, 88, l[0], { w: l[1], active: l[2], h: 30, size: 12.5 });
+      lx += l[1] + 8;
+    });
+
+    /* ---------------- sol: mənim növbəm ---------------- */
+    f.text(100, 176, 'MƏNİM NÖVBƏM', { size: 10, weight: 700, color: C.faint, ls: 1.2 });
+    f.text(212, 176, '4', { size: 10.5, weight: 700, color: C.faint });
+
+    /* seçilmiş gate — qərar inline açılır */
+    f.rrect(100, 192, 600, 322, 6, { fill: C.white });
+    f.chip(120, 204, 'TƏSDİQ', { h: 22, size: 9.5, fill: C.accentBg, color: C.accent });
+    f.chip(188, 204, 'SLA 6 saat', { h: 22, size: 9.5 });
+    f.text(680, 219, 'ACB-128', { size: 10, color: C.faint, anchor: 'end' });
+
+    f.text(120, 252, 'Refund axını sənədi', { size: 17, weight: 700 });
+    f.text(120, 274, 'S. Əliyeva · 2 gün əvvəl göndərdi · sənədi 3 dəfə yeniləyib',
+      { size: 11.5, color: C.ink2 });
+
+    f.rrect(120, 292, 560, 56, 5, { fill: C.fill, stroke: C.line, rough: 0.8 });
+    f.rrect(136, 306, 26, 30, 3, { fill: C.white, stroke: C.line, sw: 1, rough: 0.6 });
+    f.plines(140, 314, 18, 4, 5, { color: C.faint, sw: 1 });
+    f.text(176, 315, 'Refund axını · v3', { size: 12.5, weight: 700 });
+    f.text(176, 333, 'Sənəd · 4 səhifə · 12 sətir dəyişib', { size: 10.5, color: C.ink2 });
+    f.text(664, 324, 'Aç ↗', { size: 11, color: C.accent, weight: 700, anchor: 'end' });
+
+    f.text(120, 374, 'QƏBUL MEYARLARI', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    [['3DS fallback təsvir olunub', true],
+     ['Refund cədvəli yenilənib', true],
+     ['Hüquqi rəy sənədi əlavə edilib', false]].forEach(function (c, k) {
+      var cy = 398 + k * 22;
+      f.check(120, cy - 12, c[1]);
+      f.text(146, cy, c[0], { size: 11.5, color: c[1] ? C.ink2 : C.ink });
+      if (!c[1]) f.text(680, cy, 'çatışmır', { size: 10, color: C.accent, anchor: 'end' });
+    });
+
+    f.text(120, 464, 'Təsdiq v3-ə bağlanır — fayl dəyişsə, təsdiq etibarsız olur.',
+      { size: 10.5, color: C.faint });
+
+    f.btn(120, 478, 116, 'Təsdiqlə', { kind: 'primary', h: 32, size: 12 });
+    f.btn(246, 478, 142, 'Düzəliş istə', { h: 32, size: 12 });
+    f.btn(398, 478, 90, 'Rədd et', { kind: 'ghost', h: 32, size: 12 });
+
+    /* növbəti qərar sətirləri — qərar açılmadan yalnız xülasə */
+    f.text(100, 542, 'Növbəti (3)', { size: 12, weight: 700 });
+    [['TƏSDİQ', 'ACB-151 · Risk skorlaması', '1 gün', false],
+     ['TƏHVİL', '3DS keçidi · qəbul', 'bu gün', false],
+     ['RƏY', 'UC-04 · Refund axını · bloklamır', '2 gün', true]].forEach(function (r, k) {
+      var ry = 556 + k * 38;
+      f.chip(100, ry + 8, r[0], {
+        h: 20, size: 8.5,
+        fill: r[3] ? C.fill : C.accentBg,
+        color: r[3] ? C.ink2 : C.accent
+      });
+      f.text(164, ry + 23, r[1], { size: 12.5 });
+      f.text(680, ry + 23, r[2], { size: 10.5, color: C.faint, anchor: 'end' });
+      if (k < 2) f.line(100, ry + 38, 700, ry + 38, { color: C.line, dash: [4, 6], sw: 1 });
+    });
+
+    /* avtomatlaşdırma jurnalı — qərar deyil */
+    f.rrect(100, 690, 600, 94, 6, { fill: C.white });
+    f.text(120, 716, 'Sistem nə etdi', { size: 12.5, weight: 700 });
+    f.text(680, 716, 'jurnal →', { size: 10.5, color: C.ink2, anchor: 'end' });
+    f.text(120, 738, '2 xatırlatma göndərildi · SLA 24 saat', { size: 11, color: C.ink2 });
+    f.text(680, 738, 'geri al', { size: 10.5, color: C.accent, weight: 700, anchor: 'end' });
+    f.text(120, 758, '1 eskalasiya Lead-ə · 3 gün gecikmə', { size: 11, color: C.ink2 });
+    f.text(680, 758, 'geri al', { size: 10.5, color: C.accent, weight: 700, anchor: 'end' });
+    f.text(120, 776, 'Avtomatik qərar yoxdur — yalnız xatırlatma və eskalasiya.',
+      { size: 9.5, color: C.faint });
+
+    /* ---------------- sağ: gözləyirəm ---------------- */
+    f.rrect(724, 192, 616, 58, 6, { fill: C.white });
+    f.text(744, 216, 'S. Əliyeva məzuniyyətdədir', { size: 12.5, weight: 700 });
+    f.text(744, 236, '3 təsdiq müvəqqəti olaraq N. Həsənliyə keçdi · 7 noy',
+      { size: 10.5, color: C.ink2 });
+    f.text(1320, 216, 'Geri al', { size: 10.5, color: C.accent, weight: 700, anchor: 'end' });
+
+    f.text(724, 278, 'GÖZLƏYİRƏM', { size: 10, weight: 700, color: C.faint, ls: 1.2 });
+    f.text(838, 278, '7', { size: 10.5, weight: 700, color: C.faint });
+
+    var wait = [
+      ['AM', 'A. Məmmədov · ACB-151', 'Risk skorlaması — təsdiq', '3 gün', 'gecikib', 'Eskalasiya →', false],
+      ['NH', 'N. Həsənli · ACB-147', 'Smoke testləri — təhvil', '1 gün', 'gözləyir', 'Xatırlat →', false],
+      ['?', 'Vakant rol · Hüquq', 'ACB-128 — hüquq təsdiqi', '5 gün', 'əvəzedici yoxdur', 'Təyin et →', true],
+      ['—', 'Müştəri · hesab yoxdur', 'Təhvil qəbulu — link göndərilib', '2 gün', 'linklə', 'Yenilə →', true],
+      ['EC', 'E. Cəfərova · ACB-155', 'Webhook imzası — təsdiq', '4 saat', 'SLA daxilində', 'Bax →', false]
+    ];
+    wait.forEach(function (w, k) {
+      var wy = 292 + k * 60;
+      if (w[0] === '?') {
+        f.circle(740, wy + 16, 20, { fill: C.white, stroke: C.ink2, sw: 1.1, dash: [3, 3], rough: 0.6 });
+        f.text(740, wy + 20, '?', { size: 10, anchor: 'middle', color: C.ink2, weight: 700 });
+      } else if (w[0] === '—') {
+        f.circle(740, wy + 16, 20, { fill: C.fill, stroke: C.faint, sw: 1.1, dash: [3, 3], rough: 0.6 });
+        f.text(740, wy + 20, '↗', { size: 10, anchor: 'middle', color: C.ink2 });
+      } else {
+        f.av(740, wy + 16, 10, w[0]);
+      }
+      f.text(764, wy + 20, w[1], { size: 11.5, weight: 700 });
+      f.text(764, wy + 38, w[2], { size: 10.5, color: C.ink2 });
+      f.text(1320, wy + 38, w[5], { size: 10.5, color: C.accent, weight: 700, anchor: 'end' });
+      f.chip(1200, wy + 7, w[3], {
+        h: 20, size: 9,
+        fill: w[4] === 'gecikib' || w[4] === 'əvəzedici yoxdur' ? C.accentBg : C.fill,
+        color: w[4] === 'gecikib' || w[4] === 'əvəzedici yoxdur' ? C.accent : C.ink2
+      });
+      f.text(1320, wy + 20, w[4], {
+        size: 9, color: w[4] === 'gecikib' || w[4] === 'əvəzedici yoxdur' ? C.accent : C.faint,
+        anchor: 'end'
+      });
+      if (k < 4) f.line(724, wy + 52, 1340, wy + 52, { color: C.line, dash: [4, 6], sw: 1 });
+    });
+
+    /* axın sağlamlığı — sürət + keyfiyyət birlikdə */
+    f.text(724, 622, 'AXIN SAĞLAMLIĞI · 7 GÜN', { size: 9.5, weight: 700, color: C.faint, ls: 1.2 });
+    [['1.8 gün', 'orta təsdiq'], ['12%', 'rework'], ['86%', 'vaxtında']].forEach(function (m, k) {
+      var mx = 724 + k * 208;
+      f.rrect(mx, 632, 200, 76, 5, { fill: C.fill, stroke: C.line, rough: 0.8 });
+      f.text(mx + 16, 664, m[0], { size: 22, weight: 700 });
+      f.text(mx + 16, 686, m[1], { size: 10.5, color: C.ink2 });
+    });
+
+    /* köhnə vərdişlə paralel işləmə — xarici təsdiqi qeyd et */
+    f.rrect(724, 724, 616, 60, 6, { fill: C.white, stroke: C.line, dash: [5, 4], rough: 0.8 });
+    f.text(744, 748, 'Xarici təsdiqi qeyd et', { size: 12, weight: 700 });
+    f.text(744, 768, 'Email və ya Teams-də verilən qərarı auditə əlavə et.',
+      { size: 10.5, color: C.ink2 });
+    f.btn(1216, 738, 104, 'Qeyd et', { h: 30, size: 11 });
+
+    /* annotasiyalar */
+    f.anno(1, 88, 250, 118, 250);
+    f.anno(2, 88, 320, 118, 320);
+    f.anno(3, 88, 494, 118, 494);
+    f.anno(4, 712, 220, 722, 220);
+    f.anno(5, 712, 444, 722, 444);
+    f.anno(6, 712, 508, 722, 508);
+    f.anno(7, 712, 660, 722, 660);
+    f.anno(8, 712, 740, 722, 740);
+    f.anno(9, 88, 740, 118, 740);
   };
 })();
 </script>

@@ -82,7 +82,7 @@ WF.ui.button(f, 320, 192, 88, 'Bax', { variant: 'outline' });</pre>
       <div class="doc">
         <h4>Input / Select / Textarea</h4>
         <p><b>Anatomiya:</b> Label + Control + Hint. Error halında border accent olur, hint accent mətnə keçir. Select-də sağda chevron var.</p>
-        <pre class="api">WF.ui.input(f, 72, 502, 280, { label: 'Ad, soyad', value: 'Burhan Ağazadə' });
+        <pre class="api">WF.ui.input(f, 72, 502, 280, { label: 'Ad, soyad', value: 'Kamran Əliyev' });
 WF.ui.select(f, 72, 602, 280, { label: 'Şöbə', value: 'Rəqəmsallaşdırma' });</pre>
       </div>
       <div class="doc">
@@ -94,8 +94,8 @@ WF.ui.switch(f, 400, 812, 'Aktiv', true);</pre>
       <div class="doc">
         <h4>Avatar</h4>
         <p><b>Anatomiya:</b> Image və ya fallback initials. Ölçü: sm 28, default 40, lg 56. Group overlap 10px, ağ ring.</p>
-        <pre class="api">f.av(870, 208, 20, 'BA');
-WF.ui.avatarGroup(f, 1000, 208, ['SƏ','BA','NH','RQ'], 14);</pre>
+        <pre class="api">f.av(870, 208, 20, 'KƏ');
+WF.ui.avatarGroup(f, 1000, 208, ['SƏ','KƏ','NH','RQ'], 14);</pre>
       </div>
     </div>
 
@@ -224,7 +224,7 @@ WF.ui.separator(f, 760, 850, 608);</pre>
 
     /* inputs */
     UI.label(f, 72, 486, 'Input');
-    UI.input(f, 72, 502, 280, { label: 'Ad, soyad', value: 'Burhan Ağazadə', hint: 'Şirkət profili' });
+    UI.input(f, 72, 502, 280, { label: 'Ad, soyad', value: 'Kamran Əliyev', hint: 'Şirkət profili' });
     UI.input(f, 372, 502, 280, { label: 'E-poçt', placeholder: 'ad@acb.az', error: true, hint: 'Düzgün e-poçt daxil edin.' });
     UI.select(f, 72, 602, 280, { label: 'Şöbə', value: 'Rəqəmsallaşdırma' });
     UI.textarea(f, 372, 602, 280, { label: 'Təsvir', placeholder: 'Qısa kontekst…' });
@@ -240,9 +240,9 @@ WF.ui.separator(f, 760, 850, 608);</pre>
     /* avatars */
     UI.label(f, 800, 176, 'Avatar');
     f.av(814, 208, 14, 'SƏ');
-    f.av(870, 208, 20, 'BA');
+    f.av(870, 208, 20, 'KƏ');
     f.av(942, 208, 28, 'AM');
-    UI.avatarGroup(f, 1000, 208, ['SƏ', 'BA', 'NH', 'RQ'], 14);
+    UI.avatarGroup(f, 1000, 208, ['SƏ', 'KƏ', 'NH', 'RQ'], 14);
     f.text(1112, 212, '+8 nəfər', { size: 11.5, color: C.faint });
     f.text(800, 264, 'Avatar = image / fallback · group overlap 10px', { size: 11.5, color: C.ink2 });
 
@@ -274,7 +274,7 @@ WF.ui.separator(f, 760, 850, 608);</pre>
     UI.card(f, 72, 192, 600, 300, 'Ödəniş gateway', '3DS 2.0 keçidi və refund axınının modernləşdirilməsi.');
     UI.progress(f, 96, 280, 552, 0.62);
     f.text(96, 306, '62% tamamlanıb · 8 açıq iş', { size: 11.5, color: C.ink2 });
-    UI.avatarGroup(f, 96, 340, ['SƏ', 'BA', 'NH', 'RQ'], 10);
+    UI.avatarGroup(f, 96, 340, ['SƏ', 'KƏ', 'NH', 'RQ'], 10);
     UI.button(f, 96, 420, 120, 'Layihəni aç', { size: 'sm' });
     UI.button(f, 228, 420, 90, 'Paylaş', { variant: 'outline', size: 'sm' });
     f.text(72, 512, 'Card = Header (Title + Description) + Content + Footer', { size: 11.5, color: C.ink2 });
@@ -297,7 +297,7 @@ WF.ui.separator(f, 760, 850, 608);</pre>
     UI.table(f, 760, 406, 608, [
       { label: 'İş', w: 250 }, { label: 'Status', w: 130 }, { label: 'Məsul', w: 228 }
     ], [
-      ['ACB-160 · Refund API', { badge: { label: 'Todo', variant: 'outline' } }, { user: { initials: 'BA', name: 'B. Ağazadə' } }],
+      ['ACB-160 · Refund API', { badge: { label: 'Todo', variant: 'outline' } }, { user: { initials: 'KƏ', name: 'K. Əliyev' } }],
       ['ACB-142 · 3DS redirect', { badge: { label: 'İcrada', variant: 'default' } }, { user: { initials: 'SƏ', name: 'S. Əliyeva' } }],
       ['ACB-151 · Risk skorlaması', { badge: { label: 'Review', variant: 'secondary' } }, { user: { initials: 'NH', name: 'N. Həsənli' } }],
       ['ACB-133 · payment_tx', { badge: { label: 'Bitdi', variant: 'secondary' } }, { user: { initials: 'AM', name: 'A. Məmmədov' } }]

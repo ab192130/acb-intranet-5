@@ -8,10 +8,12 @@ vayrfreymlər üçün mənbədir: əvvəl ssenari razılaşdırılır, sonra ekr
 | Sənəd | Əhatə | Status |
 |---|---|---|
 | [Layihə Overview — ssenari kataloqu](project-overview.md) | U1–U20, mövcud vayrfreym boşluqları, V1 təklifi və D1–D12 qərarları | **In wireframe** — 2/7 + Resources/Works tabs |
+| [Onboarding — ilk giriş axını](onboarding.md) | 7 addım: təbrik, 3 sual, komanda, izometrik ofis, kodeks, təhlükəsizlik, dəstək | **In wireframe** — 7 ekran |
 
 ## Sürətli keçidlər
 
 - [Ssenari indeksi](project-overview.md#scenarios)
+- [Onboarding axını](onboarding.md)
 - [V1 təklifi](project-overview.md#v1)
 - [Qərarlar (D1–D12)](project-overview.md#decisions)
 - [Təsdiq yoxlaması](project-overview.md#next)
@@ -31,6 +33,10 @@ Aşağıdakı modullar üçün ssenari sənədləri hələ yaradılmayıb; hər 
 - Resources tabı — sənəd, use case, data dictionary
 - People — kataloq və şəxs profili
 - Version / activity — müqayisə və audit axını
+- Axınlar — canvas, təsdiq, təhvil və səlahiyyət lensi
+  ([vayrfreymlər](../wireframes/06-flows.html))
+- Buraxılış — PMO tələbi, bölgü, paket, yoxlama qapıları və mərhələlər
+  ([vayrfreymlər](../wireframes/07-delivery.html))
 
 ## Status mənası
 

@@ -330,7 +330,7 @@
     f.line(30, 452, 46, 452, { color: C.line });
     f.circle(38, 486, 15, { sw: 1.2, rough: 0.7 });
     f.dot(38, 486, 2.4, C.faint);
-    f.av(38, 830, 13, 'BA');
+    f.av(38, 830, 13, 'KƏ');
 
     /* top bar */
     if (header) {
@@ -339,7 +339,7 @@
       f.btn(1156, 13, 108, '+ Yarat', { kind: 'primary', h: 34, size: 12.5 });
       f.circle(1300, 30, 22, { sw: 1.2, rough: 0.7 });
       f.circle(1300, 30, 5, { fill: C.accent, stroke: C.accent, sw: 0 });
-      f.av(1346, 30, 13, 'BA');
+      f.av(1346, 30, 13, 'KƏ');
     }
   }
 
