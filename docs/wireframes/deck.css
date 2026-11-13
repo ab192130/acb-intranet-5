@@ -83,23 +83,44 @@
   .partfoot .hint{color:var(--faint); font-weight:400; font-size:12px}
   .partfoot .next{margin-left:auto; text-align:right}
 
-  /* ---------- table of contents ---------- */
-  .toc h2{font-size:15px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink2); margin:0 0 16px}
-  .toc-list{list-style:none; margin:0; padding:0; border-top:1px solid var(--line)}
-  .toc-list a{display:grid; grid-template-columns:52px 230px 1fr auto; gap:18px; align-items:baseline;
-    padding:16px 10px 16px 6px; border-bottom:1px solid var(--line); text-decoration:none; color:inherit}
-  .toc-list a:hover{background:var(--paper)}
-  .toc-list .tn{font-size:11.5px; font-weight:700; letter-spacing:.16em; color:var(--accent)}
-  .toc-list .tt{font-size:17px; font-weight:700}
-  .toc-list .td{font-size:13px; color:var(--ink2); line-height:1.4}
-  .toc-list .tf{font-size:11.5px; color:var(--faint); text-align:right; white-space:nowrap}
+  /* ---------- module cards ---------- */
+  .coverline{font-size:13px; color:var(--faint); margin:2px 0 0}
+  .hub{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:14px; margin:0 0 44px}
+  .modgrid{list-style:none; margin:0; padding:0; display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px}
+  .modcard{position:relative; display:flex; flex-direction:column; min-height:208px; overflow:hidden;
+    background:var(--paper); color:inherit; text-decoration:none;
+    border:1px solid var(--line); border-radius:4px; padding:20px 22px 18px;
+    transition:transform .16s ease, border-color .16s ease, background .16s ease, box-shadow .16s ease}
+  .modcard::before{content:""; position:absolute; left:0; right:0; top:0; height:3px;
+    background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .18s ease}
+  .modcard:hover{transform:translateY(-2px); border-color:var(--ink); background:#fffdf7;
+    box-shadow:0 2px 8px rgba(51,48,43,.08), 0 8px 0 -6px rgba(51,48,43,.10)}
+  .modcard:hover::before{transform:scaleX(1)}
+  .modcard:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+  .hubcard{min-height:190px}
+  .hubcard .mc-title{font-size:26px}
+  .mc-top{display:flex; align-items:baseline; justify-content:space-between; gap:12px}
+  .mc-num{font-size:11.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--accent)}
+  .mc-count{font-size:11px; color:var(--faint); letter-spacing:.06em; white-space:nowrap}
+  .mc-title{font-size:22px; font-weight:700; letter-spacing:-.01em; margin:10px 0 4px}
+  .mc-desc{font-size:13.5px; color:var(--ink2); line-height:1.45}
+  .mc-frames{font-size:11.5px; color:var(--faint); line-height:1.45; margin-top:10px}
+  .mc-go{margin-top:auto; padding-top:14px; display:inline-flex; align-items:center; gap:6px;
+    font-size:12px; font-weight:700; color:var(--ink2)}
+  .modcard:hover .mc-go{color:var(--accent)}
+  .mc-go span{transition:transform .16s ease}
+  .modcard:hover .mc-go span{transform:translateX(4px)}
+  @media (prefers-reduced-motion:reduce){
+    .modcard, .modcard::before, .mc-go span{transition:none}
+    .modcard:hover{transform:none}
+  }
 
   /* ---- part pages in solo mode ---- */
   body.solo .partnav, body.solo .partfoot{display:none}
 
   @media (max-width:860px){
-    .toc-list a{grid-template-columns:40px 1fr; gap:6px 14px}
-    .toc-list .td, .toc-list .tf{grid-column:2}
-    .toc-list .tf{text-align:left}
+    .hub, .modgrid{grid-template-columns:1fr}
+    .modcard{min-height:0}
     .partnav .ptitle{display:none}
   }

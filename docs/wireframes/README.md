@@ -6,7 +6,8 @@ barədə qərar çıxarmaq**.
 
 ## Necə açmaq
 
-`docs/wireframes/index.html` faylını brauzerdə aç (iki dəfə klik). Oradan bölmələrə keç.
+`docs/wireframes/index.html` faylını brauzerdə aç (iki dəfə klik) → **Modullar** kartı →
+bölmənin kartı. Bölmə səhifələrində yuxarıdakı `← Modullar` həmişə siyahıya qaytarır.
 Build yoxdur, server lazım deyil, internet lazım deyil — rough.js və Kalam şrifti
 `vendor/` içində lokaldır.
 
@@ -16,7 +17,8 @@ PDF üçün: bölmə səhifəsini aç → `Ctrl+P` → "Save as PDF" (hər ekran
 
 ```
 docs/wireframes/
-  index.html            giriş: başlıq və bölmələrin siyahısı
+  index.html            giriş: başlıq + Modullar və Komponent kiti kartları
+  modules.html          bölmələrin kart siyahısı (ekran sayı və alt-ekranlar ilə)
   components.html       shadcn anatomiyalı wireframe komponent kiti
   00-onboarding.html    Xoş gəldin · Tanışlıq · Komanda · Ofis · Qaydalar · Dəstək
   01-my-work-os.html    Bugün · Günü balanslaşdır
@@ -42,6 +44,14 @@ Layihə ssenariləri ayrı qovluqda saxlanılır:
 Hər bölmə səhifəsi **özü tamdır**: ekran kodu həmin faylın içindədir, başqa səhifədən
 asılı deyil. Ortaq olan yalnız üç şeydir — `core.js` (çəkmə DSL-i), `deck.css`
 (səhifə görünüşü) və `vendor/` (şrift + rough.js).
+
+## Modullar səhifəsi — kart naviqasiyası
+
+`modules.html` bölmələri cədvəl siyahısı kimi deyil, tam kliklənən kartlar kimi göstərir:
+üstdə bölmə nömrəsi və ekran sayı, ortada ad və bir cümləlik təyinat, altda ekran adları.
+Hover/fokusda üst accent zolağı açılır, kart bir az qalxır və “Ekranlara bax” oxu sağa
+sürüşür. Klaviatura ilə `Tab` → `Enter` işləyir; `prefers-reduced-motion` zamanı hərəkət
+söndürülür. Stil `deck.css`-dəki `.modcard` dilindədir — əlavə kitabxana yoxdur.
 
 ## core.js-i başqa səhifədə işlətmək
 
