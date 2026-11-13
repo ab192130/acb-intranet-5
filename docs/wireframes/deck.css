@@ -13,22 +13,7 @@
 
   /* ---------- cover ---------- */
   .cover{border-bottom:2px solid var(--ink); padding-bottom:28px; margin-bottom:44px}
-  .kicker{font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--faint)}
   h1{font-size:44px; line-height:1.1; margin:10px 0 6px; font-weight:700; letter-spacing:-.01em}
-  .lede{font-size:17px; color:var(--ink2); max-width:760px; margin:8px 0 0}
-  .meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:22px}
-  .tag{font-size:12.5px; color:var(--ink2); border:1px solid var(--line); background:var(--paper);
-       border-radius:999px; padding:4px 12px}
-  .tag b{color:var(--ink)}
-
-  /* ---------- principles ---------- */
-  .principles{margin:0 0 60px}
-  .principles h2{font-size:15px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink2); margin:0 0 18px}
-  .pgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:2px; background:var(--line); border:1px solid var(--line)}
-  .p{background:var(--paper); padding:16px 18px}
-  .p .n{font-size:11px; color:var(--accent); font-weight:700; letter-spacing:.1em}
-  .p .t{font-size:15px; font-weight:700; margin:2px 0 2px}
-  .p .d{font-size:13px; color:var(--ink2); line-height:1.45}
 
   /* ---------- sections ---------- */
   .section{margin:0 0 24px; padding-top:8px}
@@ -66,7 +51,7 @@
 /* ---- solo mode: 02-projects.html#board, 05-people.html#person, ... ---- */
   body.solo{background:#fbfaf5}
   body.solo .wrap{padding:0; max-width:none}
-  body.solo .cover, body.solo .principles, body.solo .section-head, body.solo .outro{display:none}
+  body.solo .cover, body.solo .section-head, body.solo .outro{display:none}
   body.solo .section{margin:0; padding:0}
   body.solo figure{display:none}
   body.solo figure.solo{display:block; margin:0}
@@ -78,7 +63,6 @@
     .wrap{max-width:none; padding:0}
     figure{page-break-inside:avoid}
     svg.frame{box-shadow:none}
-    .principles{page-break-after:always}
   }
 
   /* ---------- part pages ---------- */

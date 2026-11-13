@@ -16,7 +16,7 @@ PDF üçün: bölmə səhifəsini aç → `Ctrl+P` → "Save as PDF" (hər ekran
 
 ```
 docs/wireframes/
-  index.html            giriş: örtük, dizayn prinsipləri, bölmələrin siyahısı
+  index.html            giriş: başlıq və bölmələrin siyahısı
   components.html       shadcn anatomiyalı wireframe komponent kiti
   00-onboarding.html    Xoş gəldin · Tanışlıq · Komanda · Ofis · Qaydalar · Dəstək
   01-my-work-os.html    Bugün · Günü balanslaşdır
