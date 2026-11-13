@@ -31,7 +31,7 @@ docs/wireframes/
   deck.css              səhifə karkası: örtük, bölmə, annotasiya, solo rejim
   core.js               ortaq DSL: hand-drawn primitivlər + WF.ui + qlobal shell
   README.md             bu fayl
-  vendor/               rough.js + kalam.css + Kalam woff2 (latin / latin-ext)
+  vendor/               rough.js + kalam.css + Kalam woff2 (ə/Ə patçı ilə)
 ```
 
 ## Use case-lər
@@ -52,6 +52,23 @@ asılı deyil. Ortaq olan yalnız üç şeydir — `core.js` (çəkmə DSL-i), `
 Hover/fokusda üst accent zolağı açılır, kart bir az qalxır və “Ekranlara bax” oxu sağa
 sürüşür. Klaviatura ilə `Tab` → `Enter` işləyir; `prefers-reduced-motion` zamanı hərəkət
 söndürülür. Stil `deck.css`-dəki `.modcard` dilindədir — əlavə kitabxana yoxdur.
+
+## Üslub — tünd studiya karkası
+
+İki qat var və onlar qəsdən ayrı saxlanılır:
+
+- **Karkas** (`deck.css`): demək olar qara fon (`#08080a`), hairline xətlər (`#24242c`),
+  tək lime vurğu (`#c9ff3d`), mono mikro-label-lar, yumşaq radial işıqlar və incə film
+  grain-i. Naviqasiya yapışqan (sticky), kartlar hover-də qalxır və lime halqa alır.
+  Şrift Kalam-dır — eskiz səsi qorunur, "studiya" hissi yalnız səthdən və tipografiyadan gəlir.
+- **Ekranlar** (`core.js` → `C.*`): eyni əl çəkməsi (rough.js), amma tərsinə çevrilmiş
+  palitra — kağız yerinə `#121218`, mürəkkəb yerinə `#e8e8e3`. `C.white` "səth" tokeni
+  olaraq qalır, `C.ink` ilə cüt-cüt tərsinə düşür, ona görə bütün fg/bg cütləri işləyir.
+  Danger (`#ff6b5e`) yalnız destructive variantlarda var; lime hər yerdə "diqqət" deməkdir.
+
+**Kalam AZ patçı:** Kalam-da `ə`/`Ə` (U+0259, U+018F) yoxdur — mətn sistem şriftinə
+düşürdü. Dörd woff2 faylında `e`/`E` qlifi 180° çevrilərək həmin kod nöqtələrinə əlavə
+olunub; mövcud qliflər, advancelər və fayl adları dəyişməyib, `kalam.css` də olduğu kimidir.
 
 ## core.js-i başqa səhifədə işlətmək
 
@@ -103,25 +120,28 @@ Canlı referans və anatomiya: `components.html`.
 | Element | Dəyər |
 |---|---|
 | Kanvas | 1440 × 900 |
-| Kağız | `#fbfaf5` |
-| Mürəkkəb | `#33302b` (ikinci `#6d675d`, solğun `#a9a294`) |
-| Doldurma | `#efece2` / `#e2ded1` |
-| Vurğu | `#a4512f` — yalnız primary hərəkət və annotasiya |
-| Şrift | Kalam 400 / 700 |
+| Kağız | `#0b0b0e` |
+| Mürəkkəb | `#e8e8e3` (ikinci `#a8a8b2`, solğun `#7d7d88`) |
+| Doldurma | `#1a1a21` / `#25252e` |
+| Vurğu | `#c9ff3d` — yalnız primary hərəkət və annotasiya |
+| Təhlükə | `#ff6b5e` — yalnız destructive |
+| Şrift | Kalam 400 / 700 (+ AZ patç: `ə`, `Ə`) |
 | Ölçülər | 10.5 / 12.5 / 15 / 24 / 30 |
 | Radius | 5–6 px (çip və düymələr 16–22) |
 | Onboarding | struktur referensdən: mərkəz, tək accent, 7 nöqtə; dil rough.js + Kalam |
 
-Rəng, ikon dəsti, animasiya və real data **qəsdən yoxdur** — lo-fi mərhələsində
-bunlar müzakirəni yayındırır. **Onboarding istisnadır:** strukturca referensə uyğun
-mərkəzləşdirilmişdir, amma vizual dil dəyişmir — rough.js + Kalam və paper palitrası.
+İkon dəsti, foto, animasiya və real data **qəsdən yoxdur** — lo-fi mərhələsində bunlar
+müzakirəni yayındırır. Palitra isə tünd eskizdir: qara səth, açıq ştrix, bir lime vurğu.
+Rəng burada brend qərarı deyil, iyerarxiya alətidir — accent həmişə "buraya bax" deməkdir.
+**Onboarding istisnadır:** strukturca referensə uyğun mərkəzləşdirilmişdir, amma vizual
+dil dəyişmir — rough.js + Kalam və tünd eskiz palitrası.
 
 ## Onboarding — ilk giriş axını
 
 Onboarding ayrı bölmədir (`00`), çünki ilk giriş bütün iş məkanından əvvəl gəlir və fərqli
 rejimdə işləyir: sol rels, top bar və “+ Yarat” yoxdur. Məzmun referensdəki kimi mərkəzdədir —
 bir başlıq, bir alt mətn, bir primary hərəkət və aşağıda 7 nöqtə. Vizual dil isə dəyişmir:
-rough.js + Kalam, paper palitra və tək accent.
+rough.js + Kalam, tünd eskiz palitrası və tək lime accent.
 
 Sıra qəsdən belədir:
 

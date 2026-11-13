@@ -1,7 +1,8 @@
 /* ==========================================================================
    ACB Intranet — lo-fi wireframes
    core.js : primitives, hand-drawn DSL, global shell
-   rough.js + Kalam. Grayscale + one accent (#a4512f) for primary/annotation.
+   rough.js + Kalam. Dark sketch palette: near-black surfaces, light strokes,
+   one lime accent (#c9ff3d) for primary/annotation.
    Every frame is 1440x900, drawn into <svg data-frame="...">.
    ========================================================================== */
 (function () {
@@ -10,10 +11,12 @@
   var NS = 'http://www.w3.org/2000/svg';
   var W = 1440, H = 900, RAIL = 76, TOP = 60;
 
+  /* dark sketch palette — `white` stays the "surface" token and inverts with
+     `ink`, so the fg/bg pairings everywhere keep working after the switch. */
   var C = {
-    ink: '#33302b', ink2: '#6d675d', faint: '#a9a294', line: '#c9c4b6',
-    fill: '#efece2', fill2: '#e2ded1', accent: '#a4512f', accentBg: '#f0ded4',
-    white: '#fffef9'
+    ink: '#e8e8e3', ink2: '#a8a8b2', faint: '#7d7d88', line: '#2e2e38',
+    fill: '#1a1a21', fill2: '#25252e', accent: '#c9ff3d', accentBg: '#1f2a0e',
+    danger: '#ff6b5e', white: '#121218'
   };
 
   var FONT = "'Kalam','Segoe Print','Comic Sans MS',cursive";
@@ -350,7 +353,7 @@
 
   UI.C = {
     bg: C.white, fg: C.ink, muted: C.fill, mutedFg: C.ink2, border: C.line,
-    primary: C.ink, primaryFg: C.white, destructive: C.accent, destructiveFg: C.white,
+    primary: C.ink, primaryFg: C.white, destructive: C.danger, destructiveFg: C.white,
     ring: C.faint
   };
 
@@ -404,13 +407,13 @@
     var h = o.h || 36, fs = o.fs || 12.5, top = y;
     if (o.label) { f.text(x, y + 12, o.label, { size: 12, weight: 700 }); top = y + 24; }
     f.rrect(x, top, w, h, 6, {
-      fill: C.white, stroke: o.error ? C.accent : C.line, sw: 1.1, rough: 0.8
+      fill: C.white, stroke: o.error ? C.danger : C.line, sw: 1.1, rough: 0.8
     });
     var val = o.value != null ? o.value : (o.placeholder || '');
     f.text(x + 12, top + h / 2 + fs * 0.36, val, {
       size: fs, color: o.value != null ? C.ink : C.faint
     });
-    if (o.hint) f.text(x, top + h + 16, o.hint, { size: 11, color: o.error ? C.accent : C.faint });
+    if (o.hint) f.text(x, top + h + 16, o.hint, { size: 11, color: o.error ? C.danger : C.faint });
     return top + h + (o.hint ? 24 : 0) - y;
   };
 
@@ -512,11 +515,11 @@
     o = o || {};
     var danger = o.variant === 'destructive';
     f.rrect(x, y, w, h, 6, {
-      fill: C.white, stroke: danger ? C.accent : C.line, sw: 1.1, rough: 0.8
+      fill: C.white, stroke: danger ? C.danger : C.line, sw: 1.1, rough: 0.8
     });
-    f.circle(x + 18, y + 22, 12, { stroke: danger ? C.accent : C.ink2, sw: 1.2, rough: 0.7 });
-    f.text(x + 18, y + 26, '!', { size: 10, weight: 700, anchor: 'middle', color: danger ? C.accent : C.ink2 });
-    f.text(x + 34, y + 26, title, { size: 12.5, weight: 700, color: danger ? C.accent : C.ink });
+    f.circle(x + 18, y + 22, 12, { stroke: danger ? C.danger : C.ink2, sw: 1.2, rough: 0.7 });
+    f.text(x + 18, y + 26, '!', { size: 10, weight: 700, anchor: 'middle', color: danger ? C.danger : C.ink2 });
+    f.text(x + 34, y + 26, title, { size: 12.5, weight: 700, color: danger ? C.danger : C.ink });
     f.text(x + 34, y + 46, text, { size: 11.5, color: C.ink2 });
     return h;
   };
@@ -546,7 +549,7 @@
         cy += 9;
         return;
       }
-      f.text(x + 12, cy + 21, it.label, { size: 12, color: it.danger ? C.accent : C.ink });
+      f.text(x + 12, cy + 21, it.label, { size: 12, color: it.danger ? C.danger : C.ink });
       if (it.shortcut) f.text(x + w - 12, cy + 21, it.shortcut, {
         size: 10, color: C.faint, anchor: 'end'
       });
@@ -567,7 +570,7 @@
     f.plines(dx + 24, dy + 84, dw - 48, 2, 18, { last: 0.7 });
     var bw = 96, bh = 32, by = dy + dh - 44;
     f.rrect(dx + dw - 24 - bw, by, bw, bh, 6, {
-      fill: o.danger ? C.accent : C.ink, stroke: o.danger ? C.accent : C.ink, sw: 1, rough: 0.8
+      fill: o.danger ? C.danger : C.ink, stroke: o.danger ? C.danger : C.ink, sw: 1, rough: 0.8
     });
     f.text(dx + dw - 24 - bw / 2, by + 20, o.confirm || 'Təsdiq', {
       size: 11.5, weight: 700, anchor: 'middle', color: C.white
