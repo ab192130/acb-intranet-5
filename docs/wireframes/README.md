@@ -1,35 +1,43 @@
 # ACB Intranet — lo-fi vayr-freymlər
 
-Səkkiz bölmənin (Onboarding, My Work OS, Projects, Xəritə, Knowledge, People, Axınlar,
-Buraxılış) kağız-qələm səviyyəsində eskizləri. Məqsəd dizaynı "göstərmək" deyil — **struktur və axın
-barədə qərar çıxarmaq**.
+Beş biznes sahəsinin altı modulu və onların alt-modulları — kağız-qələm səviyyəsində
+eskizlər. Məqsəd dizaynı "göstərmək" deyil — **struktur və axın barədə qərar çıxarmaq**.
+Taksonomiya və boşluqlar: [`docs/modules.md`](../modules.md).
 
 ## Necə açmaq
 
 `docs/wireframes/index.html` faylını brauzerdə aç (iki dəfə klik) → **Modullar** kartı →
-bölmənin kartı. Bölmə səhifələrində yuxarıdakı `← Modullar` həmişə siyahıya qaytarır.
+sahə kartı → modul kartı → alt-modul sətri. Modul səhifələrində yuxarıdakı
+`← Modullar / Sahə` crumb-ı həmişə bir səviyyə yuxarı qaytarır.
 Build yoxdur, server lazım deyil, internet lazım deyil — rough.js, Kalam və Space Grotesk
 `vendor/` içində lokaldır.
 
-PDF üçün: bölmə səhifəsini aç → `Ctrl+P` → "Save as PDF" (hər ekran ayrı səhifədə).
+PDF üçün: modul səhifəsini aç → `Ctrl+P` → "Save as PDF" (hər ekran ayrı səhifədə).
 
 ## Fayl strukturu
 
 ```
 docs/wireframes/
   index.html            giriş: başlıq + Modullar və Komponent kiti kartları
-  modules.html          bölmələrin kart siyahısı (ekran sayı və alt-ekranlar ilə)
+  modules.html          beş sahə kartı (rough.js illüstrasiya ilə)
+  area-work.html        A İş icrası — modul kartları
+  area-people.html      B İnsan və təşkilat
+  area-knowledge.html   C Bilik
+  area-delivery.html    D Buraxılış
+  area-platform.html    E Platform
   components.html       shadcn anatomiyalı wireframe komponent kiti
-  00-onboarding.html    Xoş gəldin · Tanışlıq · Komanda · Ofis · Qaydalar · Dəstək
-  01-my-work-os.html    Bugün · Günü balanslaşdır
-  02-projects.html      Layihə icmalı · Resources · Works
-  03-map.html           Asılılıq xəritəsi
-  04-knowledge.html     Resurs — sənəd · use case · data dictionary
-  05-people.html        Kataloq · Şəxs profili
-  06-flows.html         Axın canvası · səlahiyyət lensi
-  07-delivery.html      Tələb · paket · buraxılış lövhəsi
-  deck.css              səhifə karkası: örtük, bölmə, annotasiya, solo rejim
+  00-onboarding.html    People › Onboarding — Xoş gəldin · Tanışlıq · Komanda · Ofis ·
+                        Qaydalar · Təhlükəsizlik · Dəstək
+  01-my-work-os.html    My Work OS — Bugün · Plan balansı · Növbə
+  02-projects.html      Projects — İcmal · İşlər · Resurslar · Axın görünüşü
+  03-map.html           Projects › Struktur — asılılıq xəritəsi
+  04-knowledge.html     Knowledge — Sənəd · Use case · Data dictionary
+  05-people.html        People — Kataloq · Şəxs profili
+  06-flows.html         Platform › Axınlar — şablon · səlahiyyət lensi
+  07-delivery.html      Buraxılış — Tələb · Paket · Lövhə
+  deck.css              səhifə karkası: örtük, sahə, bölmə, annotasiya, solo rejim
   core.js               ortaq DSL: hand-drawn primitivlər + WF.ui + qlobal shell
+  area-art.js           sahə illüstrasiyaları: rough.js + WF.Frame
   README.md             bu fayl
   vendor/               rough.js + kalam.css + Kalam woff2 (ə/Ə patçı ilə) + Space Grotesk (OFL)
 ```
@@ -40,18 +48,58 @@ Layihə ssenariləri ayrı qovluqda saxlanılır:
 [`docs/use-cases`](../use-cases/README.md) →
 [Layihə Overview ssenariləri](../use-cases/project-overview.md) ·
 [Onboarding axını](../use-cases/onboarding.md).
+Modul sərhədləri və alt-modul xəritəsi: [`docs/modules.md`](../modules.md).
 
-Hər bölmə səhifəsi **özü tamdır**: ekran kodu həmin faylın içindədir, başqa səhifədən
-asılı deyil. Ortaq olan yalnız üç şeydir — `core.js` (çəkmə DSL-i), `deck.css`
-(səhifə görünüşü) və `vendor/` (şrift + rough.js).
+Hər modul səhifəsi **özü tamdır**: ekran kodu həmin faylın içindədir, başqa səhifədən
+asılı deyil. Ortaq olan dörd şeydir — `core.js` (çəkmə DSL-i), `area-art.js` (sahə
+illüstrasiyaları), `deck.css` (səhifə görünüşü) və `vendor/` (şrift + rough.js).
 
-## Modullar səhifəsi — kart naviqasiyası
+## Modullar → sahə → modul → alt-modul
 
-`modules.html` bölmələri cədvəl siyahısı kimi deyil, tam kliklənən kartlar kimi göstərir:
-üstdə bölmə nömrəsi və ekran sayı, ortada ad və bir cümləlik təyinat, altda ekran adları.
-Hover/fokusda haşiyə elektrik lime olur və “Ekranlara bax” oxu 4px sürüşür. Kart qalxmır,
-glow və üst accent zolağı yoxdur — accent “kliklə” siqnalıdır. Klaviatura ilə
-`Tab` → `Enter` işləyir. Stil `deck.css`-dəki `.modcard` dilindədir — əlavə kitabxana yoxdur.
+Naviqasiya üç səviyyədədir və hər səviyyə öz səhifəsidir:
+
+1. **`modules.html`** — beş sahə kartı. Hər kartda rough.js illüstrasiya, sahə hərfi,
+   modul və ekran sayı, bir cümləlik təyinat var.
+2. **`area-*.html`** — sahənin modulları. Kartın içində alt-modul sətirləri və ekran linkləri.
+3. **`0*.html`** — ekranlar. Alt-modul ayrı səhifə açmır; modul səhifəsinin içində
+   `#anchor`-dur (`02-projects.html#project-works` kimi).
+
+- **Səhifə nömrəsi = deck sırası.** `00`–`07` fayl nömrəsidir, taksonomiya deyil. Kartdakı
+  nömrə həmin modulun hansı səhifədə olduğunu göstərir; ekranlar yenə `00 → 07` sırası ilə açılır.
+- **Hər ekran öz sahəsini bilir.** Modul səhifəsinin naviqasiyası `← Modullar / Sahə adı`
+  crumb-ı ilə başlayır, yəni ekrandan bir kliklə öz sahəsinə qayıdırsan.
+- **Lens ayrı modul deyil.** `03-map.html` → `Projects › Struktur`; `06-flows.html` → Platform
+  modulu, amma layihə və work item səthlərində kontekstdə görünür.
+- **Onboarding modul deyil, axındır.** `00-onboarding.html` → `People › Onboarding`;
+  prosesin özü `People` + `Axınlar` birləşməsidir.
+
+Hover/fokusda yalnız **link** vurğulanır: kart başlığı və alt-modul linki lime olur. Kart
+qalxmır, glow və üst accent zolağı yoxdur — accent “kliklə” siqnalıdır. Klaviatura ilə
+`Tab` → `Enter` işləyir.
+
+Ətraflı taksonomiya, alt-modul sərhədləri və hələ ekranı olmayan boşluqlar:
+[`docs/modules.md`](../modules.md).
+
+## Sahə illüstrasiyaları
+
+Hər sahənin öz rough.js şəkli var (`area-art.js`): layihə ağacı, orq strukturu, sənəd +
+istinadlar, mərhələ qapısı, axın qrafı. Şəkillər `modules.html` kartlarında və sahə
+səhifələrinin örtüyündə eyni SVG-dən istifadə edir:
+
+```html
+<svg class="ac-art" data-art="work" viewBox="0 0 420 200" role="img"
+     aria-label="Layihə ağacı və iş siyahısı"><title>İş icrası</title></svg>
+```
+
+Kartda `class="ac-art"`, sahə örtüyündə `class="cover-art"` işlədilir; çağırış eynidir.
+
+`area-art.js` `WF.Frame`-i işlədir, yəni illüstrasiyalar ekranlardakı eyni əl çəkməsi
+DSL-i, palitra və qalınlıqla çəkilir. Qaydalar:
+
+- Bir illüstrasiyada **bir** accent — diqqət mərkəzi (aktiv iş, HR nodu, tipli istinad,
+  qərar qapısı, səlahiyyət nodu). Rəng dekorasiya deyil.
+- Mətn yoxdur; kart başlığı mənası verir. Yalnız `av` initials istisnadır.
+- Yeni sahə əlavə olunanda `area-art.js`-də bir funksiya yazılır, `data-art` ilə çağırılır.
 
 ## Üslub — Higgsfield karkası + eskiz məzmunu
 
@@ -111,9 +159,11 @@ Canlı referans və anatomiya: `components.html`.
 
 ## Ekran əlavə etmək
 
-1. Uyğun bölmə səhifəsindəki inline `<script>`-də `frames.yeni_ad = function (f) { ... }` yaz.
+1. Uyğun modul səhifəsindəki inline `<script>`-də `frames.yeni_ad = function (f) { ... }` yaz.
 2. Gövdədə `<svg class="frame" viewBox="0 0 1440 900" data-frame="yeni_ad"></svg>` qoy.
 3. Altına `<ol class="notes">` ilə annotasiyaları yaz — nömrələr avtomatikdir.
+4. Ekranın hansı alt-modula aid olduğunu [`docs/modules.md`](../modules.md)-də, linkini isə
+   `modules.html`-də həmin alt-modul sətrinə yaz.
 
 Əsas primitivlər: `rect`, `rrect`, `circle`, `line`, `text`, `pline(s)`, `card`, `chip`,
 `btn`, `input`, `av`, `avstack`, `check`, `arrow`, `anno`, `annoS`, `chev`.
@@ -142,10 +192,11 @@ dil dəyişmir — rough.js + Kalam və tünd eskiz palitrası.
 
 ## Onboarding — ilk giriş axını
 
-Onboarding ayrı bölmədir (`00`), çünki ilk giriş bütün iş məkanından əvvəl gəlir və fərqli
-rejimdə işləyir: sol rels, top bar və “+ Yarat” yoxdur. Məzmun referensdəki kimi mərkəzdədir —
-bir başlıq, bir alt mətn, bir primary hərəkət və aşağıda 7 nöqtə. Vizual dil isə dəyişmir:
-rough.js + Kalam, tünd eskiz palitrası və tək lime accent.
+Onboarding `People` modulunun alt-moduludur (`00`), amma öz səhifəsindədir: ilk giriş bütün
+iş məkanından əvvəl gəlir və fərqli rejimdə işləyir — sol rels, top bar və “+ Yarat” yoxdur.
+Məzmun referensdəki kimi mərkəzdədir — bir başlıq, bir alt mətn, bir primary hərəkət və
+aşağıda 7 nöqtə. Vizual dil isə dəyişmir: rough.js + Kalam, tünd eskiz palitrası və tək
+lime accent.
 
 Sıra qəsdən belədir:
 

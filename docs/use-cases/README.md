@@ -21,6 +21,7 @@ vayrfreymlər üçün mənbədir: əvvəl ssenari razılaşdırılır, sonra ekr
 ## Əlaqəli
 
 - [Wireframes README](../wireframes/README.md)
+- [Modul xəritəsi](../modules.md)
 - [Layihə icmalı vayrfreymi](../wireframes/02-projects.html#project)
 - [Komponent kiti](../wireframes/components.html)
 
