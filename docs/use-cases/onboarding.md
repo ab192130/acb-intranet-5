@@ -13,8 +13,8 @@ bir qərar və ya bir ünvan verir.
 təkrar soruşmaq.
 
 **Vizual istiqamət:** struktur referensə uyğundur — mərkəzləşdirilmiş tək sütun, tək primary
-hərəkət və aşağıda 7 nöqtəli tərəqqi. Vizual dil isə dəyişmir: rough.js + Kalam, paper palitra
-(`#fbfaf5`) və tək accent (`#a4512f`). Yəni referensdən **struktur** götürülür, **üslub** yox.
+hərəkət və aşağıda 7 nöqtəli tərəqqi. Vizual dil isə dəyişmir: rough.js + Kalam, tünd palitra
+(`#0f1113`) və tək lime accent (`#d1fe17`). Yəni referensdən **struktur** götürülür, **üslub** yox.
 
 ## Aktyorlar
 

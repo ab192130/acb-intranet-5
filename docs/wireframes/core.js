@@ -1,8 +1,8 @@
 /* ==========================================================================
    ACB Intranet — lo-fi wireframes
    core.js : primitives, hand-drawn DSL, global shell
-   rough.js + Kalam. Dark sketch palette: near-black surfaces, light strokes,
-   one lime accent (#c9ff3d) for primary/annotation.
+   rough.js + Kalam. Higgsfield-style dark palette: cool near-black surfaces,
+   light strokes, one electric lime accent (#d1fe17) for primary/annotation.
    Every frame is 1440x900, drawn into <svg data-frame="...">.
    ========================================================================== */
 (function () {
@@ -11,12 +11,12 @@
   var NS = 'http://www.w3.org/2000/svg';
   var W = 1440, H = 900, RAIL = 76, TOP = 60;
 
-  /* dark sketch palette — `white` stays the "surface" token and inverts with
-     `ink`, so the fg/bg pairings everywhere keep working after the switch. */
+  /* Higgsfield-style dark palette — `white` stays the "surface" token and
+     inverts with `ink`, so the fg/bg pairings everywhere keep working. */
   var C = {
-    ink: '#e8e8e3', ink2: '#a8a8b2', faint: '#7d7d88', line: '#2e2e38',
-    fill: '#1a1a21', fill2: '#25252e', accent: '#c9ff3d', accentBg: '#1f2a0e',
-    danger: '#ff6b5e', white: '#121218'
+    ink: '#f7f7f8', ink2: '#898a8b', faint: '#565a5e', line: '#3a3e43',
+    fill: '#1c1e20', fill2: '#22252a', accent: '#d1fe17', accentBg: '#222b00',
+    danger: '#e72930', white: '#131517'
   };
 
   var FONT = "'Kalam','Segoe Print','Comic Sans MS',cursive";
